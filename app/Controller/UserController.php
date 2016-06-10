@@ -24,6 +24,7 @@ class UserController extends Controller
     if (!empty($result)) {$error['password'] = $result;}
     $testAuthentification = new AuthentificationModel();
     $test = $testAuthentification->isValidLoginInfo($_POST['pseudo_or_email'],$_POST['password']);
+    if ($test == 0) { $error['password'] = 'mauvais password ou mauvais login';}
     if (count($error) == 0) {
       $testModel1 = new UserModel();
       $test1 = $testModel1-> getUserByUsernameOrEmail($_POST['pseudo_or_email']);
