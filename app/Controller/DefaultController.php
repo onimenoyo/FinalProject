@@ -2,7 +2,9 @@
 
 namespace Controller;
 
-use \W\Controller\Controller;
+use \Controller\Controller;
+
+use \Services\Flash\FlashBags;
 
 class DefaultController extends Controller
 {
@@ -12,6 +14,11 @@ class DefaultController extends Controller
 	 */
 	public function home()
 	{
+
+		$flashBag = new FlashBags();
+
+		$flashBag->setFlash('info', "Test de message");
+
 		$this->show('default/home');
 	}
 
