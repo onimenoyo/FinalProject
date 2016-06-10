@@ -17,22 +17,24 @@ class UserController extends Controller
   public function loginUser()
   {
     $valid = new Validation();
-    $error = array();
+    $errors = array();
     $result = $valid->validateText($_POST['pseudo_or_email'], 3, 50);
-    if (!empty($result)) {$error['pseudo_or_email'] = $result;}
+    if (!empty($result)) {$errors['pseudo_or_email'] = $result;}
     $result = $valid->validateText($_POST['password'], 3, 50);
-    if (!empty($result)) {$error['password'] = $result;}
+    if (!empty($result)) {$errors['password'] = $result;}
     $testAuthentification = new AuthentificationModel();
     $test = $testAuthentification->isValidLoginInfo($_POST['pseudo_or_email'],$_POST['password']);
-    if ($test == 0) { $error['password'] = 'mauvais password ou mauvais login';}
-    if (count($error) == 0) {
+    if ($test == 0) { $errors['password'] = 'mauvais password ou mauvais login';}
+    if (count($errors) == 0) {
       $testModel1 = new UserModel();
       $test1 = $testModel1-> getUserByUsernameOrEmail($_POST['pseudo_or_email']);
       $testAuthentification1 = new AuthentificationModel();
       $testAuthentification1->logUserIn($test1);
       $this->redirect('http://localhost/FinalProject/public/');
     } else {
-        $this->show('user/register', ['pseudo' => $_POST['pseudo'], 'mail' => $_POST['mail'], 'errorPseudo' => $error['pseudo'], 'errorMail' => $error['mail']]);
+        if (!empty($errors['pseudo_or_email']) && !empty($errors['password'])) {$this->show('user/login',['errorLogin' =>$errors['pseudo_or_email'],'errorPassword' => $errors['password']]);}
+        elseif (!empty($errors['pseudo_or_email'])){$this->show('user/login',['errorLogin' => $errors['pseudo_or_email']]);}
+        elseif (!empty($errors['password'])){$this->show('user/login',['errorPassword' => $errors['password']]);}
     }
   }
 
@@ -90,7 +92,7 @@ class UserController extends Controller
         $articles= $testModel->findAll();
         $this->redirect('http://localhost/FinalProject/public/');
     } else {
-        $this->show('default/register', ['pseudo' => $_POST['pseudo'], 'mail' => $_POST['mail'], 'errorPseudo' => $error['pseudo'], 'errorMail' => $error['mail']]);
+        $this->show('user/register', ['error' => $error]);
     }
   }
 

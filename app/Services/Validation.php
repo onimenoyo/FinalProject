@@ -9,9 +9,9 @@
           // on verifie si le $text correcpond a nos attentes
           if (!empty($text)) {
               if (strlen($text) < $min) {
-                  $errors = 'votre champ doit fair au moin '.$min.' caractère';
+                  $errors = 'votre champ doit faire au moins '.$min.' caractères';
               } elseif (strlen($text) > $max) {
-                  $errors = 'votre champ doit fair au maximum '.$max.' caractère';
+                  $errors = 'votre champ doit faire au maximum '.$max.' caractères';
               }
           } else {
               $errors = 'veuillez remplir ce champ';
