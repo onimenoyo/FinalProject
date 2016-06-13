@@ -102,26 +102,62 @@ class UserController extends Controller
     $authentificationModel->logUserOut();
     $this->redirect('http://localhost/FinalProject/public/');
   }
-  public function lostpassword()
+  public function forgotpassword()
   {
-    $this->show('default/lostpassword');
+    $this->show('user/forgotpassword');
   }
-  public function lostpassworduser()
+  public function forgotpassworduser()
   {
     $valid = new Validation();
     $error = array();
     $result = $valid->validateText($_POST['email'], 3, 50);
     if (!empty($result)) {$error['email'] = $result;}
-    $testModel1 = new UserModel();
-    $test1 = $testModel1->emailExists($_POST['email']);
+    $testModel = new UserModel();
+    $test = $testModel->emailExists($_POST['email']);
     if (count($error) == 0) {
-      if ($test1) {
+      if ($test) {
         $testModel1 = new UserModel();
         $test1 = $testModel1-> getUserByUsernameOrEmail($_POST['email']);
         $token = $test1['token'];
-        $this->url('lostpassword', ['token'=> $token]);
+        $this->show('user/sent_mail', ['token'=> $token, 'email'=>$_POST['email']]);
       }
     }
   }
 
+  public function forgotpasswordmodif($token)
+  {
+    $this->show('user/forgotpasswordmodif', ['token'=> $token]);
+  }
+
+  public function forgotpasswordmodifpost($token)
+  {
+    $valid = new Validation();
+    $error = array();
+    $result = $valid->validateText($_POST['new_password1'], 3, 50);
+    if (!empty($result)) {$error['new_password1'] = $result;}
+    $result = $valid->validateText($_POST['new_password2'], 3, 50);
+    if (!empty($result)) {$error['new_password2'] = $result;}
+    if ($_POST['new_password1'] != $_POST['new_password2']) {$error['new_password2'] = "Vos mots de passes sont différents !";}
+    if (count($error) == 0) {
+        $password1 = $_POST['new_password1'];
+        $auth = new AuthentificationModel();
+        $password = $auth->hashPassword($password1);
+        $new_token1 = new StringUtils();
+        $new_token = $new_token1->randomString();
+        $testModel2 = new UserModel();
+        $get_id = $testModel2->getUserByToken($token);
+        $id = $get_id['id'];
+        $testModel = new UserModel();
+        $testModel->update(array(
+                'password' => $password,
+                'token' => $new_token,
+                'modified_at' => date('Y-m-d H:i:s'),
+            ), $id
+        );
+        $articles= $testModel->findAll();
+        $this->redirect('http://localhost/FinalProject/public/');
+    } else {
+        $this->show('user/forgotpasswordmodif', ['error' => $error]);
+    }
+  }
 }

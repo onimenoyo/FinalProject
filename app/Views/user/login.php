@@ -12,6 +12,7 @@
     <input type="submit">
 
 </form>
-
+<br>
+  <a href="<?= $this->url("forgotpassword")?>">Mot de passe oublié ...</a>
 
 <?php $this->stop('main_content') ?>
