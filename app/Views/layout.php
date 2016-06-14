@@ -20,6 +20,7 @@
           <li><a href="#">Nous contacter</a></li>
 					<?php if (!empty($w_user)) { ?>
 						<li><a href="<?= $this->url("logout")?>">Se déconnecter</a></li>
+						<li><a href="<?= $this->url("profil")?>">Profil</a></li>
 						<?php } else {?>
 					<li><a href="<?= $this->url("register")?>">S'inscrire</a></li>
 					<li><a href="<?= $this->url("login")?>">Se connecter</a></li>

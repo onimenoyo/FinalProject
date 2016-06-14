@@ -5,6 +5,7 @@ use \W\Controller\Controller;
 use \Services\Validation;
 use \Model\AuthentificationModel;
 use \Model\UserModel;
+use \Model\AvatarModel;
 use \Model\StringUtils;
 
 class UserController extends Controller
@@ -80,7 +81,7 @@ class UserController extends Controller
                 'lastname' => $_POST['lastname'],
                 'email' => $_POST['mail'],
                 'password' => $password,
-                'avatar' => 'http://compagnie.vmdancestudio.fr/wp-content/uploads/sites/5/2014/06/profil-photo-manquante.jpg',
+                'avatar' => 1,
                 'role'=> 'user',
                 'token' => $token,
                 'last_connexion' => date('Y-m-d H:i:s'),
@@ -158,6 +159,93 @@ class UserController extends Controller
         $this->redirect('http://localhost/FinalProject/public/');
     } else {
         $this->show('user/forgotpasswordmodif', ['error' => $error]);
+    }
+  }
+
+  public function profil() {
+    $loggedUser = $this->getUser();
+    $testModel = new AvatarModel();
+    $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+    $this->show('user/profil', ['img_path'=> $test1['img_path']]);
+  }
+
+  public function profilPost() {
+    //Tableau d'erreurs vide
+    $errors = array();
+    //Par défaut $success est vide
+    $success = false;
+    //On définit une variable qui contient les extensions de fichier désirées
+    $extensionsAutorisees = array("jpeg", "jpg", "gif", "png");
+
+
+
+    if(!empty($_POST['submitfile'])) {
+
+      $file = $_FILES['image'];
+      $type_file = $file['type'];
+      $size_file = $file['size'];
+
+      if($file['error'] > 0){
+        if($file['error'] == 4){
+          $errors['file'] = 'Vous devez télécharger une image.';
+        }elseif($file['error'] == 1 || $file['error'] == 2){
+          $errors['size'] = 'La taille de votre image est trop grande.';
+        }elseif($file['error'] == 3){
+          $errors['incomplet'] = 'Votre image n a pas pu etre télécharger completement, veuillez recommencer.';
+        }elseif($file['error'] == 6 || $file['error'] == 7){
+          $errors['admin'] = 'Votre image n a pas pu etre enregistrer, veuillez contacter l admin du site.';
+        }
+      }else{
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = finfo_file($finfo, $file['tmp_name']);
+        finfo_close($finfo);
+        $goodExtension = array('image/jpg', 'image/jpeg','image/png', 'image/gif');
+        if($size_file > 2000000 || filesize($file['tmp_name']) > 2000000){
+            $errors['size'] = 'La taille de votre image est trop grande.';
+        }elseif(!in_array($mime, $goodExtension)){
+          $errors['image'] = 'Veuillez utiliser une extension de type : jpg, jpeg, gif, png';
+        }
+      }
+      if(count($errors) == 0){
+        $i_point = strrpos($file['name'], '.');
+        $fileExtension = substr($file['name'], $i_point, strlen($file['name']));
+        $newName = substr($file['name'], 0, 4) . uniqid(). $fileExtension;
+        $destination = 'C:/xampp/htdocs/FinalProject/public/assets/img/'.$newName;
+        $path = 'img/'. $newName;
+        if(move_uploaded_file ($file['tmp_name'], $destination)){
+          $success = true;
+          $testModel1 = new AvatarModel();
+          $loggedUser = $this->getUser();
+          $testModel1->insert(array(
+                        'user_id' => $loggedUser['id'],
+                        'name' => $newName,
+                        'img_path' => $path,
+                        'size' => $file['size'],
+                        'type' => $fileExtension,
+                      )
+                    );
+
+          $testModel2 = new UserModel();
+          $testModel3 = new AvatarModel();
+          $test3 = $testModel3->getIdByUserId($newName);
+          $testModel2->update(array(
+                        'avatar' => $test3['id']
+            ), $loggedUser['id']
+          );
+          if (!empty($file['name'])) {
+            $testModel = new AvatarModel();
+            $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+            $authentificationModel = new AuthentificationModel();
+            $authentificationModel->refreshUser();
+            $this->show('user/profil', ['img_path'=> $test1['img_path']]);
+          }
+        }
+      }else {
+        $loggedUser = $this->getUser();
+        $testModel = new AvatarModel();
+        $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+        $this->show('user/profil', ['img_path'=> $test1['img_path'], 'errors'=> $errors]);
+      }
     }
   }
 }

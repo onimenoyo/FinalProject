@@ -3,6 +3,8 @@
 	$w_routes = array(
 		['GET', '/', 'Default#home', 'default_home'],
 
+
+
 		// LOGIN
 		['GET', '/register', 'User#register', 'register'],
 		['POST', '/register', 'User#registerUser', 'registerUser'],
@@ -13,4 +15,6 @@
 		['POST', '/forgotpassword', 'User#forgotpassworduser', 'forgotpassworduser'],
 		['GET', '/forgotpassword/[:token]', 'User#forgotpasswordmodif', 'forgotpasswordmodif'],
 		['POST', '/forgotpassword/[:token]', 'User#forgotpasswordmodifpost', 'forgotpasswordmodifpost'],
+		['GET', '/profil', 'User#profil', 'profil'],
+		['POST', '/profil', 'User#profilPost', 'profilPost'],
 	);
