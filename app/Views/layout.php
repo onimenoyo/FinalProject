@@ -15,7 +15,7 @@
 	<div class="container">
 		<header>
 			<div class="navbar">
-        <a href="<?= $this->url("default_home")?>"><img src="<?= $this->assetUrl('img/herozerologo.png')?>" alt="Logo" class="logoSite"/></a>
+        <a href="<?= $this->url("default_home")?>"><img src="<?= $this->assetUrl('img/Logo Final Project.png')?>" alt="Logo" class="logoSite"/></a>
         <ul class="menuSite">
           <li><a href="#">Nous contacter</a></li>
 					<?php if (!empty($w_user)) { ?>
@@ -43,7 +43,7 @@
       </div>
 		</header>
 
-		<section>
+		<section class="backdrop">
 			<?= $this->section('main_content') ?>
 		</section>
 

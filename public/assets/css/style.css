@@ -63,7 +63,7 @@ a{
 /******************/
 /*   RESPONSIVE   */
 /******************/
-@media (max-width: 480px) {
+@media (max-width: 624px) {
   .logMenu{
     display: none;
   }
@@ -135,7 +135,7 @@ a{
   }
 }
 
-@media (min-width: 480px) {
+@media (min-width: 624px) {
   .menuSite{
     position: absolute;
     top: 0;
