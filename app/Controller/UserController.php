@@ -184,7 +184,6 @@ class UserController extends Controller
       $file = $_FILES['image'];
       $type_file = $file['type'];
       $size_file = $file['size'];
-
       if($file['error'] > 0){
         if($file['error'] == 4){
           $errors['file'] = 'Vous devez télécharger une image.';
@@ -210,7 +209,8 @@ class UserController extends Controller
         $i_point = strrpos($file['name'], '.');
         $fileExtension = substr($file['name'], $i_point, strlen($file['name']));
         $newName = substr($file['name'], 0, 4) . uniqid(). $fileExtension;
-        $destination = 'C:/xampp/htdocs/FinalProject/public/assets/img/'.$newName;
+        echo $newName;
+        $destination = 'assets/img/'.$newName;
         $path = 'img/'. $newName;
         if(move_uploaded_file ($file['tmp_name'], $destination)){
           $success = true;
