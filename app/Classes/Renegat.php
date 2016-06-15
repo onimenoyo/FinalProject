@@ -1,7 +1,10 @@
 <?php
+namespace classes;
 
-class Alien extends Characters{
-  protected $CA = 17;
+//Monstre Rare (Dangereux)
+class Renegat extends Characters{
+  protected $CA = 20;
+  protected $life = 91;
   //Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée et définit ses PV en fonction de son lvl
   public function __construct($name){
     $this->name = $name;
@@ -13,16 +16,15 @@ class Alien extends Characters{
     return $lvl;
   }
   function set_life(){
-    $this->life = 27 * $this->lvl;
+    $this->life = $this->life * $this->lvl;
   }
 
-  //Dés : 1D8 + 2
+  //Dés : 2D6 + 9
   function attaque($cible){
-    $cible->life = $cible->life - $this->diceRoll(1,8,2);
+    $cible->life = $cible->life - $this->diceRoll(2,6,9);
     $pvRestant = 'Il reste ' . $cible->life . 'PV à ' . $cible->get_name();
     return $pvRestant;
   }
 }
-
 
  ?>

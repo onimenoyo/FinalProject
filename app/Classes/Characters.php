@@ -1,6 +1,7 @@
 <?php
+namespace classes;
 
-class Characters extends Utilities\Dices{
+class Characters{
 
   // use Dices;
   // public $dice = new Dices();
@@ -8,7 +9,7 @@ class Characters extends Utilities\Dices{
   protected $lifeMax = 100;
   protected $life = 100;
   protected $strength = 20;
-  protected $dextirity = 20;
+  protected $dexterity = 20;
   protected $spiritMax = 100;
   protected $spirit = 100;
   protected $name;
@@ -32,7 +33,7 @@ public function diceRoll($nb = 1, $dice, $bonus = 0){
 
 // Retourne l'initiative du personnage
 public function initiative(){
-  $initiative = $this->diceRoll(1,20,0) + $this->get_bonus('dextirity');
+  $initiative = $this->diceRoll(1,20,0) + $this->get_bonus('dexterity');
   return $initiative;
 }
 
@@ -106,7 +107,7 @@ public function get_CA(){
   return $this->CA;
 }
 
-// Retourne les bonus de 'strength', 'dextirity' et 'spirit'
+// Retourne les bonus de 'strength', 'dexterity' et 'spirit'
 public function get_bonus($stat){
   $bonus = floor(($this->$stat-10)/2); //arrondi a l'entier inférieur
   return $bonus;
@@ -120,7 +121,7 @@ public function get_bonus_atkCaC(){
 
 // Retourne le bonus d'attaque à distance
 public function get_bonus_atkDistance(){
-  $bonusAtkDistance = $this->lvl + $this->get_bonus('dextirity');
+  $bonusAtkDistance = $this->lvl + $this->get_bonus('dexterity');
   return $bonusAtkDistance;
 }
 

@@ -13,7 +13,7 @@ $drone->set_lvl(3);
 $alien = new Alien('alien');
 $player = new Player('Johann');
 $player->set_strength(14);
-$player->set_dextirity(16);
+$player->set_dexterity(16);
 $player->set_spirit(12);
 echo 'initiative de '.$player->get_name() . ' : ' . $player->initiative() .'<br>';
 echo 'Est-ce que '.$player->get_name() . '  touche ' . $alien->get_name() . ' : ' . $player->touch_cac($alien) .'<br>';

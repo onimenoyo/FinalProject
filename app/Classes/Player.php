@@ -1,4 +1,5 @@
 <?php
+namespace classes;
 
 class Player extends Characters{
 
@@ -17,8 +18,8 @@ class Player extends Characters{
   }
 
   // Pour définir la Dextirité du joueur
-  public function set_dextirity($dextirity){
-    $this->dextirity = $dextirity;
+  public function set_dexterity($dexterity){
+    $this->dexterity = $dexterity;
   }
 
   // Pour définir l'esprit du joueur
@@ -28,7 +29,7 @@ class Player extends Characters{
 
   // Retourne la Classe D'Armure du joueur
   public function get_CA_player($bonusCA = 0){
-    $CA = 10 + $this->get_bonus('dextirity') + $bonusCA;
+    $CA = 10 + $this->get_bonus('dexterity') + $bonusCA;
     return $CA;
   }
 

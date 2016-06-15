@@ -1,32 +1,31 @@
 <?php
+namespace classes;
 
-
-class Drone extends Characters{
-  protected $CA = 14;
-
+class Ravageur extends Characters{
+  protected $CA = 18;
+  protected $life = 252;
   //Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée et définit ses PV en fonction de son lvl
   public function __construct($name){
     $this->name = $name;
     $this->set_lvl();
   }
-  //Fonction pour définir son niveau qui définit ses pv
-  public function set_lvl($lvl = 1){
+  function set_lvl($lvl = 1){
     $this->lvl = $lvl;
     $this->set_life();
     return $lvl;
   }
-  public function set_life(){
-    $this->life = 9 * $this->lvl;
+  function set_life(){
+    $this->life = $this->life * $this->lvl;
   }
 
-  //Dés : 1D4
-  public function attaque($cible){
-    $cible->life = $cible->life - $this->diceRoll(1,4);
+  //Dés : 2D8 + 15
+  function attaque($cible){
+    $cible->life = $cible->life - $this->diceRoll(2,8,15);
     $pvRestant = 'Il reste ' . $cible->life . 'PV à ' . $cible->get_name();
     return $pvRestant;
   }
-
-
 }
+
+
 
  ?>

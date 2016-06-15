@@ -1,6 +1,10 @@
 <?php
-class Ravageur extends Characters{
-  protected $CA = 18;
+namespace classes;
+
+class Alien extends Characters{
+  protected $CA = 17;
+  protected $life = 20;
+
   //Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée et définit ses PV en fonction de son lvl
   public function __construct($name){
     $this->name = $name;
@@ -12,17 +16,16 @@ class Ravageur extends Characters{
     return $lvl;
   }
   function set_life(){
-    $this->life = 252 * $this->lvl;
+    $this->life = $this->life * $this->lvl;
   }
 
-  //Dés : 2D8 + 15
+  //Dés : 1D8 + 2
   function attaque($cible){
-    $cible->life = $cible->life - $this->diceRoll(2,8,15);
+    $cible->life = $cible->life - $this->diceRoll(1,8,2);
     $pvRestant = 'Il reste ' . $cible->life . 'PV à ' . $cible->get_name();
     return $pvRestant;
   }
 }
-
 
 
  ?>
