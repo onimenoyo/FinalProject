@@ -15,9 +15,9 @@ class DefaultController extends Controller
 	public function home()
 	{
 
-		$flashBag = new FlashBags();
+		//$flashBag = new FlashBags();
 
-		$flashBag->setFlash('info', "Test de message");
+		//$flashBag->setFlash('info', "Test de message");
 
 		$this->show('default/home');
 	}
