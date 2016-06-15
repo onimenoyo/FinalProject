@@ -19,6 +19,10 @@ class Alien extends Characters{
     $this->life = $this->life * $this->lvl;
   }
 
+  function set_newLife($life){
+    $this->life = $life;
+  }
+
   //Dés : 1D8 + 2
   function attaque($cible){
     $cible->life = $cible->life - $this->diceRoll(1,8,2);

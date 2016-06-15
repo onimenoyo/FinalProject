@@ -16,10 +16,64 @@ class Characters{
   protected $lvl = 1;
   protected $CA = 20;
 
-  //Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée.
-  public function __construct($name){
-    $this->name = $name;
+//Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée.
+public function __construct($name){
+  $this->name = $name;
+}
+
+//Fonction pour la gestion des tours
+public function tour(){
+  // Boucle tant que le joueur et le monstre sont vivants
+  while (!$player->is_dead() && !$mob->is_dead()){
+    $PlayerAction = 0;
+    $MobAction = 0;
+    // Si le joueur ou le monstre n'a pas joué on rentre dans la condition
+    if ($PlayerAction == 0 || $MobAction == 0){
+      // Si l'initiative du joueur est supérieur à celle du monstre on rentre dans la condition
+      if($player->initiative() > $mob->initiative){
+        // Si le joueur n'a pas joué :
+        if ($PlayerAction == 0){
+          echo '<a href="#?PlayerAction=1">Attaque au Corps à Corps</a>';
+          echo '<a href="#?PlayerAction=1">Attaque à distance</a>';
+          echo '<a href="#?PlayerAction=1">Attaque Magique</a>';
+          echo '<a href="#?PlayerAction=1">Soin</a>';
+          if($mob->is_dead()){
+            echo 'Le monstre est mort.';
+            die();
+          }
+        // Si le monstre n'a pas joué
+        }elseif($MobAction == 0){
+          $mob->attaque($player, $deg);
+          $MobAction = 1;
+          if($player->is_dead()){
+            echo 'Vous êtes mort.';
+            die();
+          }
+        }
+      }else{
+        // Si le monstre n'a pas joué
+        if($MobAction == 0){
+          $mob->attaque($player, $deg);
+          $MobAction = 1;
+          if($player->is_dead()){
+            echo 'Vous êtes mort.';
+            die();
+          }
+        // Si le joueur n'a pas joué :
+        }elseif ($PlayerAction == 0){
+          echo '<a href="#?PlayerAction=1">Attaque au Corps à Corps</a>';
+          echo '<a href="#?PlayerAction=1">Attaque à distance</a>';
+          echo '<a href="#?PlayerAction=1">Attaque Magique</a>';
+          echo '<a href="#?PlayerAction=1">Soin</a>';
+          if($mob->is_dead()){
+            echo 'Le monstre est mort.';
+            die();
+          }
+        }
+      }
+    }
   }
+}
 
 //Fonction Jet de Dés $nb = nombre de dés  et $dice le type de dés (d4, d6, d8, etc...)
 public function diceRoll($nb = 1, $dice, $bonus = 0){
@@ -38,14 +92,14 @@ public function initiative(){
 }
 
 //Retourne Si le personnage touche la cible au CàC
-public function touch_cac($cible){
+public function touch_cac($cible, $deg){
   $d20 = $this->diceRoll(1,20,0);
   if ($d20 == 20){
-    return True;
+    return $this->attaque($cible, $deg);
   }else{
     $touch = $d20 + $this->get_bonus_atkCaC();
     if($touch > $cible->get_CA()){
-      return True;
+      return $this->attaque($cible, $deg);
     }else{
       return false;
     }
@@ -53,9 +107,33 @@ public function touch_cac($cible){
 }
 
 //Retourne Si le personnage touche la cible à distance
-public function touch_distance($cible){
-  $touch = $this->diceRoll(1,20,0) + $this->get_bonus_atkDistance();
-  return $touch;
+public function touch_distance($cible, $deg){
+  $d20 = $this->diceRoll(1,20,0);
+  if ($d20 == 20){
+    $this->attaque($cible, $deg);
+  }else{
+    $touch = $d20 + $this->get_bonus_atkDistance();
+    if($touch > $cible->get_CA()){
+      $this->attaque($cible, $deg);
+    }else{
+      return false;
+    }
+  }
+}
+
+//Retourne Si le personnage touche la cible avec sa magie
+public function touch_magique($cible, $deg){
+  $d20 = $this->diceRoll(1,20,0);
+  if ($d20 == 20){
+    $this->attaque($cible, $deg);
+  }else{
+    $touch = $d20 + $this->get_bonus_atkMagique();
+    if($touch > $cible->get_CA()){
+      $this->attaque($cible, $deg);
+    }else{
+      return false;
+    }
+  }
 }
 
 //Retourne le nom
@@ -64,7 +142,7 @@ public function get_name(){
 }
 
 // Retourne Vrai ou Faux en fonction de la life du personnage
-public function dead(){
+public function is_dead(){
 return $this->life <= 0; // si la life est inférieur ou égale à 0 il retournera TRUE
 }
 

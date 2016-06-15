@@ -40,7 +40,9 @@ class Player extends Characters{
   }
 
   public function attaque($cible, $degats){
-    $cible->life = $cible->life - $degats;
+    $cible->set_newLife($cible->get_life() - $degats);
+    $pvRestant = 'Il reste ' . $cible->get_life() . 'PV à ' . $cible->get_name();
+    return $pvRestant;
   }
 
 }
