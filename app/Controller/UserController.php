@@ -31,7 +31,7 @@ class UserController extends Controller
       $test1 = $testModel1-> getUserByUsernameOrEmail($_POST['pseudo_or_email']);
       $testAuthentification1 = new AuthentificationModel();
       $testAuthentification1->logUserIn($test1);
-      $this->redirect('http://localhost/FinalProject/public/');
+      $this->redirectToRoute('default_home');
     } else {
         if (!empty($errors['pseudo_or_email']) && !empty($errors['password'])) {$this->show('user/login',['errorLogin' =>$errors['pseudo_or_email'],'errorPassword' => $errors['password']]);}
         elseif (!empty($errors['pseudo_or_email'])){$this->show('user/login',['errorLogin' => $errors['pseudo_or_email']]);}
@@ -90,8 +90,7 @@ class UserController extends Controller
                 'modified_at' => date('Y-m-d H:i:s'),
             )
         );
-        $articles= $testModel->findAll();
-        $this->redirect('http://localhost/FinalProject/public/');
+      $this->redirectToRoute('default_home');
     } else {
         $this->show('user/register', ['error' => $error]);
     }
@@ -101,7 +100,7 @@ class UserController extends Controller
   {
     $authentificationModel = new AuthentificationModel();
     $authentificationModel->logUserOut();
-    $this->redirect('http://localhost/FinalProject/public/');
+    $this->redirectToRoute('default_home');
   }
   public function forgotpassword()
   {
@@ -155,8 +154,7 @@ class UserController extends Controller
                 'modified_at' => date('Y-m-d H:i:s'),
             ), $id
         );
-        $articles= $testModel->findAll();
-        $this->redirect('http://localhost/FinalProject/public/');
+      $this->redirectToRoute('default_home');
     } else {
         $this->show('user/forgotpasswordmodif', ['error' => $error]);
     }
@@ -209,7 +207,6 @@ class UserController extends Controller
         $i_point = strrpos($file['name'], '.');
         $fileExtension = substr($file['name'], $i_point, strlen($file['name']));
         $newName = substr($file['name'], 0, 4) . uniqid(). $fileExtension;
-        echo $newName;
         $destination = 'assets/img/'.$newName;
         $path = 'img/'. $newName;
         if(move_uploaded_file ($file['tmp_name'], $destination)){
@@ -246,6 +243,115 @@ class UserController extends Controller
         $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
         $this->show('user/profil', ['img_path'=> $test1['img_path'], 'errors'=> $errors]);
       }
+    }
+    if(!empty($_POST['submitfile1'])) {
+      $loggedUser = $this->getUser();
+      $testModel = new UserModel();
+      $testModel->update(array(
+          'avatar' => 1
+        ), $loggedUser['id']
+      );
+      $testModel1 = new AvatarModel();
+      $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar']);
+      $authentificationModel = new AuthentificationModel();
+      $authentificationModel->refreshUser();
+      $this->show('user/profil', ['img_path'=> $test1['img_path']]);
+    }
+
+    if(!empty($_POST['submitfile2'])) {
+      $loggedUser = $this->getUser();
+      $valid = new Validation();
+      $error = array();
+      $result = $valid->validateText($_POST['pseudo'], 3, 50);
+      if (!empty($result)) {$error['pseudo'] = $result;}
+      $result = $valid->validateText($_POST['firstname'], 3, 50);
+      if (!empty($result)) {$error['firstname'] = $result;}
+      $result = $valid->validateText($_POST['lastname'], 3, 50);
+      if (!empty($result)) {$error['lastname'] = $result;}
+      $result = $valid->validateText($_POST['mail'], 3, 50);
+      if (!empty($result)) {$error['mail'] = $result;}
+      $testModel2 = new UserModel();
+      $test2 = $testModel2->usernameExists($_POST['pseudo']);
+      if ($_POST['mail'] == $loggedUser['email']) {}
+      else {
+          $testModel1 = new UserModel();
+          $test1 = $testModel1->emailExists($_POST['mail']);
+          if ($test1) {$error['mail'] = "l'email existe déjà";}
+        }
+      if ($_POST['pseudo'] == $loggedUser['pseudo']) {}
+        else {
+          $testModel2 = new UserModel();
+          $test2 = $testModel2->usernameExists($_POST['pseudo']);
+          if ($test2) {$error['pseudo'] = "le pseudo existe déjà";}
+        }
+      if (count($error) == 0) {
+          $auth = new AuthentificationModel();
+          $token1 = new StringUtils();
+          $token = $token1->randomString();
+          $testModel = new UserModel();
+          $testModel->update(array(
+                  'pseudo' => $_POST['pseudo'],
+                  'firstname' => $_POST['firstname'],
+                  'lastname' => $_POST['lastname'],
+                  'email' => $_POST['mail'],
+                  'last_connexion' => date('Y-m-d H:i:s'),
+                  'modified_at' => date('Y-m-d H:i:s'),
+              ), $loggedUser['id']
+          );
+          $testModel1 = new AvatarModel();
+          $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar']);
+          $authentificationModel = new AuthentificationModel();
+          $authentificationModel->refreshUser();
+          $this->show('user/profil', ['img_path'=> $test1['img_path'], 'error'=> $error]);
+      } else {
+        $loggedUser = $this->getUser();
+        $testModel = new AvatarModel();
+        $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+        $authentificationModel = new AuthentificationModel();
+        $authentificationModel->refreshUser();
+        $this->show('user/profil', ['img_path'=> $test1['img_path'], 'error'=> $error]);
+      }
+    }
+    if(!empty($_POST['submitfile3'])) {
+      $loggedUser = $this->getUser();
+      $valid = new Validation();
+      $error = array();
+      $result = $valid->validateText($_POST['oldPassword'], 3, 50);
+      if (!empty($result)) {$error['oldPassword'] = $result;}
+      $result = $valid->validateText($_POST['newPassword'], 3, 50);
+      if (!empty($result)) {$error['newPassword'] = $result;}
+      $result = $valid->validateText($_POST['newPassword2'], 3, 50);
+      if (!empty($result)) {$error['newPassword2'] = $result;}
+      $testModel = new AuthentificationModel();
+      $test = $testModel -> isValidPassword($loggedUser['pseudo'], $_POST['oldPassword']);
+      if ($_POST['newPassword'] != $_POST['newPassword2']) {$error['newPassword2'] = "Vos nouveaux mots de passes sont différents !";}
+      if ($test) {$error['oldPassword'] = 'Votre mot de passe ne correspond pas';}
+      if (count($error) == 0) {
+        $password1 = $_POST['newPassword'];
+        $auth = new AuthentificationModel();
+        $password = $auth->hashPassword($password1);
+        $new_token1 = new StringUtils();
+        $new_token = $new_token1->randomString();
+        $testModel = new UserModel();
+        $testModel->update(array(
+                'password' => $password,
+                'token' => $new_token,
+                'modified_at' => date('Y-m-d H:i:s'),
+            ), $loggedUser['id']
+        );
+        $testModel1 = new AvatarModel();
+        $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar']);
+        $authentificationModel = new AuthentificationModel();
+        $authentificationModel->refreshUser();
+        $this->show('user/profil', ['img_path'=> $test1['img_path'], 'error'=> $error]);
+      }
+      else {
+       $testModel = new AvatarModel();
+       $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+       $authentificationModel = new AuthentificationModel();
+       $authentificationModel->refreshUser();
+       $this->show('user/profil', ['img_path'=> $test1['img_path'], 'error'=> $error]);
+     }
     }
   }
 }
