@@ -73,7 +73,6 @@ a{
   .menuBurger{
     display: inline;
     position: absolute;
-    top: -1em;
     right: 2em;
     table-layout: fixed;
   }
@@ -230,12 +229,6 @@ input#register{
   margin-top: 1em;
   margin-left: 6.7em;
 }
-
-
-
-
-
-
 
 .close:hover,
 .close:focus {
