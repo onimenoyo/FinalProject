@@ -17,8 +17,7 @@
     foreach ($errors as $error) {
     ?> <h3><?= $error ?></h3>
     <?php }
-    ?>
-  <?php }
+     }
    ?>
 
    <h2>Modifier ces infos persos :</h2>
@@ -37,10 +36,9 @@
        <input required type="email" name="mail" value="<?=$w_user['email'] ?>">
        <span class="error"><?php if (!empty($error['mail'])){ echo  $error['mail']; } ?></span><br>
        <input type="submit" name="submitfile2">
-
+  </form>
        <h2>Modifier le mot de passe</h2>
 
-   </form>
 
    <form action="" method="post">
        <label for="oldPassword">Ancien mot de passe</label>

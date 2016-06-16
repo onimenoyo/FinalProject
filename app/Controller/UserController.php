@@ -1,7 +1,7 @@
 <?php
 namespace Controller;
 
-use \W\Controller\Controller;
+use \Controller\Controller;
 use \Services\Validation;
 use \Model\AuthentificationModel;
 use \Model\UserModel;

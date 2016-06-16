@@ -18,7 +18,10 @@
         <a href="<?= $this->url("default_home")?>"><img src="<?= $this->assetUrl('img/Logo Final Project.png')?>" alt="Logo" class="logoSite"/></a>
         <ul class="menuSite">
           <li><a href="#">Nous contacter</a></li>
-					<?php if (!empty($w_user)) { ?>
+					<?php if (!empty($w_user)) {
+						if ($w_user['role'] == 'admin') {?>
+							<li><a href="<?= $this->url("dashboard")?>">Administration</a></li>
+							<?php } ?>
 						<li><a href="<?= $this->url("logout")?>">Se déconnecter</a></li>
 						<li><a href="<?= $this->url("profil")?>">Profil</a></li>
 						<?php } else {?>
@@ -51,5 +54,6 @@
 		<footer>
 		</footer>
 	</div>
+	<?= $this->section('ajax') ?>
 </body>
 </html>
