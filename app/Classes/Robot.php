@@ -2,9 +2,10 @@
 namespace classes;
 
 class Robot extends Characters{
-
   protected $CA = 16;
   protected $life = 84;
+  Private $deg = 6; //Type de dés
+
   //Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée et définit ses PV en fonction de son lvl
   public function __construct($name){
     $this->name = $name;
@@ -21,8 +22,8 @@ class Robot extends Characters{
   }
 
   //Dés : 1D6 + 6
-  function attaque($cible){
-    $cible->life = $cible->life - $this->diceRoll(1,6,6);
+  function attaque($cible, $deg){
+    $cible->life = $cible->life - $this->diceRoll(1,$deg,6);
     $pvRestant = 'Il reste ' . $cible->life . 'PV à ' . $cible->get_name();
     return $pvRestant;
   }

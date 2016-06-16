@@ -16,14 +16,30 @@ $player->set_dexterity(16);
 $player->set_spirit(12);
 echo 'initiative de '.$player->get_name() . ' : ' . $player->initiative() .'<br>';
 $degatsPlayer = $player->get_degats(8,2);
-echo '<br>PV de Alien : <br>';
+echo '<br>PV de Alien : ';
 echo $alien->get_life();
-echo 'Dégats de l\'arme de '.$player->get_name().' : ' . $degatsPlayer .'<br>';
-echo '<br>Est-ce que '.$player->get_name() . '  touche ' . $alien->get_name() . ' : ' . $player->touch_cac($alien, $degatsPlayer) .'<br>';
+echo '<br>Dégats de l\'arme de '.$player->get_name().' : ' . $degatsPlayer .'<br>';
+// echo '<br>Est-ce que '.$player->get_name() . '  touche ' . $alien->get_name() . ' : ' . $player->touch_cac($alien, $degatsPlayer) .'<br>';
+// echo '<br>Est-ce que '.$player->get_name() . '  touche ' . $alien->get_name() . ' : ' . $player->touch_cac($alien, $degatsPlayer) .'<br>';
+// echo '<br>Est-ce que '.$player->get_name() . '  touche ' . $alien->get_name() . ' : ' . $player->touch_cac($alien, $degatsPlayer) .'<br>';
+// echo '<br>Est-ce que '.$player->get_name() . '  touche ' . $alien->get_name() . ' : ' . $player->touch_cac($alien, $degatsPlayer) .'<br>';
+// echo '<br>Est-ce que '.$player->get_name() . '  touche ' . $alien->get_name() . ' : ' . $player->touch_cac($alien, $degatsPlayer) .'<br>';
+while(!$alien->is_dead() && !$player->is_dead()){
+  echo '<br>'.$player->get_name() . '  attaque ' . $alien->get_name() . ' : ' . $player->touch_cac($alien, $degatsPlayer) .'<br>';
+  if($alien->is_dead()){
+    echo $alien->get_name() . ' est mort !<br>';
+    die();
+  }
+  echo '<br>'.$alien->get_name() . '  attaque ' . $player->get_name() . ' : ' . $alien->touch_cac($player, $alien->get_deg()) .'<br>';
+  if($player->is_dead()){
+    echo $player->get_name() . ' est mort ! <br> Vous Avez Perdu ! <br>';
+    die();
+  }
+}
 echo 'Vie de '.$player->get_name() . ' : ' . $player->get_life() .'<br>';
 echo 'CA de ' . $player->get_name() . ' : ' . $player->get_CA_player(2);
 echo '<br>';
-echo '<br>PV de Alien : <br>';
+echo '<br>PV de Alien : ';
 echo $alien->get_life();
 echo '<br>';
 echo $player->attaque($alien, $degatsPlayer);
@@ -41,7 +57,7 @@ echo $drone->get_life();
 echo '<br>PV de Alien : <br>';
 echo $alien->get_life();
 echo '<br>alien attaque persoTest :<br>';
-echo $alien->attaque($persoTest) . '<br>';
+echo $alien->attaque($persoTest, $alien->get_deg()) . '<br>';
 echo 'CA de alien : ' . $alien->get_ca();
 
 

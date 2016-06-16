@@ -4,6 +4,7 @@ namespace classes;
 class Traqueur extends Characters{
   protected $CA = 13;
   protected $life = 20;
+  private $deg = 6; // Type de dés
 
   //Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée et définit ses PV en fonction de son lvl
   public function __construct($name){
@@ -20,8 +21,8 @@ class Traqueur extends Characters{
   }
 
   //Dés : 1D6 + 1
-  function attaque($cible){
-    $cible->life = $cible->life - $this->diceRoll(1,6,1);
+  function attaque($cible, $deg){
+    $cible->life = $cible->life - $this->diceRoll(1,$deg,1);
     $pvRestant = 'Il reste ' . $cible->life . 'PV à ' . $cible->get_name();
     return $pvRestant;
   }

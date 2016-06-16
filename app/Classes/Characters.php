@@ -101,7 +101,7 @@ public function touch_cac($cible, $deg){
     if($touch > $cible->get_CA()){
       return $this->attaque($cible, $deg);
     }else{
-      return false;
+      return $this->get_name() . ' rate son attaque.';
     }
   }
 }
@@ -116,7 +116,7 @@ public function touch_distance($cible, $deg){
     if($touch > $cible->get_CA()){
       $this->attaque($cible, $deg);
     }else{
-      return false;
+      return $this->get_name() . ' rate son attaque.';
     }
   }
 }
@@ -131,9 +131,15 @@ public function touch_magique($cible, $deg){
     if($touch > $cible->get_CA()){
       $this->attaque($cible, $deg);
     }else{
-      return false;
+      return $this->get_name() . ' rate son attaque.';
     }
   }
+}
+
+
+// Permet de rédéfinir la vie après une attaque subie
+function set_newLife($life){
+  $this->life = $life;
 }
 
 //Retourne le nom
