@@ -254,6 +254,8 @@ class UserController extends Controller
         $i_point = strrpos($file['name'], '.');
         $fileExtension = substr($file['name'], $i_point, strlen($file['name']));
         $newName = substr($file['name'], 0, 4) . uniqid(). $fileExtension;
+        $destination = 'assets/img/avatar/'.$newName;
+        $path = 'img/avatar/'. $newName;
         // si le telechargement de l'image c'est bien passer
         if(move_uploaded_file ($file['tmp_name'], $destination)){
           $success = true;
