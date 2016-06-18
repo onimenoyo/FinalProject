@@ -52,13 +52,17 @@
 		['POST', '/admin/pnj/modif/[:id]', 'Admin#admin_pnj_modif_post', 'admin_pnj_modif_post'],
 		['GET', '/admin/pnj/delete/[:id]', 'Admin#admin_pnj_delete', 'admin_pnj_delete'],
 
+		//JEU
+		['GET', '/game/intro', 'Game#intro', 'intro'],
+		['GET', '/game/character_creation', 'Game#character_creation', 'character_creation'],
+		['POST', '/game/character_creation', 'Game#character_creation_post', 'character_creation_post'],
 		// EXPLORATION
-
         ['GET', '/game/explore', 'Game#explore', 'explore'],
-
         // FIGHT
         ['GET', '/game/fight', "Game#fight", 'fight'],
-
         // AJAX
         ['GET', '/[:cible]/[:deg]', "Game#fight", 'attack'],
+
+		//MailController
+		['GET', '/test/mail', 'Mail#mail', 'mail'],
 	);

@@ -102,7 +102,8 @@ class UserController extends Controller
                 'lastname' => $_POST['lastname'],
                 'email' => $_POST['mail'],
                 'password' => $password,
-                'avatar' => 1,
+                'avatar_id' => 1,
+                'characters_id' => 0,
                 'role'=> 'user',
                 'token' => $token,
                 'last_connexion' => date('Y-m-d H:i:s'),
@@ -206,7 +207,7 @@ class UserController extends Controller
     $loggedUser = $this->getUser();
     // affiche la page de profil de l'utilisateur et récupere l'image de profil
     $testModel = new AvatarModel();
-    $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+    $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
     $this->show('user/profil', ['img_path'=> $test1['img_path']]);
   }
 
@@ -253,8 +254,6 @@ class UserController extends Controller
         $i_point = strrpos($file['name'], '.');
         $fileExtension = substr($file['name'], $i_point, strlen($file['name']));
         $newName = substr($file['name'], 0, 4) . uniqid(). $fileExtension;
-        $destination = 'assets/img/'.$newName;
-        $path = 'img/'. $newName;
         // si le telechargement de l'image c'est bien passer
         if(move_uploaded_file ($file['tmp_name'], $destination)){
           $success = true;
@@ -269,18 +268,18 @@ class UserController extends Controller
                         'type' => $fileExtension,
                       )
                     );
-          // récupère l'id de l'avatar et l'ajoute dans la base de donnée utilisateur
+          // récupère l'id de l'avatar_id et l'ajoute dans la base de donnée utilisateur
           $testModel2 = new UserModel();
           $testModel3 = new AvatarModel();
           $test3 = $testModel3->getIdByUserId($newName);
           $testModel2->update(array(
-                        'avatar' => $test3['id']
+                        'avatar_id' => $test3['id']
             ), $loggedUser['id']
           );
           if (!empty($file['name'])) {
             // raffraichit les donnée de l'utilisateur pour que les modification soit mit à jour et affiche la page de proifil avec la nouvelle image
             $testModel = new AvatarModel();
-            $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+            $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
             $authentificationModel = new AuthentificationModel();
             $authentificationModel->refreshUser();
             $this->show('user/profil', ['img_path'=> $test1['img_path']]);
@@ -290,7 +289,7 @@ class UserController extends Controller
         // affiches profil.php avec les erreurs
         $loggedUser = $this->getUser();
         $testModel = new AvatarModel();
-        $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+        $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
         $this->show('user/profil', ['img_path'=> $test1['img_path'], 'errors'=> $errors]);
       }
     }
@@ -302,12 +301,12 @@ class UserController extends Controller
       // remet l'image de profil classique
       $testModel = new UserModel();
       $testModel->update(array(
-          'avatar' => 1
+          'avatar_id' => 1
         ), $loggedUser['id']
       );
-      // raffraichit l'utilisateur, affiche le profil.php et recupere l'avatar de l'utilisateur
+      // raffraichit l'utilisateur, affiche le profil.php et recupere l'avatar_id de l'utilisateur
       $testModel1 = new AvatarModel();
-      $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar']);
+      $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar_id']);
       $authentificationModel = new AuthentificationModel();
       $authentificationModel->refreshUser();
       $this->show('user/profil', ['img_path'=> $test1['img_path']]);
@@ -360,7 +359,7 @@ class UserController extends Controller
           );
           // raffraichit les infos utilisateur, affiche la page profil  en recuperant l'image de profil
           $testModel1 = new AvatarModel();
-          $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar']);
+          $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar_id']);
           $authentificationModel = new AuthentificationModel();
           $authentificationModel->refreshUser();
           $this->show('user/profil', ['img_path'=> $test1['img_path']]);
@@ -368,7 +367,7 @@ class UserController extends Controller
         // raffraichit les infos utilisateur, affiche la page profil  en recuperant l'image de profil
         $loggedUser = $this->getUser();
         $testModel = new AvatarModel();
-        $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+        $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
         $authentificationModel = new AuthentificationModel();
         $authentificationModel->refreshUser();
         $this->show('user/profil', ['img_path'=> $test1['img_path'], 'error'=> $error]);
@@ -412,7 +411,7 @@ class UserController extends Controller
         );
         // on raffraichit les infos utilisateur et on affiche le profil
         $testModel1 = new AvatarModel();
-        $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar']);
+        $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar_id']);
         $authentificationModel = new AuthentificationModel();
         $authentificationModel->refreshUser();
         $this->show('user/profil', ['img_path'=> $test1['img_path'],]);
@@ -420,7 +419,7 @@ class UserController extends Controller
       else {
        // on raffraichit les infos utilisateur et on affiche le profil en envoyant les erreurs
        $testModel = new AvatarModel();
-       $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar']);
+       $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
        $authentificationModel = new AuthentificationModel();
        $authentificationModel->refreshUser();
        $this->show('user/profil', ['img_path'=> $test1['img_path'], 'error'=> $error]);

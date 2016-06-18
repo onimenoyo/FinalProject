@@ -1,0 +1,369 @@
+
+/*******************/
+/*     GENERAL     */
+/*******************/
+body{
+  box-sizing: border-box;
+  margin: 0 auto;
+  background-color: #333;
+}
+section{
+  position: relative;
+  max-width: 1170px;
+  width: 100%;
+  background-color: #222;
+  height: 100vh;
+  margin: 0 auto;
+  box-shadow: 0 0 2px 2px black;
+}
+a{
+  text-decoration: none;
+  color: #7E7FED;
+  text-transform: uppercase;
+  text-shadow: 1px 1px black;
+  font-weight: bolder;
+  padding: 12px 4px;
+}
+
+section img{
+  max-width: 1170px;
+  width: 100%;
+  height: 70%;
+}
+
+#avatar{
+  position: absolute;
+  left: 4%;
+  top: 5%;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+  border-radius: 10px;
+}
+
+#pnj{
+  /*position: absolute;*/
+  /*right: 5%;
+  top: 5%;*/
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+  border-radius: 10px;
+}
+
+.dialogue{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 58%;
+  height: 20%;
+  left: 4%;
+  top: 45%;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+  border-radius: 10px;
+  background-color: rgba(55, 56, 56, 0.73);
+}
+.dialogue p{
+  width: 90%;
+  color: white;
+}
+#Mob{
+  position: absolute;
+  right: 1%;
+  top: 5%;
+}
+.mobInfo{
+  z-index: 1;
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 60%;
+  right: 5px;
+  top: 25%;
+  border-radius: 10px;
+  background-color: rgba(55, 56, 56, 0.6);
+  color: red;
+}
+
+.conteneur{
+  position: absolute;
+  top: 70.4%;
+  height: 30%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.menu{
+  background-color: #3a3f4e;
+  height: 95%;
+  width: 25%;
+  border-radius: 15px;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+}
+
+.options{
+  background-color: #3a3f4e;
+  height: 95%;
+  width: 44%;
+  border-radius: 15px;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+}
+.infos{
+  background-color: #3a3f4e;
+  height: 95%;
+  width: 25%;
+  border-radius: 15px;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+}
+
+.info{
+  margin-left: 5px;
+}
+.contenu{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;;
+  align-items: center;
+  font-variant: small-caps;
+  color: rgb(194, 232, 249);
+}
+.contenu ul{
+  list-style: none;
+}
+.contenu li{
+  margin-left: -20px;
+  padding-bottom: 25px;
+}
+.contenu a{
+  background-size: 60%;
+  text-decoration: none;
+  color: rgb(194, 232, 249);
+
+}
+.button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  width : 260px;
+  height: 50px;
+  background-color: rgb(17, 63, 89);
+  border-radius: 10px;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+}
+
+/*.contenu img{
+  position: relative;
+  top: 13px;
+  left: -20px;
+  width: 46px;
+  height: 46px;
+}*/
+
+.options li{
+  position: relative;
+  top: 10px;
+  margin-top: 10px;
+  /*font-size: 1.5em;*/
+  text-shadow: 2px 2px black;
+}
+
+/*   INVENTAIRE   */
+.slot{
+  position: relative;
+  width: 90px;
+  height: 90px;
+  background-color: black;
+  border-radius: 8px;
+  border: 1px solid rgb(134, 125, 0);
+}
+.slot span{
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  color: rgb(28, 245, 193);
+  text-shadow: 2px 2px black;
+  font-weight: bold;
+}
+.slot img{
+  border-radius: 8px;
+  left: 1px;
+  width: 100%;
+  height: 100%;
+}
+/*------------------------------------*\
+    RESPONSIVE
+\*------------------------------------*/
+
+@media only screen and (min-width:320px) {
+  .infos{
+    display: none;
+  }
+  .menu{
+    height: 95%;
+    width: 25%;
+    font-size:0.55em;
+  }
+
+  .options{
+    height: 95%;
+    width: 70%;
+  }
+  .contenu img{
+    left: -6px;
+    width: 35px;
+    height: 35px;
+  }
+  .slot{
+    width: 80px;
+    height: 80px;
+  }
+  .slot img{
+    left: 1px;
+    width: 100%;
+    height: 100%;
+  }
+  .dialogue{
+    left: 1%;
+    width: 98%;
+    height: 20%;
+    top: 50%;
+  }
+  #avatar{
+    width : 80px;
+    height : 90px;
+  }
+  #pnj{
+    width: 150px;
+    height: 200px;
+  }
+  .bmenu{
+    width : 72px;
+    height: 37px;
+  }
+  .option{
+    width : 300px;
+    height: 30px;
+  }
+}
+@media only screen and (min-width:480px) {
+  .slot{
+    width: 65px;
+    height: 65px;
+  }
+  .bmenu{
+    width : 110px;
+    height: 40px;
+  }
+  #pnj{
+    width: 185px;
+    height: 260px;
+  }
+}
+@media only screen and (min-width:580px) {
+  .slot{
+    width: 78px;
+    height: 78px;
+  }
+}
+@media only screen and (min-width:680px) {
+  .slot{
+    width: 87px;
+    height: 87px;
+  }
+}
+@media only screen and (min-width:768px) {
+  #Character{
+    display: none;
+  }
+  .infos{
+    display: inline-flex;
+  }
+  .menu{
+    height: 95%;
+    width: 25%;
+    font-size:0.9em;
+  }
+
+  .options{
+    height: 95%;
+    width: 44%;
+  }
+  .contenu img{
+    left: -12px;
+    width: 42px;
+    height: 42px;
+  }
+  .slot{
+    width: 62px;
+    height: 62px;
+  }
+  .slot img{
+    left: 1px;
+    width: 100%;
+    height: 100%;
+  }
+  .dialogue{
+    left: 5%;
+    width: 60%;
+    height: 20%;
+    top: 45%;
+  }
+  #avatar{
+    width : 90px;
+    height : 100px;
+  }
+  #pnj{
+    width: 230px;
+    height: 300px;
+  }
+  .bmenu{
+    width : 150px;
+    height: 42px;
+  }
+  .option{
+    width : 300px;
+    height: 35px;
+  }
+}
+@media only screen and (min-width:860px) {
+  .slot{
+    width: 70px;
+    height: 68px;
+  }
+}
+@media only screen and (min-width:945px) {
+  .slot{
+    width: 78px;
+    height: 68px;
+  }
+}
+@media  only screen and (min-width: 1024px) {
+  .slot{
+    width: 85px;
+    height: 85px;
+  }
+  .slot img{
+    left: 1px;
+    width: 100%;
+    height: 100%;
+  }
+  #avatar{
+    width : 100px;
+    height : 110px;
+  }
+  #pnj{
+    width: 320px;
+    height: 400px;
+  }
+  .bmenu{
+    width : 240px;
+    height: 50px;
+  }
+  .option{
+    width : 700px;
+    height: 50px;
+  }
+}

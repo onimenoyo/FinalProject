@@ -1,0 +1,45 @@
+<?php
+namespace Controller;
+
+use \Controller\Controller;
+use \PHPMailer;
+
+class MailController extends Controller
+{
+	private $GMailUSER = 'finalproject.wf3@gmailcom';
+	private $GMailPWD = 'Webforce3';
+
+	public function mail()
+	{
+			// echo 'michel';
+			$mail = new PHPMailer();  // Cree un nouvel objet PHPMailer
+			$mail->IsSMTP(); // active SMTP
+			$mail->IsHTML();
+			$mail->SMTPDebug = 0;  // debogage: 1 = Erreurs et messages, 2 = messages seulement
+			$mail->SMTPAuth = true;  // Authentification SMTP active
+			$mail->SMTPSecure = 'ssl'; // Gmail REQUIERT Le transfert securise
+			$mail->Host = 'smtp.gmail.com';
+			$mail->Port = 465;
+			$mail->Username = 'finalproject.wf3';
+			$mail->Password = 'Webforce3';
+			$mail->SetFrom('finalproject.wf3@gmail.com', 'Final Project');
+			$mail->Subject = 'test';
+			$mail->Body = 'Le sujet de votre message de test';
+			$mail->AddAddress('rougee.thomas@gmail.com');
+			// debug($mail);
+			if(!$mail->Send()) {
+				return 'Mail error: '.$mail->ErrorInfo;
+			} else {
+				return true;
+			}
+
+
+
+		$result = smtpmailer('johannhild@gmail.com', 'finalproject.wf3@gmail.com', 'Final Project', 'test', 'Le sujet de votre message de test');
+		if (true !== $result)
+		{
+			// erreur -- traiter l'erreur
+			echo $result;
+		}
+	}
+}
