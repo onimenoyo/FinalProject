@@ -9,7 +9,7 @@ class MailController extends Controller
 	private $GMailUSER = 'finalproject.wf3@gmailcom';
 	private $GMailPWD = 'Webforce3';
 
-	public function mail()
+	public function email($body, $email)
 	{
 			// echo 'michel';
 			$mail = new PHPMailer();  // Cree un nouvel objet PHPMailer
@@ -23,8 +23,8 @@ class MailController extends Controller
 			$mail->Username = 'finalproject.wf3';
 			$mail->Password = 'Webforce3';
 			$mail->SetFrom('finalproject.wf3@gmail.com', 'Final Project');
-			$mail->Subject = 'test';
-			$mail->Body = 'Le sujet de votre message de test';
+			$mail->Subject = 'Récupération de mot de passe';
+			$mail->Body = 'Voici l\'adresse pour configurer votre mot de passe : '.$body.'.';
 			$mail->AddAddress('rougee.thomas@gmail.com');
 			// debug($mail);
 			if(!$mail->Send()) {
@@ -35,7 +35,7 @@ class MailController extends Controller
 
 
 
-		$result = smtpmailer('johannhild@gmail.com', 'finalproject.wf3@gmail.com', 'Final Project', 'test', 'Le sujet de votre message de test');
+		$result = smtpmailer($email, 'finalproject.wf3@gmail.com', 'Final Project', 'test', 'Le sujet de votre message de test');
 		if (true !== $result)
 		{
 			// erreur -- traiter l'erreur

@@ -2,6 +2,7 @@
 namespace Controller;
 
 use \Controller\Controller;
+use \Controller\MailController;
 use \Services\Validation;
 use \Model\AuthentificationModel;
 use \Model\UserModel;
@@ -142,7 +143,6 @@ class UserController extends Controller
     // Vérifie si le mail existe déja dans la base de donnée
     $testModel = new UserModel();
     $test = $testModel->emailExists($_POST['email']);
-    if ($test1) {$error['mail'] = "l'email existe déjà";}
     // Si aucune erreur
     if (count($error) == 0) {
       if ($test) {
@@ -150,6 +150,9 @@ class UserController extends Controller
         $testModel1 = new UserModel();
         $test1 = $testModel1-> getUserByUsernameOrEmail($_POST['email']);
         $token = $test1['token'];
+        $body = 'http://localhost/FinalProject/public/forgotpassword/'.$token;
+        $testModel2 = new MailController();
+        $testModel2->email($body , $_POST['email']);
         $this->show('user/sent_mail', ['token'=> $token, 'email'=>$_POST['email']]);
       }
     }
