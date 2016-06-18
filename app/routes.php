@@ -10,6 +10,7 @@
 		['GET', '/login', 'User#login', 'login'],
 		['POST', '/login', 'User#loginUser', 'loginUser'],
 		['GET', '/logout', 'User#logout', 'logout'],
+		['GET', '/validmail/[:token]', 'User#validmail', 'validmail'],		
 		['GET', '/forgotpassword', 'User#forgotpassword', 'forgotpassword'],
 		['POST', '/forgotpassword', 'User#forgotpassworduser', 'forgotpassworduser'],
 		['GET', '/forgotpassword/[:token]', 'User#forgotpasswordmodif', 'forgotpasswordmodif'],

@@ -31,11 +31,15 @@ class UserController extends Controller
     $testAuthentification = new AuthentificationModel();
     $test = $testAuthentification->isValidLoginInfo($_POST['pseudo_or_email'],$_POST['password']);
     if ($test == 0) { $errors['password'] = 'mauvais password ou mauvais login';}
+    $testModel1 = new UserModel();
+    $test1 = $testModel1-> getUserByUsernameOrEmail($_POST['pseudo_or_email']);
+    if ($test1['actif'] == 0) {
+        $errors['pseudo_or_email'] = 'Veuillez activer votre e-mail';
+    }
     //Si il n'y a pas d'erreurs
     if (count($errors) == 0) {
       $testModel1 = new UserModel();
       // récupère les infos utilisateurs
-      $test1 = $testModel1-> getUserByUsernameOrEmail($_POST['pseudo_or_email']);
       $testAuthentification1 = new AuthentificationModel();
       // connecte l'utilisateur
       $testAuthentification1->logUserIn($test1);
@@ -106,6 +110,7 @@ class UserController extends Controller
                 'avatar_id' => 1,
                 'characters_id' => 0,
                 'role'=> 'user',
+                'actif' => 0,
                 'token' => $token,
                 'last_connexion' => date('Y-m-d H:i:s'),
                 'ip' => $_SERVER['SERVER_ADDR'],
@@ -114,11 +119,29 @@ class UserController extends Controller
             )
         );
         // rammène l'utilisateur a l'accueil
-        $this->redirectToRoute('default_home');
+        $body = 'http://localhost/FinalProject/public/validmail/'.$token;
+        $testModel2 = new MailController();
+        $testModel2->email_validation($body , $_POST['mail']);
+        $this->show('user/sent_mail', ['token'=> $token, 'mail'=>$_POST['mail']]);
     } else {
       // récupère les erreurs et permet de les réutiliser dans register.php
       $this->show('user/register', ['error' => $error]);
     }
+  }
+
+    public function validmail($token)
+  {
+    // affiche la page validmail.php
+        $testModel = new UserModel();
+        $get_id = $testModel->getUserByToken($token);
+        $id = $get_id['id'];
+        // met a jour l'utilisateur avec le nouveau mot de passe
+        $testModel->update(array(
+                'actif' => 1,
+            ), $id
+        );
+
+    $this->show('user/validmail');
   }
 
   public function logout()
