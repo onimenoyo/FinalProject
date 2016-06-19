@@ -16,6 +16,7 @@
       <th>last_connexion</th>
       <th>ip</th>
       <th>role</th>
+      <th>actif</th>
       <th>created_at</th>
       <th>modified_at</th>
       <th>modifier/supprimer</th>
@@ -34,11 +35,12 @@
        <td><?=$user['email'];?></td>
        <td><?=$user['lastname'];?></td>
        <td><?=$user['firstname'];?></td>
-       <td><?=$user['avatar'];?></td>
+       <td><?=$user['avatar_id'];?></td>
        <td><?=$user['token'];?></td>
        <td><?=$user['last_connexion'];?></td>
        <td><?=$user['ip'];?></td>
        <td><?=$user['role'];?></td>
+       <td><?=$user['actif'];?></td>
        <td><?=$user['created_at'];?></td>
        <td><?=$user['modified_at'];?></td>
        <td>

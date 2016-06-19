@@ -10,8 +10,6 @@
       <th>character_id</th>
       <th>object_id</th>
       <th>amount</th><!-- max:99-->
-      <th>max_slot</th><!-- max:30-->
-      <th>gold</th> <!-- max:9999-->
       <th>modifier/supprimer</th>
     </tr>
   </thead>
@@ -27,9 +25,7 @@
        <td><?=$inventory1['character_id'];?></td>
        <td><?=$inventory1['object_id'];?></td>
        <td><?=$inventory1['amount'];?></td>
-       <td><?=$inventory1['max_slot'];?></td>
-       <td><?=$inventory1['gold'];?></td>
-       <td>
+        <td>
         <a href="<?= $this->url("admin_inventory_modif", ["id" => $inventory1['id']]);?>"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
         <a href="<?= $this->url("admin_inventory_delete", ["id" => $inventory1['id']]);?>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
        </td>

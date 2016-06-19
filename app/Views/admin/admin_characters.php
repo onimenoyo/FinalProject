@@ -8,14 +8,19 @@
     <tr>
       <th>id</th>
       <th>user_id</th>
+      <th>class</th>
       <th>name</th>
+      <th>health</th>
+      <th>energy</th>
+      <th>armor</th>
       <th>lvl</th>
+      <th>attack</th>
       <th>strength</th>
       <th>dexterity</th>
       <th>spirit</th>
       <th>social</th>
+      <th>lvl spell</th>
       <th>page_id</th>
-      <th>img_id</th>
       <th>exp</th>
       <th>gender</th>
       <th>modifier/supprimer</th>
@@ -31,14 +36,19 @@
     <tr>
        <td><?=$character['id'];?></td>
        <td><?=$character['user_id'];?></td>
+       <td><?=$character['class'];?></td>       
        <td><?=$character['name'];?></td>
+       <td><?=$character['health'];?></td>
+       <td><?=$character['energy'];?></td>  
+       <td><?=$character['armor'];?></td>                   
        <td><?=$character['lvl'];?></td>
+       <td><?=$character['attack'];?></td>       
        <td><?=$character['strength'];?></td>
        <td><?=$character['dexterity'];?></td>
        <td><?=$character['spirit'];?></td>
        <td><?=$character['social'];?></td>
+       <td><?=$character['lvl_spell'];?></td>
        <td><?=$character['page_id'];?></td>
-       <td><?=$character['img_id'];?></td>
        <td><?=$character['exp'];?></td>
        <td><?=$character['gender'];?></td>
        <td>

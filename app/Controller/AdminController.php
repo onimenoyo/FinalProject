@@ -234,11 +234,15 @@ class AdminController extends Controller
       $test= $testModel->find($id);
       $this->show('admin/admin_characters_modif', ['id'=> $id,
                                        'name'=> $test['name'],
+                                       'health'=> $test['health'],
+                                       'energy'=> $test['energy'],
+                                       'armor'=> $test['armor'],
                                        'lvl'=> $test['lvl'],
                                        'strength'=> $test['strength'],
                                        'dexterity'=> $test['dexterity'],
                                        'spirit'=> $test['spirit'],
                                        'social'=> $test['social'],
+                                       'lvl_spell'=> $test['lvl_spell'],
                                        'exp'=> $test['exp'],
                                      ]);
     }
@@ -247,9 +251,18 @@ class AdminController extends Controller
     {
         $valid = new Validation();
         $error = array();
-        // Vérification title
+        // Vérification Name
         $result = $valid->validateText($_POST['name'], 3, 255);
         if (!empty($result)) {$error['name'] = $result;}
+        // Vérification Health
+        $result = $valid->validateNumber($_POST['health'], 1, 9999);
+        if (!empty($result)) {$error['health'] = $result;}
+        // Vérification Energy
+        $result = $valid->validateNumber($_POST['energy'], 1, 9999);
+        if (!empty($result)) {$error['energy'] = $result;}
+        // Vérification Armor
+        $result = $valid->validateNumber($_POST['armor'], 1, 9999);
+        if (!empty($result)) {$error['armor'] = $result;}
         // Vérification Niveau
         $result = $valid->validateNumber($_POST['lvl'], 1, 20);
         if (!empty($result)) {$error['lvl'] = $result;}
@@ -265,8 +278,11 @@ class AdminController extends Controller
         // Vérification social
         $result = $valid->validateNumber($_POST['social'], 1, 30);
         if (!empty($result)) {$error['social'] = $result;}
+        // Vérification lvl_spell
+        $result = $valid->validateNumber($_POST['lvl_spell'], 1, 30);
+        if (!empty($result)) {$error['lvl_spell'] = $result;}
         // Vérification experience
-        $result = $valid->validateNumber($_POST['exp'], 1, 2100);
+        $result = $valid->validateNumber($_POST['exp'], 0, 2100);
         if (!empty($result)) {$error['exp'] = $result;}
         // si aucune erreur
         if (count($error) == 0) {
@@ -274,11 +290,15 @@ class AdminController extends Controller
           $testModel = new CharactersModel();
           $testModel->update(array(
             'name' => $_POST['name'],
+            'health'=> $_POST['health'],
+            'energy'=> $_POST['energy'],
+            'armor'=> $_POST['armor'],            
             'lvl' => $_POST['lvl'],
             'strength' => $_POST['strength'],
             'dexterity' => $_POST['dexterity'],
             'spirit' => $_POST['spirit'],
             'social' => $_POST['social'],
+            'lvl_spell'=> $_POST['lvl_spell'],
             'exp' => $_POST['exp'],
                 ), $id
             );
@@ -287,18 +307,23 @@ class AdminController extends Controller
             // affiche admin_characters.php
             $this->show('admin/admin_characters', ['characters'=> $tests]);
         } else {
-          $testModel = new CharactersModel();
-          $test= $testModel->find($id);
-          $this->show('admin/admin_characters_modif', ['id'=> $id,
-                                           'error'=> $error,
-                                           'name'=> $test['name'],
-                                           'lvl'=> $test['lvl'],
-                                           'strength'=> $test['strength'],
-                                           'dexterity'=> $test['dexterity'],
-                                           'spirit'=> $test['spirit'],
-                                           'social'=> $test['social'],
-                                           'exp'=> $test['exp'],
-                                         ]);
+      // On affiche modif_user.php en récupérant toutes les infos de l'utilisateur
+      $testModel = new CharactersModel();
+      $test= $testModel->find($id);
+      $this->show('admin/admin_characters_modif', ['id'=> $id,
+                                       'error'=> $error,
+                                       'name'=> $test['name'],
+                                       'health'=> $test['health'],
+                                       'energy'=> $test['energy'],
+                                       'armor'=> $test['armor'],
+                                       'lvl'=> $test['lvl'],
+                                       'strength'=> $test['strength'],
+                                       'dexterity'=> $test['dexterity'],
+                                       'spirit'=> $test['spirit'],
+                                       'social'=> $test['social'],
+                                       'lvl_spell'=> $test['lvl_spell'],
+                                       'exp'=> $test['exp'],
+                                     ]);
         }
     }
 
@@ -324,8 +349,6 @@ class AdminController extends Controller
       $test= $testModel->find($id);
       $this->show('admin/admin_inventory_modif', ['id'=> $id,
                                        'amount'=> $test['amount'],
-                                       'max_slot'=> $test['max_slot'],
-                                       'gold'=> $test['gold'],
                                      ]);
     }
 
@@ -336,20 +359,12 @@ class AdminController extends Controller
         // Vérification amount
         $result = $valid->validateNumber($_POST['amount'], 1, 99);
         if (!empty($result)) {$error['amount'] = $result;}
-        // Vérification max_slot
-        $result = $valid->validateNumber($_POST['max_slot'], 1, 30);
-        if (!empty($result)) {$error['max_slot'] = $result;}
-        // Vérification gold
-        $result = $valid->validateNumber($_POST['gold'], 1, 9999);
-        if (!empty($result)) {$error['gold'] = $result;}
         // si aucune erreur
         if (count($error) == 0) {
           // met à jour le personnage avec les nouvelles infos inseré
           $testModel = new InventoryModel();
           $testModel->update(array(
             'amount' => $_POST['amount'],
-            'max_slot' => $_POST['max_slot'],
-            'gold' => $_POST['gold'],
                 ), $id
             );
             $tests= $testModel->findAll();
@@ -362,8 +377,6 @@ class AdminController extends Controller
           $this->show('admin/admin_inventory_modif', ['id'=> $id,
                                            'error'=>$error,
                                            'amount'=> $test['amount'],
-                                           'max_slot'=> $test['max_slot'],
-                                           'gold'=> $test['gold'],
                                          ]);
         }
     }
