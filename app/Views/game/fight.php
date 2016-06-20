@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang='fr'>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="<?= $this->assetUrl('css/styleGame.css') ?>" media="screen" title="no title" charset="utf-8">
-    <title>Interface Jeu</title>
-  </head>
-  <body>
-    <section>
+<?php $this->layout('interfaceLayout', ['title' => 'Combat']) ?>
+
+<?php $this->start('main_content') ?>
       <img src="<?= $this->assetUrl($img_path)?>" alt="avatar" id="avatar"/>
       <div id="Mob">
         <img src="img/pnj/Renegat.jpg" alt="pnj" id="pnj"/>
@@ -35,9 +29,9 @@
 
         </div>
         <div class="contenu options">
-          <a href="#"><div class="button option">Attaquer</div></a>
-          <a href="#"><div class="button option">Se Soigner</div></a>
-          <a href="#"><div class="button option">Fuir !</div></a>
+          <a href="#"><div class="button option" id="attack">Attaquer</div></a>
+          <a href="#"><div class="button option" id="heal">Se Soigner</div></a>
+          <a href="#"><div class="button option" id="run">Fuir !</div></a>
 
           <!-- <ul>
             <li><a href="#"><div class="button">Attaquer</div></a></li>
@@ -54,14 +48,52 @@
           <div class="info"><strong>Armure : </strong>$player->get_ca()</div>
         </div>
       </div>
-    </section>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script type="text/javascript" src="<?= $this->assetUrl('js/app.js') ?>"></script>
-  </body>
-</html>
+<?php $this->stop('main_content') ?>
 
 
+<!--
   <button type="button" class="attack" name="button">Attaque </button>
   <button type="button" class="magie" name="button">Magie  </button>
   <button type="button" class="heal" name="button">Se soigner </button>
-  <button type="button" class="run" name="button">Fuite ! </button>
+  <button type="button" class="run" name="button">Fuite ! </button> -->
+
+
+
+<?php $this->start('ajax'); ?>
+
+<?php
+
+$fight['cible'] = 'drone';
+$fight['deg'] = 'degs';
+
+$url = $this->url('attack', ['cible' => $fight['cible'], 'dice' => $fight['dice'], 'deg' => $fight['deg']  ]);
+ ?>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+    $('#attack').on('click', function(e){
+      e.preventDefault();
+
+      $.ajax({
+        type: 'get',
+        url: '<?php echo $url; ?>',
+
+        // en cas de succés :
+        success: function(data){
+
+           $('#info').html(data.cible);
+
+
+        },
+        // si erreur :
+        error : function(err){
+        //  console.log (err);
+        }
+      });
+    });
+    });
+</script>
+
+<?php $this->stop('ajax') ?>

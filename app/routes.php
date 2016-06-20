@@ -10,7 +10,7 @@
 		['GET', '/login', 'User#login', 'login'],
 		['POST', '/login', 'User#loginUser', 'loginUser'],
 		['GET', '/logout', 'User#logout', 'logout'],
-		['GET', '/validmail/[:token]', 'User#validmail', 'validmail'],		
+		['GET', '/validmail/[:token]', 'User#validmail', 'validmail'],
 		['GET', '/forgotpassword', 'User#forgotpassword', 'forgotpassword'],
 		['POST', '/forgotpassword', 'User#forgotpassworduser', 'forgotpassworduser'],
 		['GET', '/forgotpassword/[:token]', 'User#forgotpasswordmodif', 'forgotpasswordmodif'],
@@ -57,12 +57,9 @@
 		['GET', '/game/intro', 'Game#intro', 'intro'],
 		['GET', '/game/character_creation', 'Game#character_creation', 'character_creation'],
 		['POST', '/game/character_creation', 'Game#character_creation_post', 'character_creation_post'],
-		// EXPLORATION
-        ['GET', '/game/explore', 'Game#explore', 'explore'],
-        // FIGHT
-        ['GET', '/game/fight', "Game#fight", 'fight'],
-        // AJAX
-        ['GET', '/[:cible]/[:deg]', "Game#fight", 'attack'],
+		['GET', '/game/camp', 'Game#camp', 'camp'],
+		['GET', '/game/explore/[:lieu]', 'Game#explore', 'explore'],
+    ['GET', '/game/fight/[:cible]', "Game#fight", 'fight'],
 
 		//MailController
 		['GET', '/test/mail', 'Mail#mail', 'mail'],
