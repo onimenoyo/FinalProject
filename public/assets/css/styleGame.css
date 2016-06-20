@@ -60,6 +60,43 @@ section img{
   border-radius: 10px;
   background-color: rgba(55, 56, 56, 0.73);
 }
+.dialogue2{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 92%;
+  height: 20%;
+  left: 4%;
+  top: 45%;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+  border-radius: 10px;
+  background-color: rgba(55, 56, 56, 0.73);
+}
+
+.dialogue2 p{
+  width: 90%;
+  color: white;
+}
+
+.dialogue3{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 92%;
+  left: 4%;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+  border-radius: 10px;
+  background-color: rgba(55, 56, 56, 0.73);
+}
+
+.dialogue3 p{
+  width: 90%;
+  color: white;
+}
+
+
 .dialogue p{
   width: 90%;
   color: white;
@@ -148,12 +185,62 @@ section img{
   align-items: center;
   max-width: 300px;
   width : 260px;
-  height: 50px;
+  height: 20px;
   background-color: rgb(17, 63, 89);
   border-radius: 10px;
   box-shadow: 0 0 2px 2px rgb(134, 125, 0);
 }
 
+.button2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  width : 260px;
+  height: 50px;
+  background-color: rgb(64, 55, 41);
+  color: rgb(255, 208, 102);
+  font-weight: bolder;
+  border-radius: 10px;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+}
+
+.contenu2{
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  font-variant: small-caps;
+  color: rgb(194, 232, 249);
+}
+
+.button3{
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  width : 200px;
+  height: 20px;
+  background-color: rgb(64, 55, 41);
+  color: rgb(255, 208, 102);
+  font-weight: bolder;
+  border-radius: 10px;
+  box-shadow: 0 0 2px 2px rgb(134, 125, 0);
+}
+
+.cleaner {
+  clear: both;
+}
+.flexbox {
+  display: flex;
+}
+
+.flexbox1 {
+  flex-direction: row;
+height: 50px;
+justify-content: space-between;
+}
 /*.contenu img{
   position: relative;
   top: 13px;
@@ -198,6 +285,13 @@ section img{
 \*------------------------------------*/
 
 @media only screen and (min-width:320px) {
+  .dialogue3{
+    height: 69.5%;
+    top:0;
+  }
+  .dialogue3 p{
+    width: 98%;
+  }
   .infos{
     display: none;
   }
@@ -249,6 +343,13 @@ section img{
   }
 }
 @media only screen and (min-width:480px) {
+  .dialogue3{
+    height: 68%;
+    top:1%;
+  }
+  .dialogue3 p{
+    width: 95%;
+  }
   .slot{
     width: 65px;
     height: 65px;
@@ -263,18 +364,30 @@ section img{
   }
 }
 @media only screen and (min-width:580px) {
+  .dialogue3{
+    top:8%;
+    height: 60%;
+  }
   .slot{
     width: 78px;
     height: 78px;
   }
 }
 @media only screen and (min-width:680px) {
+  .dialogue3{
+    top: 18%;
+    height: 50%;
+  }
   .slot{
     width: 87px;
     height: 87px;
   }
 }
 @media only screen and (min-width:768px) {
+  .dialogue3{
+    top: 20%;
+    height: 45%;
+  }
   #Character{
     display: none;
   }
@@ -329,18 +442,30 @@ section img{
   }
 }
 @media only screen and (min-width:860px) {
+  .dialogue3{
+    top: 20%;
+    height: 45%;
+  }
   .slot{
     width: 70px;
     height: 68px;
   }
 }
 @media only screen and (min-width:945px) {
+  .dialogue3{
+    top: 25%;
+    height: 40%;
+  }
   .slot{
     width: 78px;
     height: 68px;
   }
 }
 @media  only screen and (min-width: 1024px) {
+  .dialogue3{
+    height: 30%;
+  }
+
   .slot{
     width: 85px;
     height: 85px;

@@ -1,15 +1,19 @@
 <?php $this->layout('interfaceLayout', ['title' => 'Camp']) ?>
 
 <?php $this->start('main_content') ?>
-
-  <p>
-    L’avant poste se trouve dans les ruines d’une ville, plusieurs bâtiments ont été réquisitionnés et renforcés afin de pouvoir résister aux attaques.
-    Par endroit des tourelles ont été installées, des tanks gardent également certains passages mais l’on peu voir que la majorité des soldats sont des porteurs d’armures.
-  </p>
-
-  <button type="button" id="Command" name="button">Centre de commandement</button>
-  <button type="button" id="infirmary" name="button">Infirmerie</button>
-  <button type="button" id="armory" name="button">Armurerie</button>
-  <a href="<?= $this->url('explore', ['lieu' => 'Ruines'])?>"><button type="button" id="ruins" name="button">Explorer les ruines </button></a>
-
+      <img src=" <?= $this->assetUrl('img/background/Intro_Vortex.jpg')?>" alt="Abords_Pont" />
+      <div class="dialogue2">
+        <p>
+          L’avant poste se trouve dans les ruines d’une ville, plusieurs bâtiments ont été réquisitionnés et renforcés afin de pouvoir résister aux attaques.
+          Par endroit des tourelles ont été installées, des tanks gardent également certains passages mais l’on peu voir que la majorité des soldats sont des porteurs d’armures.
+        </p>
+      </div>
+      <div class="conteneur">
+        <div class="contenu options">
+          <a href="#" id="Command" class='button' name="button">Centre de commandement</a>
+          <a href="#" id="infirmary" class='button' name="button">Infirmerie</a>
+          <a href="#" id="armory" class='button' name="button">Armurerie</a>
+          <a href="<?= $this->url('explore', ['lieu' => 'Ruines'])?>" id="ruins" class='button' name="button">Explorer les ruines </a>
+        </div>
+      </div>
 <?php $this->stop('main_content'); ?>

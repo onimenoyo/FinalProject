@@ -24,6 +24,13 @@ class GameController extends Controller{
     $this->show('game/intro');
   }
 
+  public function intro2() {
+    $this->show('game/intro2');
+  }
+
+  public function intro3() {
+    $this->show('game/intro3');
+  }
   public function camp(){
   $this->show('game/camp');
   }
@@ -193,7 +200,7 @@ class GameController extends Controller{
                     );
         }
           // affiche admin_user.php
-          $this->redirectToRoute('default_home');
+          $this->redirectToRoute('intro3');
       } else {
         $this->show('game/character_creation', ['error' => $error
                                                ]);

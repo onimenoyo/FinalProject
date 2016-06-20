@@ -55,8 +55,9 @@
 
 		//JEU
 		['GET', '/game/intro', 'Game#intro', 'intro'],
-		['GET', '/game/character_creation', 'Game#character_creation', 'character_creation'],
-		['POST', '/game/character_creation', 'Game#character_creation_post', 'character_creation_post'],
+		['GET', '/game/intro2', 'Game#intro2', 'intro2'],
+		['POST', '/game/intro2', 'Game#character_creation_post', 'character_creation_post'],
+		['GET', '/game/intro3', 'Game#intro3', 'intro3'],
 		['GET', '/game/camp', 'Game#camp', 'camp'],
 		['GET', '/game/explore/[:lieu]', 'Game#explore', 'explore'],
 		['POST', '/game/explore/[:lieu]', 'Game#exploration', 'exploration'],
