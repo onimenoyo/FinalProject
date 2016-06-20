@@ -383,6 +383,7 @@ class GameController extends Controller{
 
     }
 
+
     public function attack($cible, $deg){
       $valid = new Validation();
       // verification ajax :

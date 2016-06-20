@@ -66,4 +66,59 @@ $(document).ready(function() {
             $('.options').append('</div>');
         }
     });
+
+    var modal = document.getElementById('myModal');
+      $(".menuBurger").click(function() {
+        if ($(".burgerDropDown").hasClass("hide")){
+          $(".burgerDropDown").removeClass("hide");
+          $('section').css('background-color', '#333');
+        } else {
+          $(".burgerDropDown").addClass("hide");
+          $('section').css('background-color', '#666');
+        }
+      });
+
+      $("#myBtn").click(function() {
+        console.log("myBtn");
+        if ($("#myModal").hasClass("hide")){
+          console.log('pas hide');
+          modal.style.display = "block";
+          // $("#myModal").removeClass("hide");
+        } else {
+          console.log('hide');
+          modal.style.display = "none";
+          // $("#myModal").addClass("hide");
+        }
+      });
+
+
+      $("#myBtnBurger").click(function() {
+        if ($("#myModal").hasClass("hide")){
+          modal.style.display = "block";
+        } else {
+          $("#myModal").addClass("hide");
+        }
+      });
+      //Pour fermer la modal en cliquant sur le menu burger
+      $(".menuBurger").click(function() {
+        console.log('burger');
+        if (!$("#myModal").hasClass("hide")){
+        }else{
+          modal.style.display = "none";
+        }
+      });
+
+    // On définit la croix de la modal dans une variable
+    var close = document.getElementsByClassName("close")[0];
+    // Pour fermer la modal en cliquant sur la croix
+    close.onclick = function() {
+        modal.style.display = "none";
+    }
+    // Quand on clique a l'extérieur de la modal ca la ferme
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
 });
