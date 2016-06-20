@@ -48,7 +48,4 @@ class Controller extends WController
  		die();
  	}
 
-
-
-
 }

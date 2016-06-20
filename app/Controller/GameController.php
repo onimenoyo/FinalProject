@@ -9,6 +9,7 @@ use \Services\Validation;
 
 class GameController extends Controller{
 
+
   public function fight() {
     //récupération des infos de l'utilisateur connecté
     $loggedUser = $this->getUser();
@@ -208,17 +209,20 @@ class GameController extends Controller{
 
     // fonction d'exploration qui va générer ce qui va arriver :
     public function exploration($lieu){
+        $acte ="";
 
       $valid = new Validation();
           // on lance un résultat aléatoire :
           $random = rand (1, 20);
           // si on est <= 5 alors on ne trouve rien
           if ($random <= 5){
+            $adresse = 'explore';
+            $type = [];
             echo 'Après avoir tourné pendant des heures, tu te rends compte que tu es retourné sur tes pas';
 
           // si on se trouve entre 6 et 10 alors on rencontre un ennemi en fonction du lieu :
           }elseif($random >= 6 && $random <= 10){
-            $addresse = 'fight';
+            $adresse = 'fight';
             if($lieu = 'Ruines'){
                 $rand = rand(1, 10);
 
@@ -369,9 +373,13 @@ class GameController extends Controller{
                 $type = ['lieu' => 'Reacteur'];
               }
           }
+          debug($type);
+          // $adresse = '/game/' . $adresse.'/';
+          debug($adresse);
           // genere l'URL en fonction des tirages :
-          $acte = generateUrl($adresse, $type);
-          $this->show('game/'.$acte);
+          $acte = $this->generateUrl($adresse, $type);
+          $this->redirect($acte);
+          // $this->url('game/'.$acte);
 
     }
 

@@ -59,6 +59,7 @@
 		['POST', '/game/character_creation', 'Game#character_creation_post', 'character_creation_post'],
 		['GET', '/game/camp', 'Game#camp', 'camp'],
 		['GET', '/game/explore/[:lieu]', 'Game#explore', 'explore'],
+		['POST', '/game/explore/[:lieu]', 'Game#exploration', 'exploration'],
     ['GET', '/game/fight/[:cible]', "Game#fight", 'fight'],
 
 		//MailController
