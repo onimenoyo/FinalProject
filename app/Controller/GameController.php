@@ -209,21 +209,17 @@ class GameController extends Controller{
 
     // fonction d'exploration qui va générer ce qui va arriver :
     public function exploration($lieu){
-        $acte ="";
+      $acte ="";
 
       $valid = new Validation();
           // on lance un résultat aléatoire :
           $random = rand (1, 20);
-          // si on est <= 5 alors on ne trouve rien
-          if ($random <= 5){
-            $adresse = 'explore';
-            $type = [];
-            echo 'Après avoir tourné pendant des heures, tu te rends compte que tu es retourné sur tes pas';
 
           // si on se trouve entre 6 et 10 alors on rencontre un ennemi en fonction du lieu :
-          }elseif($random >= 6 && $random <= 10){
+
+          if($random <= 7){
             $adresse = 'fight';
-            if($lieu = 'Ruines'){
+            if($lieu == 'Ruines' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                 $rand = rand(1, 10);
 
                 if($rand >= 1 && $rand <=4){
@@ -239,7 +235,7 @@ class GameController extends Controller{
                   $type = ['cible' => 'Robot'];
                 }
 
-            }elseif($lieu = 'Abords'){
+            }elseif($lieu == 'Abords' && $lieu != 'Ruines' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                 $rand = rand(1, 10);
 
                 if($rand >= 1 && $rand <=3){
@@ -255,7 +251,7 @@ class GameController extends Controller{
                   $type = ['cible' => 'Renegat'];
                 }
 
-            }elseif($lieu = 'Foret'){
+            }elseif($lieu == 'Foret' && $lieu != 'Abords' && $lieu != 'Ruines' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                   $rand = rand(1, 10);
 
                 if($rand >= 1 && $rand <=4){
@@ -268,7 +264,7 @@ class GameController extends Controller{
                   $type = ['cible' => 'Renegat'];
                 }
 
-            }elseif($lieu = 'Lac' || $lieu ='Montagne'){
+            }elseif($lieu == 'Lac' || $lieu == 'Montagne' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Base_Alien'){
                 $rand = rand(1,10);
 
                 if($rand >=1 && $rand <= 5){
@@ -281,7 +277,7 @@ class GameController extends Controller{
                   $type = ['cible' => 'Ravageur'];
                 }
 
-            }elseif($lieu = 'Base Alien'){
+            }elseif($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines'){
                   $rand = rand(1,10);
 
                   if($rand >=1 && $rand <= 5){
@@ -296,20 +292,23 @@ class GameController extends Controller{
             }
 
           // si l'on se trouve au dessus de 10 alors on découvre une zone d'exploration
-          }elseif($random >= 11 && $random <= 15) {
+          }elseif($random >= 8 && $random <= 15) {
             $adresse = 'explore';
 
-            if($lieu = 'Ruines'){
-                $rand = rand(1,2);
+            if($lieu == 'Ruines' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
+                $rand = rand(1,3);
 
                 if($rand == 1){
-                  $type = ['lieu' => 'Centre Commercial'];
+                  $type = ['lieu' => 'Centre_Commercial'];
 
                 }elseif($rand == 2){
                   $type = ['lieu' => 'Gare'];
+
+                }elseif($rand == 3){
+                  $type = ['lieu' => 'Musée'];
                 }
 
-            }elseif ($lieu = 'Abords') {
+            }elseif ($lieu == 'Abords' && $lieu != 'Ruines' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $rand = rand(1,3);
 
                 if($rand == 1){
@@ -322,54 +321,54 @@ class GameController extends Controller{
                   $type = ['lieu' => 'Frontière'];
                 }
 
-            }elseif ($lieu = 'Foret') {
+            }elseif ($lieu == 'Foret' && $lieu != 'Abords' && $lieu != 'Ruines' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $rand = rand(1,2);
 
                 if($rand == 1){
-                  $type = ['lieu' => 'Camp Survivants'];
+                  $type = ['lieu' => 'Camp_Survivants'];
 
                 }elseif($rand == 2){
                   $type = ['lieu' => 'Bosquet'];
                 }
 
-            }elseif ($lieu = 'Lac') {
+            }elseif ($lieu == 'Lac' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Ruines' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $rand = rand(1,2);
 
                 if($rand == 1){
-                  $type = ['lieu' => 'Chateau Antique'];
+                  $type = ['lieu' => 'Chateau_Antique'];
 
                 }elseif($rand == 2){
-                  $type = ['lieu' => 'Porte Montagnes'];
+                  $type = ['lieu' => 'Porte_Montagnes'];
                 }
 
-            }elseif ($lieu = 'Montagne') {
+            }elseif ($lieu == 'Montagne' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Ruines' && $lieu != 'Base_Alien') {
                 $rand = rand(1,2);
 
                 if($rand == 1){
-                  $type = ['lieu' => 'Vieux Temple'];
+                  $type = ['lieu' => 'Vieux_Temple'];
 
                 }elseif($rand == 2){
                   $type = ['lieu' => 'Caverne'];
                 }
 
-            }elseif ($lieu = 'Base Alien') {
-                $type = ['lieu' => 'Entrée Secrète'];
+            }elseif ($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines') {
+                $type = ['lieu' => 'Entrée_Secrète'];
             }
 
             //si l'on est au dessus de 15, on ouvre l'accès à la zone suivante :
           }elseif ($random >= 16){
               $adresse = 'explore';
-              if($lieu = 'Ruines'){
+              if($lieu == 'Ruines' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                 $type = ['lieu' => 'Abords'];
-              }elseif ($lieu = 'Abords') {
+              }elseif ($lieu == 'Abords' && $lieu != 'Ruines' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $type = ['lieu' => 'Foret'];
-              }elseif ($lieu = 'Foret') {
+              }elseif ($lieu == 'Foret' && $lieu != 'Abords' && $lieu != 'Ruines' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $type = ['lieu' => 'Lac'];
-              }elseif ($lieu = 'Lac') {
+              }elseif ($lieu == 'Lac' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Ruines' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $type = ['lieu' => 'Montagne'];
-              }elseif ($lieu = 'Montagne') {
+              }elseif ($lieu == 'Montagne' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Ruines' && $lieu != 'Base_Alien') {
                 $type = ['lieu' => 'Base Alien'];
-              }elseif ($lieu = 'Base Alien') {
+              }elseif ($lieu == 'Base Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines') {
                 $type = ['lieu' => 'Reacteur'];
               }
           }
@@ -382,7 +381,6 @@ class GameController extends Controller{
           // $this->url('game/'.$acte);
 
     }
-
 
     public function attack($cible, $deg){
       $valid = new Validation();
