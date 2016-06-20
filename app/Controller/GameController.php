@@ -305,7 +305,7 @@ class GameController extends Controller{
                   $type = ['lieu' => 'Gare'];
 
                 }elseif($rand == 3){
-                  $type = ['lieu' => 'Musée'];
+                  $type = ['lieu' => 'Musee'];
                 }
 
             }elseif ($lieu == 'Abords' && $lieu != 'Ruines' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
@@ -318,7 +318,7 @@ class GameController extends Controller{
                   $type = ['lieu' => 'Aeroport'];
 
                 }elseif($rand == 3){
-                  $type = ['lieu' => 'Frontière'];
+                  $type = ['lieu' => 'Frontiere'];
                 }
 
             }elseif ($lieu == 'Foret' && $lieu != 'Abords' && $lieu != 'Ruines' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
@@ -352,7 +352,7 @@ class GameController extends Controller{
                 }
 
             }elseif ($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines') {
-                $type = ['lieu' => 'Entrée_Secrète'];
+                $type = ['lieu' => 'Entree_Secrete'];
             }
 
             //si l'on est au dessus de 15, on ouvre l'accès à la zone suivante :

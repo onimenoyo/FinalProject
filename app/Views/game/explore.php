@@ -31,7 +31,7 @@
 
 <a href="<?= $this->url('explore', ['lieu' => 'Ruines'])?>"><button type="button" id="return" name="button">Retour</button></a>
 
-<?php }elseif($lieu == 'Musée'){ ?>
+<?php }elseif($lieu == 'Musee'){ ?>
 
 <p>
   Au bout d’un moment d’exploration, tu finis par découvrir un vieux musé et poussé par la curiosité, tu te décides d’y entrer. Le sentiment est étrange, bien que la ressemblance entre notre monde et celui-ci soit frappante, tu découvres que la culture a vraiment évolué différemment ici.
@@ -71,7 +71,7 @@
 </p>
 <a href="<?= $this->url('explore', ['lieu' => 'Abords'])?>"><button type="button" id="return" name="button">Retour</button></a>
 
-<?php }elseif($lieu == 'Frontière'){  ?>
+<?php }elseif($lieu == 'Frontiere'){  ?>
 
 <p>
   La végétation est de plus en plus dense, il devient difficile de voir les bâtiments ou véhicules sous cet amas vert. Il devient de plus en plus difficile de s’orienter.
@@ -164,7 +164,7 @@
 </form>
 <a href="<?= $this->url('explore', ['lieu' => 'Montagne'])?>"><button type="button" id="return" name="button">Retour</button></a>
 
-<?php }elseif($lieu == 'Entrée_Secrète'){  ?>
+<?php }elseif($lieu == 'Entree_Secrete'){  ?>
 
 <p>
 </p>
@@ -176,7 +176,7 @@
 
 <p>
 </p>
-<a href="<?= $this->url('explore', ['lieu' => 'Entrée_Secrète'])?>"><button type="button" id="return" name="button">Retour</button></a>
+<a href="<?= $this->url('explore', ['lieu' => 'Entree_Secrete'])?>"><button type="button" id="return" name="button">Retour</button></a>
 
 
 <?php } ?>
