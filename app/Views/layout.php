@@ -17,8 +17,10 @@
 			<div class="navbar">
         <a href="<?= $this->url("default_home")?>"><img src="<?= $this->assetUrl('img/Logo Final Project.png')?>" alt="Logo" class="logoSite"/></a>
         <ul class="menuSite">
-          <li><a href="#">Nous contacter</a></li>
-					<?php if (!empty($w_user)) {
+					<?php if ($w_user['role'] == 'admin') {}
+						else {
+							?><li><a href="#">Nous contacter</a></li>
+					<?php } if (!empty($w_user)) {
 						if ($w_user['role'] == 'admin') {?>
 							<li><a href="<?= $this->url("dashboard")?>">Administration</a></li>
 							<?php } ?>
