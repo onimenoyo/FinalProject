@@ -25,7 +25,7 @@ class MailController extends Controller
 			$mail->SetFrom('finalproject.wf3@gmail.com', 'Final Project');
 			$mail->Subject = 'Récupération de mot de passe';
 			$mail->Body = 'Voici l\'adresse pour configurer votre mot de passe : '.$body.'.';
-			// $mail->AddAddress('rougee.thomas@gmail.com');
+			$mail->AddAddress($email);
 			// debug($mail);
 			if(!$mail->Send()) {
 				return 'Mail error: '.$mail->ErrorInfo;
@@ -59,7 +59,7 @@ class MailController extends Controller
 			$mail->SetFrom('finalproject.wf3@gmail.com', 'Final Project');
 			$mail->Subject = 'Validation d\'e-mail';
 			$mail->Body = 'Voici l\'adresse pour valider votre adresse e-mail : '.$body.'.';
-			// $mail->AddAddress('rougee.thomas@gmail.com');
+			$mail->AddAddress($email);
 			// debug($mail);
 			if(!$mail->Send()) {
 				return 'Mail error: '.$mail->ErrorInfo;
