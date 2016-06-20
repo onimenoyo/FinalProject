@@ -183,31 +183,7 @@
 
 
   <button type="button" id="heal" name="button">Soin</button>
-  <a href="<?= $this->url('camp')?>"><button type="button" id="return" name="button">Retour au camp</button></a>
+  <a href="<?= $this->url('camp')?>"><button type="button" id="backtocamp" name="button">Retour au camp</button></a>
 
 
 <?php $this->stop('main_content'); ?>
-
-
-
-
-
-
-<?php /* $this->start('ajax'); ?>
-
-<?php $url = $this->url('exploration', ['lieu' => $lieu]); ?>
-<script type="text/javascript">
-
- $(document).ready(function(){
-
-     $('#explore').on('click', function(e){
-      e.preventDefault();
-
-      location.href = "";
-
-
-       });
-     });
-
-</script>
-<?php */ ?>

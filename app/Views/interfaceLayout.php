@@ -6,7 +6,7 @@
 
 	<title><?= $this->e($title) ?></title>
 	<link rel="stylesheet" href="<?= $this->assetUrl('css/font-awesome.min.css')?>">
-	<link rel="stylesheet" href="<?= $this->assetUrl('css/style.css') ?>">
+	<link rel="stylesheet" href="<?= $this->assetUrl('css/styleGame.css') ?>">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
 </head>

@@ -10,14 +10,14 @@ use \Services\Validation;
 class GameController extends Controller{
 
 
-  public function fight() {
+  public function fight($lieu, $cible) {
     //récupération des infos de l'utilisateur connecté
     $loggedUser = $this->getUser();
     $testModel = new AvatarModel();
     $testModel1 = new CharactersModel();
     $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
     $test2 = $testModel1-> find($loggedUser['id']);
-    $this->show('game/fight', ['img_path'=> $test1['img_path']]);
+    $this->show('game/fight', ['lieu' => $lieu, 'cible' => $cible]);
   }
 
   public function intro() {
@@ -219,75 +219,81 @@ class GameController extends Controller{
 
           if($random <= 7){
             $adresse = 'fight';
+
             if($lieu == 'Ruines' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                 $rand = rand(1, 10);
+                $type = ['lieu' => $lieu];
 
                 if($rand >= 1 && $rand <=4){
-                  $type = ['cible' => 'Drone'];
+                  $type['cible'] = 'Drone';
 
                 }elseif($rand >=5 && $rand <= 7){
-                  $type = ['cible' => 'Traqueur'];
+                  $type['cible'] = 'Traqueur';
 
                 }elseif($rand >=8 && $rand < 10 ){
-                  $type = ['cible' => 'FantassinAlien'];
+                  $type['cible'] = 'FantassinAlien';
 
                 }elseif($rand == 10){
-                  $type = ['cible' => 'Robot'];
+                  $type['cible'] = 'Robot';
                 }
 
             }elseif($lieu == 'Abords' && $lieu != 'Ruines' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                 $rand = rand(1, 10);
+                $type = ['lieu' => $lieu];
 
                 if($rand >= 1 && $rand <=3){
-                  $type = ['cible' => 'Drone'];
+                  $type['cible'] = 'Drone';
 
                 }elseif($rand >=4 && $rand <= 7){
-                  $type = ['cible' => 'Traqueur'];
+                  $type['cible'] = 'Traqueur';
 
                 }elseif($rand >=8 && $rand < 10 ){
-                  $type = ['cible' => 'FantassinAlien'];
+                  $type['cible'] = 'FantassinAlien';
 
                 }elseif($rand == 10){
-                  $type = ['cible' => 'Renegat'];
+                  $type['cible'] = 'Renegat';
                 }
 
             }elseif($lieu == 'Foret' && $lieu != 'Abords' && $lieu != 'Ruines' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
-                  $rand = rand(1, 10);
+                $rand = rand(1, 10);
+                $type = ['lieu' => $lieu];
 
                 if($rand >= 1 && $rand <=4){
-                  $type = ['cible' => 'Traqueur'];
+                  $type['cible'] = 'Traqueur';
 
                 }elseif($rand >=5 && $rand <= 8){
-                  $type = ['cible' => 'FantassinAlien'];
+                  $type['cible'] = 'FantassinAlien';
 
                 }elseif($rand >= 9){
-                  $type = ['cible' => 'Renegat'];
+                  $type['cible'] = 'Renegat';
                 }
 
             }elseif($lieu == 'Lac' || $lieu == 'Montagne' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Base_Alien'){
                 $rand = rand(1,10);
+                $type = ['lieu' => $lieu];
 
                 if($rand >=1 && $rand <= 5){
-                  $type = ['cible' => 'FantassinAlien'];
+                  $type['cible'] = 'FantassinAlien';
 
                 }elseif($rand >=6 && $rand <= 9){
-                  $type = ['cible' => 'Renegat'];
+                  $type['cible'] = 'Renegat';
 
                 }elseif($rand == 10){
-                  $type = ['cible' => 'Ravageur'];
+                  $type['cible'] = 'Ravageur';
                 }
 
             }elseif($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines'){
                   $rand = rand(1,10);
+                  $type = ['lieu' => $lieu];
 
                   if($rand >=1 && $rand <= 5){
-                    $type = ['cible' => 'Drone'];
+                    $type['cible'] = 'Drone';
 
                   }elseif($rand >=6 && $rand <= 9){
-                    $type = ['cible' => 'FantassinAlien'];
+                    $type['cible'] = 'FantassinAlien';
 
                   }elseif($rand == 10){
-                    $type = ['cible' => 'Ravageur'];
+                    $type['cible'] = 'Ravageur';
                   }
             }
 
@@ -372,17 +378,17 @@ class GameController extends Controller{
                 $type = ['lieu' => 'Reacteur'];
               }
           }
-          debug($type);
           // $adresse = '/game/' . $adresse.'/';
           debug($adresse);
+          debug($type);
           // genere l'URL en fonction des tirages :
           $acte = $this->generateUrl($adresse, $type);
           $this->redirect($acte);
-          // $this->url('game/'.$acte);
 
     }
 
-    public function attack($cible, $deg){
+    public function attack($cible, $dice, $deg){
+
       $valid = new Validation();
       // verification ajax :
         if ($valid->isAjax()){
