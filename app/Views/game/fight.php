@@ -1,6 +1,7 @@
 <?php $this->layout('interfaceLayout', ['title' => 'Combat']) ?>
 
 <?php $this->start('main_content') ?>
+
       <img src="<?= $this->assetUrl($img_path)?>" alt="avatar" id="avatar"/>
       <div id="Mob">
         <img src="img/pnj/Renegat.jpg" alt="pnj" id="pnj"/>
@@ -31,13 +32,8 @@
         <div class="contenu options">
           <a href="#"><div class="button option" id="attack">Attaquer</div></a>
           <a href="#"><div class="button option" id="heal">Se Soigner</div></a>
-          <a href="#"><div class="button option" id="run">Fuir !</div></a>
+          <a href="<?= $this->url('explore', ['lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
 
-          <!-- <ul>
-            <li><a href="#"><div class="button">Attaquer</div></a></li>
-            <li><a href="#"><div class="button">Se Soigner</div></a></li>
-            <li><a href="#"><div class="button">Fuir</div></a></li>
-          </ul> -->
 
         </div>
         <div class="contenu infos">
@@ -63,10 +59,8 @@
 
 <?php
 
-$fight['cible'] = 'drone';
-$fight['deg'] = 'degs';
 
-$url = $this->url('attack', ['cible' => $fight['cible'], 'dice' => $fight['dice'], 'deg' => $fight['deg']  ]);
+$url = $this->url('attack', ['lieu' => $lieu, 'cible' => $cible, 'weapon' => $weapon]);
  ?>
 
 <script type="text/javascript">

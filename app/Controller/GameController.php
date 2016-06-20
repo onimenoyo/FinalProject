@@ -394,7 +394,12 @@ class GameController extends Controller{
 
     }
 
-    public function attack($cible, $dice, $deg){
+    public function attack($cible, $weapon){
+      $target = new PnjModel();
+      $targetInfo = $target->find($cible);
+
+      $arme = new ObjectsModel();
+      $armeInfo = $arme->find($weapon);
 
       $valid = new Validation();
       // verification ajax :

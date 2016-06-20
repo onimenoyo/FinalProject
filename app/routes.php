@@ -61,7 +61,12 @@
 		['GET', '/game/camp', 'Game#camp', 'camp'],
 		['GET', '/game/explore/[:lieu]', 'Game#explore', 'explore'],
 		['POST', '/game/explore/[:lieu]', 'Game#exploration', 'exploration'],
-    ['GET', '/game/fight/[:cible]', "Game#fight", 'fight'],
+		['GET', '/game/fight/[:lieu]/[:cible]', "Game#fight", 'fight'],
+
+		// AJAX
+
+		['GET', '/game/attack/ajax/[:lieu]/[:cible]/[:weapon]', "Game#attack", 'attack'],
+
 
 		//MailController
 		['GET', '/test/mail', 'Mail#mail', 'mail'],
