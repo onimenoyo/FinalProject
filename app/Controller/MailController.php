@@ -24,7 +24,7 @@ class MailController extends Controller
 			$mail->Password = 'Webforce3';
 			$mail->SetFrom('finalproject.wf3@gmail.com', 'Final Project');
 			$mail->Subject = 'Récupération de mot de passe';
-			$mail->Body = 'Voici l\'adresse pour configurer votre mot de passe : '.$body.'.';
+			$mail->Body = 'Voici l\'adresse pour configurer votre mot de passe : <a href="'.$body.'">'.$body.'</a>.';
 			$mail->AddAddress($email);
 			// debug($mail);
 			if(!$mail->Send()) {
@@ -58,7 +58,7 @@ class MailController extends Controller
 			$mail->Password = 'Webforce3';
 			$mail->SetFrom('finalproject.wf3@gmail.com', 'Final Project');
 			$mail->Subject = 'Validation d\'e-mail';
-			$mail->Body = 'Voici l\'adresse pour valider votre adresse e-mail : '.$body.'.';
+			$mail->Body = 'Voici l\'adresse pour valider votre adresse e-mail : <a href="'.$body.'">'.$body.'</a>.';
 			$mail->AddAddress($email);
 			// debug($mail);
 			if(!$mail->Send()) {
