@@ -136,6 +136,9 @@
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Bosquet" />
   <div class="dialogue2">
     <p>
+      Tu arrives à quelque chose d’étrange, un bosquet dans une forêt. L'environnement semble délimité par un petit ruisseau. Le lieu est vraiment calme et magnifique.
+Tu te sent reposé et apaisé par l’environnement.
+Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes blessures et de ta fatigue.
     </p>
   </div>
   <div class="conteneur">
@@ -246,7 +249,7 @@
 
 <?php } if($lieu != 'Infirmerie') {?>
   <button type="button" id="heal" class="button option" style="color:white" name="button">Soin</button>
-  <a href="<?= $this->url('camp')?>"><button type="button" id="backtocamp" style="color:white" class="button option" name="button">Retour au camp</button></a>
+  <a href="<?= $this->url('camp', ['id' => $id])?>"><button type="button" id="backtocamp" style="color:white" class="button option" name="button">Retour au camp</button></a>
   </div>
 </div>
 

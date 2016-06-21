@@ -34,7 +34,7 @@
         <div class="contenu options">
           <a href="#"><div class="button option" id="attack">Attaquer</div></a>
           <a href="#"><div class="button option" id="heal">Se Soigner</div></a>
-          <a href="<?= $this->url('explore', ['lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
+          <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
 
 
         </div>
@@ -69,7 +69,7 @@ $url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'w
 
   $(document).ready(function(){
 
-    $('#attack').on('click', function(e){
+    $('#attack').click(function(e){
       e.preventDefault();
 
       $.ajax({
