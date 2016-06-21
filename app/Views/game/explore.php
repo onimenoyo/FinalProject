@@ -2,7 +2,7 @@
 <?php $this->start('main_content'); ?>
 
 <?php if($lieu == 'Ruines'){ ?>
-  <img src=" <?= $this->assetUrl('img/background/RuinesBG.jpg')?>" alt="Ruines" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Ruines" />
   <div class="dialogue2">
     <p>
       La ville dans laquelle tu circules n’est que ruine et végétaux. Les seuls bruits que tu entends sont ceux des combats dans le lointain, parfois des morceaux de pierre s’écroulant d’immeuble.
@@ -17,7 +17,7 @@
       </form>
 
 <?php }elseif($lieu == 'Centre_Commercial'){ ?>
-  <img src=" <?= $this->assetUrl('img/background/Ruines_CentreCom')?>" alt="Centre Commercial" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Centre Commercial" />
   <div class="dialogue2">
     <p>
       Ton exploration te mène à un grand centre commercial abandonné. Lorsque tu entres à l’intérieur, tu découvres un plafond éventré tandis que la végétation a commencé à rependre ses droits sur le béton.
@@ -26,10 +26,10 @@
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Ruines'])?>"><button type="button" id="return" class="button option" style="color:white" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Ruines'])?>"><button type="button" id="return" class="button option" style="color:white" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Gare'){ ?>
-  <img src=" <?= $this->assetUrl('img/background/Ruines_Gare.jpg')?>" alt="Gare" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Gare" />
   <div class="dialogue2">
     <p>
       Tes pas t’ont amené à ce qui semble être l’une des gares importante de la ville. L’intérieur est couvert d’une végétation luxuriante. Tu ne sais pas depuis combien de temps l’invasion de cette planète a eu lieu, mais tu restes impressionné de voir la vitesse à laquelle les installations se sont dégradées.
@@ -38,10 +38,10 @@
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Ruines'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Ruines'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Musee'){ ?>
-  <img src=" <?= $this->assetUrl('img/background/Ruines_Muse.jpg')?>" alt="Musé" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Musé" />
   <div class="dialogue2">
     <p>
       Au bout d’un moment d’exploration, tu finis par découvrir un vieux musé et poussé par la curiosité, tu te décides d’y entrer. Le sentiment est étrange, bien que la ressemblance entre notre monde et celui-ci soit frappante, tu découvres que la culture a vraiment évolué différemment ici.
@@ -52,10 +52,10 @@
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Ruines'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Ruines'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Abords'){ ?>
-  <img src=" <?= $this->assetUrl('img/background/AbordsBG.jpg')?>" alt="Abords" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords" />
   <div class="dialogue2">
     <p>
       Au bout d’un moment, tu finis par arriver aux abords de la ville, entourée de son périphérique aérien tombant en morceaux. Tu te trouves dans une banlieue vraiment typique, avec ses HLM, petites maisons et magasins de quartier. Moins touché que le centre ville, les lieux sont tout de même abandonnés et s’effondrant par manque d’entretien.
@@ -67,10 +67,10 @@
       <form action="" method="post">
         <button class="button option" style="color:white" type="submit" id="explore" name="button">Exploration</button>
       </form>
-      <a href="<?= $this->url('explore', ['lieu' => 'Ruines'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Ruines'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Pont'){ ?>
-  <img src=" <?= $this->assetUrl('img/background/Abords_Pont.jpg')?>" alt="Pont" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Pont" />
   <div class="dialogue2">
     <p>
       Après quelques heures à circuler à travers les voitures abandonnées et les rues silencieuses, tu arrives à un pont. Celui-ci devait être beau avant d’être brisé par l’invasion alien.
@@ -79,10 +79,10 @@
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Abords'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Abords'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Aeroport'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/Abords_Aeroport.jpg')?>" alt="Aéroport" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Aéroport" />
   <div class="dialogue2">
     <p>
       Ta recherche te mène à un aéroport situé en bord de mer. La digue qui devait maintenir la mer à distance ayant du céder depuis un certain temps au vu de l’eau et du sable reprenant de l’avance sur la terre.
@@ -92,10 +92,10 @@
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Abords'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Abords'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Frontiere'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/Abords_Frontiere.jpg')?>" alt="Frontière" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Frontière" />
   <div class="dialogue2">
     <p>
       La végétation est de plus en plus dense, il devient difficile de voir les bâtiments ou véhicules sous cet amas vert. Il devient de plus en plus difficile de s’orienter.
@@ -104,10 +104,10 @@
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Abords'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Abords'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Foret'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/ForetBG.jpg')?>" alt="Fôret" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Fôret" />
   <div class="dialogue2">
     <p>
       Les lieux sont paisibles et semblent ne pas avoir été touché par les conflits. Les cratères, carcasses de voiture ou autre objet trouvable sous la verdure restent tout de même un souvenir constant de ce qu’il se passe à l'extérieur de cet endroit.
@@ -120,30 +120,30 @@
       <form action="" method="post">
         <button type="submit" id="explore" class="button option" style="color:white" name="button">Exploration</button>
       </form>
-      <a href="<?= $this->url('explore', ['lieu' => 'Abords'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Abords'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Camp_Survivants'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/Foret_CampSurvivants.jpg')?>" alt="Camp Survivants de la fôret" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Camp Survivants de la fôret" />
   <div class="dialogue2">
     <p>
     </p>
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Foret'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Foret'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Bosquet'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/Foret_Bosquet.jpg')?>" alt="Bosquet" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Bosquet" />
   <div class="dialogue2">
     <p>
     </p>
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Foret'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Foret'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Lac'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/LacBG.jpg')?>" alt="Lac" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Lac" />
   <div class="dialogue2">
     <p>
     </p>
@@ -153,30 +153,30 @@
       <form action="" method="post">
         <button type="submit" class="button option" style="color:white" id="explore" name="button">Exploration</button>
       </form>
-      <a href="<?= $this->url('explore', ['lieu' => 'Foret'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Foret'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Chateau_Antique'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/CampBG.jpg')?>" alt="Camp" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Camp" />
   <div class="dialogue2">
     <p>
     </p>
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Lac'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Lac'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Porte_Montagnes'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/Lac_Portail.jpg')?>" alt="Portail du lac" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Portail du lac" />
   <div class="dialogue2">
     <p>
     </p>
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Lac'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Lac'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Montagne'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/MontagneBG.jpg')?>" alt="Abords_Pont" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords_Pont" />
   <div class="dialogue2">
     <p>
     </p>
@@ -186,30 +186,30 @@
       <form action="" method="post">
         <button type="submit" id="explore" class="button option" style="color:white" name="button">Exploration</button>
       </form>
-      <a href="<?= $this->url('explore', ['lieu' => 'Lac'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Lac'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Vieux_Temple'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/Montagne_Temple.jpg')?>" alt="Temple" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Temple" />
   <div class="dialogue2">
     <p>
     </p>
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Montagne'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Montagne'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Caverne'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/Montagne_Grotte.jpg')?>" alt="Grotte" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Grotte" />
   <div class="dialogue2">
     <p>
     </p>
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Montagne'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Montagne'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Base_Alien'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/BaseAlien.jpg')?>" alt="Base alien" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Base alien" />
   <div class="dialogue2">
     <p>
     </p>
@@ -219,29 +219,29 @@
       <form action="" method="post">
         <button type="submit" id="explore" class="button option" style="color:white" name="button">Exploration</button>
       </form>
-      <a href="<?= $this->url('explore', ['lieu' => 'Montagne'])?>"><button type="button" id="return" class="button option" style="color:white" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Montagne'])?>"><button type="button" id="return" class="button option" style="color:white" name="button">Retour</button></a>
 
 <?php }elseif($lieu == 'Entree_Secrete'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/RuinesBG.jpg')?>" alt="Entrée secrète" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Entrée secrète" />
   <div class="dialogue2">
     <p>
     </p>
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Base_Alien'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
-      <a href="<?= $this->url('explore', ['lieu' => 'Generateur'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Attaquer le Generateur</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Base_Alien'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Generateur'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Attaquer le Generateur</button></a>
 
 
 <?php }elseif($lieu == 'Generateur'){  ?>
-  <img src=" <?= $this->assetUrl('img/background/BaseAlien_Objectif.jpg')?>" alt="Générateur" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Générateur" />
   <div class="dialogue2">
     <p>
     </p>
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('explore', ['lieu' => 'Entree_Secrete'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
+      <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Entree_Secrete'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
 
 <?php } if($lieu != 'Infirmerie') {?>
@@ -251,7 +251,7 @@
 </div>
 
 <?php } if($lieu == 'Infirmerie'){ ?>
-  <img src=" <?= $this->assetUrl('img/background/Camp_Infirmerie.jpg')?>" alt="Infirmerie" />
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Infirmerie" />
   <div class="dialogue2">
     <p>
       Placé dans un ancien centre commercial, les lieux ont été vidés et transformé en hôpital de
@@ -265,7 +265,7 @@
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('camp')?>"><button type="button" id="backtocamp" style="color:white" class="button option" name="button">Retour au camp après s'être fais soigner</button></a>
+      <a href="<?= $this->url('camp', ['id' => $id]) ?>"><button type="button" id="backtocamp" style="color:white" class="button option" name="button">Retour au camp après s'être fais soigner</button></a>
     </div>
 
 <?php } $this->stop('main_content'); ?>

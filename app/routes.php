@@ -57,15 +57,15 @@
 		['GET', '/game/intro', 'Game#intro', 'intro'],
 		['GET', '/game/intro2', 'Game#intro2', 'intro2'],
 		['POST', '/game/intro2', 'Game#character_creation_post', 'character_creation_post'],
-		['GET', '/game/intro3', 'Game#intro3', 'intro3'],
-		['GET', '/game/camp', 'Game#camp', 'camp'],
-		['GET', '/game/explore/[:lieu]', 'Game#explore', 'explore'],
-		['POST', '/game/explore/[:lieu]', 'Game#exploration', 'exploration'],
-		['GET', '/game/fight/[:lieu]/[:cible]', "Game#fight", 'fight'],
+		['GET', '/game/intro3/[:id]', 'Game#intro3', 'intro3'],
+		['GET', '/game/camp/[:id]', 'Game#camp', 'camp'],
+		['GET', '/game/explore/[:id]/[:lieu]', 'Game#explore', 'explore'],
+		['POST', '/game/explore/[:id]/[:lieu]', 'Game#exploration', 'exploration'],
+		['GET', '/game/fight/[:id]/[:lieu]/[:cible]', "Game#fight", 'fight'],
 
 		// AJAX
 
-		['GET', '/game/attack/ajax/[:lieu]/[:cible]/[:weapon]', "Game#attack", 'attack'],
+		['GET', '/game/attack/ajax/[:id]/[:lieu]/[:cible]/[:weapon]', "Game#attack", 'attack'],
 
 
 		//MailController

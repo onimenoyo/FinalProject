@@ -33,7 +33,7 @@
       </div>
       <div class="conteneur">
         <div class="contenu options">
-          <a href="<?= $this->url("camp")?>"><button class="button2 option" type="button" name="button">Suivant</button></a>
+          <a href="<?= $this->url('camp', ['id' => $id])?>"><button class="button2 option" type="button" name="button">Suivant</button></a>
         </div>
       </div>
 <?php $this->stop('main_content') ?>

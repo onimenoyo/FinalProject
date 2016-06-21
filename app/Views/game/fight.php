@@ -4,7 +4,7 @@
 
       <img src="<?= $this->assetUrl($img_path)?>" alt="avatar" id="avatar"/>
       <div id="Mob">
-        <img src="img/pnj/Renegat.jpg" alt="pnj" id="pnj"/>
+        <img src="<?= $this->assetUrl('img/bestiaire/'.$cible.'.jpg')?>" alt="pnj" id="pnj"/>
         <div class="mobInfo">
           <div class="info"><strong>Nom : </strong>$mob->get_name()</div>
           <div class="info"><strong>Lvl : </strong>$mob->get_lvl()</div>
@@ -12,11 +12,13 @@
           <div class="info"><strong>Armure : </strong>$mob->get_ca()</div>
         </div>
       </div>
-      <img src="img/background/BaseAlien.jpg" alt="Abords_Pont" />
+      <img src="<?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords_Pont" />
       <div class="dialogue">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac dui et ligula ultricies vehicula a gravida nulla. Fusce enim tortor, mollis vel vehicula vel, faucibus sed ante. Lorem ipsum.
-        </p>
+<div id="info">
+
+</div>
+<?php debug($cible); ?>
+
       </div>
       <div class="conteneur">
         <div class="contenu menu">
@@ -59,8 +61,8 @@
 
 <?php
 
-
-$url = $this->url('attack', ['lieu' => $lieu, 'cible' => $cible, 'weapon' => $weapon]);
+$weapon = 'Vulcan';
+$url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'weapon' => $weapon]);
  ?>
 
 <script type="text/javascript">
