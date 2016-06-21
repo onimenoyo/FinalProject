@@ -107,18 +107,18 @@ $(document).ready(function() {
           modal.style.display = "none";
         }
       });
-
-    // On définit la croix de la modal dans une variable
-    var close = document.getElementsByClassName("close")[0];
-    // Pour fermer la modal en cliquant sur la croix
-    close.onclick = function() {
-        modal.style.display = "none";
-    }
-    // Quand on clique a l'extérieur de la modal ca la ferme
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
+    // 
+    // // On définit la croix de la modal dans une variable
+    // var closeModal = document.getElementsByClassName("close")[0];
+    // // Pour fermer la modal en cliquant sur la croix
+    // closeModal.onclick = function() {
+    //     modal.style.display = "none";
+    // }
+    // // Quand on clique a l'extérieur de la modal ca la ferme
+    // window.onclick = function(event) {
+    //     if (event.target == modal) {
+    //         modal.style.display = "none";
+    //     }
+    // }
 
 });

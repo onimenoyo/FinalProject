@@ -5,6 +5,7 @@ use \Model\AvatarModel;
 use \Model\UserModel;
 use \Model\CharactersModel;
 use \Model\InventoryModel;
+use \Model\ObjectsModel;
 use \Services\Validation;
 use \classes\Characters;
 use \classes\Drone;
@@ -398,7 +399,6 @@ class GameController extends Controller{
                 $type['lieu'] = 'Base_Alien';
               }elseif ($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines') {
                 $type['lieu'] = 'Entree_Secrete';
-
               }
           }
 
@@ -408,28 +408,26 @@ class GameController extends Controller{
 
     }
 
-    public function attack($id, $cible, $weapon){
+    public function attack($id, $lieu, $cible){
 
       // appel de la classe du monstre
-      $target = new $cible($cible);
+      $drone = new Drone('Drone');
 
       // appel des informations du personnage
       $char = new CharactersModel();
       $character = $char->find($id);
 
-
       // on récupère les infos de l'arme du personnage
       $arme = new ObjectsModel();
-
       $armeInfo = $arme->find($character['weapon_id']);
-
 
       $valid = new Validation();
       // verification ajax :
         if ($valid->isAjax()){
           $data = array(
             'cible' => $cible,
-            'weapon' => $weapon,
+            'weapon' => $armeInfo,
+
           );
           //
           // if($armeInfo['type'] = 'cac'){

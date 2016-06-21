@@ -15,14 +15,10 @@
       <img src="<?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords_Pont" />
       <div class="dialogue">
 
-
         <!-- div permettant de recevoir les infos ajax -->
         <div id="info">
 
         </div>
-        <?php debug($cible);
-        debug($id);
-        debug($lieu);?>
 
 
       </div>
@@ -35,7 +31,7 @@
 
         </div>
         <div class="contenu options">
-          <a href="#"><div class="button option" id="attack">Attaquer</div></a>
+          <button class="button option" id="attack">Attaquer</button>
           <a href="#"><div class="button option" id="heal">Se Soigner</div></a>
           <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
 
@@ -55,8 +51,8 @@
 
 <?php
 
-$weapon = 'Vulcan';
-$url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'weapon' => $weapon]);
+
+$url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible]);
  ?>
 
 <script type="text/javascript">
@@ -73,6 +69,7 @@ $url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'w
         // en cas de succés :
         success: function(data){
 
+          // renvoit l'information de la cible
            $('#info').html(data.cible);
 
 
@@ -83,7 +80,7 @@ $url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'w
         }
       });
     });
-    });
+  });
 </script>
 
 <?php $this->stop('ajax') ?>
