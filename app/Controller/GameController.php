@@ -398,6 +398,7 @@ class GameController extends Controller{
                 $type['lieu'] = 'Base_Alien';
               }elseif ($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines') {
                 $type['lieu'] = 'Entree_Secrete';
+
               }
           }
 
@@ -416,9 +417,12 @@ class GameController extends Controller{
       $char = new CharactersModel();
       $character = $char->find($id);
 
+
       // on récupère les infos de l'arme du personnage
       $arme = new ObjectsModel();
+
       $armeInfo = $arme->find($character['weapon_id']);
+
 
       $valid = new Validation();
       // verification ajax :

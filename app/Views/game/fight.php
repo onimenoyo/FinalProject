@@ -15,6 +15,7 @@
       <img src="<?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords_Pont" />
       <div class="dialogue">
 
+
         <!-- div permettant de recevoir les infos ajax -->
         <div id="info">
 
@@ -22,6 +23,7 @@
         <?php debug($cible);
         debug($id);
         debug($lieu);?>
+
 
       </div>
       <div class="conteneur">
