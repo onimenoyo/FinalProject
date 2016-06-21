@@ -6,18 +6,28 @@ use \Model\UserModel;
 use \Model\CharactersModel;
 use \Model\InventoryModel;
 use \Services\Validation;
+use \classes\Characters;
+use \classes\Drone;
+use \classes\FantassinAlien;
+use \classes\Player;
+use \classes\Ravageur;
+use \classes\Robot;
+use \classes\Traqueur;
+
+
+
 
 class GameController extends Controller{
 
 
-  public function fight($lieu, $cible) {
+  public function fight($id, $lieu, $cible) {
     //récupération des infos de l'utilisateur connecté
     $loggedUser = $this->getUser();
     $testModel = new AvatarModel();
     $testModel1 = new CharactersModel();
     $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
     $test2 = $testModel1-> find($loggedUser['id']);
-    $this->show('game/fight', ['lieu' => $lieu, 'cible' => $cible]);
+    $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible]);
   }
 
   public function intro() {
@@ -28,15 +38,11 @@ class GameController extends Controller{
     $this->show('game/intro2');
   }
 
-  public function intro3() {
-    $this->show('game/intro3');
+  public function intro3($id) {
+    $this->show('game/intro3', ['id' => $id]);
   }
-  public function camp(){
-  $this->show('game/camp');
-  }
-
-  public function character_creation() {
-    $this->show('game/character_creation');
+  public function camp($id){
+  $this->show('game/camp', ['id' => $id] );
   }
 
   public function character_creation_post()
@@ -66,6 +72,7 @@ class GameController extends Controller{
         // met à jour l'utilisateur avec les nouvelles infos inserer
         $testModel = new CharactersModel();
         $testModel1 = new InventoryModel();
+        //si le joueur prend la classe psy
         if ($class == 'psy') {
           $testModel->insert(array(
                     'user_id' => $loggedUser['id'],
@@ -85,9 +92,10 @@ class GameController extends Controller{
                     'gender' => $gender,
                 )
             );
+        // injection équipement de départ
         $test = $testModel->findWithUserId($loggedUser['id']);
         $testModel1->insert(array(
-                    'character_id' => $test['user_id'],
+                    'character_id' => $test['id'],
                     'object_id' => 2,
                     'amount' => 1
                   )
@@ -95,7 +103,7 @@ class GameController extends Controller{
 
         $test = $testModel->findWithUserId($loggedUser['id']);
         $testModel1->insert(array(
-                            'character_id' => $test['user_id'],
+                            'character_id' => $test['id'],
                             'object_id' => 5,
                             'amount' => 1
                           )
@@ -103,13 +111,14 @@ class GameController extends Controller{
 
           $test = $testModel->findWithUserId($loggedUser['id']);
           $testModel1->insert(array(
-                                    'character_id' => $test['user_id'],
+                                    'character_id' => $test['id'],
                                     'object_id' => 16,
                                     'amount' => 2
                                   )
                                 );
         }
 
+        // si le joueur prend la classe ranger
         if ($class == 'ranger') {
           $testModel->insert(array(
                     'user_id' => $loggedUser['id'],
@@ -130,9 +139,10 @@ class GameController extends Controller{
                 )
             );
 
+            // injection équipement de départ
             $test = $testModel->findWithUserId($loggedUser['id']);
             $testModel1->insert(array(
-                        'character_id' => $test['user_id'],
+                        'character_id' => $test['id'],
                         'object_id' => 2,
                         'amount' => 1,
                       )
@@ -140,7 +150,7 @@ class GameController extends Controller{
 
             $test = $testModel->findWithUserId($loggedUser['id']);
             $testModel1->insert(array(
-                        'character_id' => $test['user_id'],
+                        'character_id' => $test['id'],
                         'object_id' => 6,
                         'amount' => 1,
                       )
@@ -148,13 +158,14 @@ class GameController extends Controller{
 
             $test = $testModel->findWithUserId($loggedUser['id']);
             $testModel1->insert(array(
-                        'character_id' => $test['user_id'],
+                        'character_id' => $test['id'],
                         'object_id' => 16,
                         'amount' => 2,
                       )
                     );
         }
 
+        // si le joueur prend la classe soldier
         if ($class == 'soldier') {
           $testModel->insert(array(
                     'user_id' => $loggedUser['id'],
@@ -175,9 +186,10 @@ class GameController extends Controller{
                 )
             );
 
+            // injection équipement de départ
             $test = $testModel->findWithUserId($loggedUser['id']);
             $testModel1->insert(array(
-                        'character_id' => $test['user_id'],
+                        'character_id' => $test['id'],
                         'object_id' => 1,
                         'amount' => 1,
                       )
@@ -185,7 +197,7 @@ class GameController extends Controller{
 
             $test = $testModel->findWithUserId($loggedUser['id']);
             $testModel1->insert(array(
-                        'character_id' => $test['user_id'],
+                        'character_id' => $test['id'],
                         'object_id' => 5,
                         'amount' => 1,
                       )
@@ -193,16 +205,16 @@ class GameController extends Controller{
 
             $test = $testModel->findWithUserId($loggedUser['id']);
             $testModel1->insert(array(
-                        'character_id' => $test['user_id'],
+                        'character_id' => $test['id'],
                         'object_id' => 16,
                         'amount' => 2,
                       )
                     );
         }
           // affiche admin_user.php
-          $this->redirectToRoute('intro3');
+          $this->redirectToRoute('intro3', ['id' => $test['id'] ]);
       } else {
-        $this->show('game/character_creation', ['error' => $error
+        $this->show('game/intro2', ['error' => $error
                                                ]);
       }
     }
@@ -210,12 +222,12 @@ class GameController extends Controller{
 
 
     // afficher la page explore en fonction du lieu :
-    public function explore($lieu) {
-      $this->show('game/explore', ['lieu' => $lieu]);
+    public function explore($id, $lieu) {
+      $this->show('game/explore', ['id' => $id, 'lieu' => $lieu]);
     }
 
     // fonction d'exploration qui va générer ce qui va arriver :
-    public function exploration($lieu){
+    public function exploration($id, $lieu){
       $acte ="";
 
       $valid = new Validation();
@@ -229,7 +241,7 @@ class GameController extends Controller{
 
             if($lieu == 'Ruines' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                 $rand = rand(1, 10);
-                $type = ['lieu' => $lieu];
+                $type = ['id' => $id, 'lieu' => $lieu];
 
                 if($rand >= 1 && $rand <=4){
                   $type['cible'] = 'Drone';
@@ -246,7 +258,7 @@ class GameController extends Controller{
 
             }elseif($lieu == 'Abords' && $lieu != 'Ruines' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                 $rand = rand(1, 10);
-                $type = ['lieu' => $lieu];
+                $type = ['id' => $id, 'lieu' => $lieu];
 
                 if($rand >= 1 && $rand <=3){
                   $type['cible'] = 'Drone';
@@ -263,7 +275,7 @@ class GameController extends Controller{
 
             }elseif($lieu == 'Foret' && $lieu != 'Abords' && $lieu != 'Ruines' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                 $rand = rand(1, 10);
-                $type = ['lieu' => $lieu];
+                $type = ['id' => $id, 'lieu' => $lieu];
 
                 if($rand >= 1 && $rand <=4){
                   $type['cible'] = 'Traqueur';
@@ -277,7 +289,7 @@ class GameController extends Controller{
 
             }elseif($lieu == 'Lac' || $lieu == 'Montagne' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Base_Alien'){
                 $rand = rand(1,10);
-                $type = ['lieu' => $lieu];
+                $type = ['id' => $id, 'lieu' => $lieu];
 
                 if($rand >=1 && $rand <= 5){
                   $type['cible'] = 'FantassinAlien';
@@ -291,7 +303,7 @@ class GameController extends Controller{
 
             }elseif($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines'){
                   $rand = rand(1,10);
-                  $type = ['lieu' => $lieu];
+                  $type = ['id' => $id, 'lieu' => $lieu];
 
                   if($rand >=1 && $rand <= 5){
                     $type['cible'] = 'Drone';
@@ -307,107 +319,121 @@ class GameController extends Controller{
           // si l'on se trouve au dessus de 10 alors on découvre une zone d'exploration
           }elseif($random >= 8 && $random <= 15) {
             $adresse = 'explore';
+            $type = ['id' => $id];
 
             if($lieu == 'Ruines' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
                 $rand = rand(1,3);
 
                 if($rand == 1){
-                  $type = ['lieu' => 'Centre_Commercial'];
+                  $type['lieu'] = 'Centre_Commercial';
 
                 }elseif($rand == 2){
-                  $type = ['lieu' => 'Gare'];
+                  $type['lieu'] = 'Gare';
 
                 }elseif($rand == 3){
-                  $type = ['lieu' => 'Musee'];
+                  $type['lieu'] = 'Musee';
                 }
 
             }elseif ($lieu == 'Abords' && $lieu != 'Ruines' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $rand = rand(1,3);
 
                 if($rand == 1){
-                  $type = ['lieu' => 'Pont'];
+                  $type['lieu'] = 'Pont';
 
                 }elseif($rand == 2){
-                  $type = ['lieu' => 'Aeroport'];
+                  $type['lieu'] = 'Aeroport';
 
                 }elseif($rand == 3){
-                  $type = ['lieu' => 'Frontiere'];
+                  $type['lieu'] = 'Frontiere';
                 }
 
             }elseif ($lieu == 'Foret' && $lieu != 'Abords' && $lieu != 'Ruines' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $rand = rand(1,2);
 
                 if($rand == 1){
-                  $type = ['lieu' => 'Camp_Survivants'];
+                  $type['lieu'] = 'Camp_Survivants';
 
                 }elseif($rand == 2){
-                  $type = ['lieu' => 'Bosquet'];
+                  $type['lieu'] = 'Bosquet';
                 }
 
             }elseif ($lieu == 'Lac' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Ruines' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $rand = rand(1,2);
 
                 if($rand == 1){
-                  $type = ['lieu' => 'Chateau_Antique'];
+                  $type['lieu'] = 'Chateau_Antique';
 
                 }elseif($rand == 2){
-                  $type = ['lieu' => 'Porte_Montagnes'];
+                  $type['lieu'] = 'Porte_Montagnes';
                 }
 
             }elseif ($lieu == 'Montagne' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Ruines' && $lieu != 'Base_Alien') {
                 $rand = rand(1,2);
 
                 if($rand == 1){
-                  $type = ['lieu' => 'Vieux_Temple'];
+                  $type['lieu'] = 'Vieux_Temple';
 
                 }elseif($rand == 2){
-                  $type = ['lieu' => 'Caverne'];
+                  $type['lieu'] = 'Caverne';
                 }
 
             }elseif ($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines') {
-                $type = ['lieu' => 'Entree_Secrete'];
+                $type['lieu'] = 'Entree_Secrete';
             }
 
             //si l'on est au dessus de 15, on ouvre l'accès à la zone suivante :
           }elseif ($random >= 16){
               $adresse = 'explore';
+              $type = ['id' => $id];
+
               if($lieu == 'Ruines' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien'){
-                $type = ['lieu' => 'Abords'];
+                $type['lieu'] = 'Abords';
               }elseif ($lieu == 'Abords' && $lieu != 'Ruines' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
-                $type = ['lieu' => 'Foret'];
+                $type['lieu'] = 'Foret';
               }elseif ($lieu == 'Foret' && $lieu != 'Abords' && $lieu != 'Ruines' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
-                $type = ['lieu' => 'Lac'];
+                $type['lieu'] = 'Lac';
               }elseif ($lieu == 'Lac' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Ruines' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
-                $type = ['lieu' => 'Montagne'];
+                $type['lieu'] = 'Montagne';
               }elseif ($lieu == 'Montagne' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Ruines' && $lieu != 'Base_Alien') {
-                $type = ['lieu' => 'Base_Alien'];
+                $type['lieu'] = 'Base_Alien';
               }elseif ($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines') {
-                $type = ['lieu' => 'Reacteur'];
+                $type['lieu'] = 'Entree_Secrete';
               }
           }
-          // $adresse = '/game/' . $adresse.'/';
-          debug($adresse);
-          debug($type);
+
           // genere l'URL en fonction des tirages :
           $acte = $this->generateUrl($adresse, $type);
           $this->redirect($acte);
 
     }
 
-    public function attack($cible, $weapon){
-      $target = new PnjModel();
-      $targetInfo = $target->find($cible);
+    public function attack($id, $cible, $weapon){
 
+      // appel de la classe du monstre
+      $target = new $cible($cible);
+
+      // appel des informations du personnage
+      $char = new CharactersModel();
+      $character = $char->find($id);
+
+      // on récupère les infos de l'arme du personnage
       $arme = new ObjectsModel();
-      $armeInfo = $arme->find($weapon);
+      $armeInfo = $arme->find($character['weapon_id']);
 
       $valid = new Validation();
       // verification ajax :
         if ($valid->isAjax()){
           $data = array(
             'cible' => $cible,
-            'degats' => $deg,
+            'weapon' => $weapon,
           );
+          //
+          // if($armeInfo['type'] = 'cac'){
+          //
+          //
+          // }elseif($armeInfo['type'] = 'tir'){
+          //
+          // }
           $this->showJson($data);
           //si ce n'est pas de l'ajax :
         } else{

@@ -4,7 +4,7 @@
 
       <img src="<?= $this->assetUrl($img_path)?>" alt="avatar" id="avatar"/>
       <div id="Mob">
-        <img src="img/pnj/Renegat.jpg" alt="pnj" id="pnj"/>
+        <img src="<?= $this->assetUrl('img/bestiaire/'.$cible.'.jpg')?>" alt="pnj" id="pnj"/>
         <div class="mobInfo">
           <div class="info"><strong>Nom : </strong>$mob->get_name()</div>
           <div class="info"><strong>Lvl : </strong>$mob->get_lvl()</div>
@@ -12,27 +12,30 @@
           <div class="info"><strong>Armure : </strong>$mob->get_ca()</div>
         </div>
       </div>
-      <img src="img/background/BaseAlien.jpg" alt="Abords_Pont" />
+      <img src="<?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords_Pont" />
       <div class="dialogue">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ac dui et ligula ultricies vehicula a gravida nulla. Fusce enim tortor, mollis vel vehicula vel, faucibus sed ante. Lorem ipsum.
-        </p>
+
+        <!-- div permettant de recevoir les infos ajax -->
+        <div id="info">
+
+        </div>
+        <?php debug($cible);
+        debug($id);
+        debug($lieu);?>
+
       </div>
       <div class="conteneur">
         <div class="contenu menu">
           <a href="#" id="menu"><div class="button bmenu"><img src="<?= $this->assetUrl('img/icon/menublanc.png')?>" alt="Menu" />Menu</div></a>
           <a href="#" id="Character"><div class="button bmenu"><img src="img/icon/characterblanc.png" alt="Character" />Personnage</div></a>
           <a href="#" id='inventaire'><div class="button bmenu"><img src="<?= $this->assetUrl('img/icon/sacblanc.png')?>" alt="Sac" />Inventaire</div></a>
-          <!-- <ul>
-            <li><a href="#"><img src="img/icon/homeblanc.png" alt="home" />Home</a></li>
-            <li><a href="#"><img src="img/icon/sacblanc.png" alt="sac" />Inventaire</a></li>
-          </ul> -->
+
 
         </div>
         <div class="contenu options">
           <a href="#"><div class="button option" id="attack">Attaquer</div></a>
           <a href="#"><div class="button option" id="heal">Se Soigner</div></a>
-          <a href="<?= $this->url('explore', ['lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
+          <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
 
 
         </div>
@@ -46,28 +49,19 @@
       </div>
 <?php $this->stop('main_content') ?>
 
-
-<!--
-  <button type="button" class="attack" name="button">Attaque </button>
-  <button type="button" class="magie" name="button">Magie  </button>
-  <button type="button" class="heal" name="button">Se soigner </button>
-  <button type="button" class="run" name="button">Fuite ! </button> -->
-
-
-
 <?php $this->start('ajax'); ?>
 
 <?php
 
-
-$url = $this->url('attack', ['lieu' => $lieu, 'cible' => $cible, 'weapon' => $weapon]);
+$weapon = 'Vulcan';
+$url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'weapon' => $weapon]);
  ?>
 
 <script type="text/javascript">
 
   $(document).ready(function(){
 
-    $('#attack').on('click', function(e){
+    $('#attack').click(function(e){
       e.preventDefault();
 
       $.ajax({

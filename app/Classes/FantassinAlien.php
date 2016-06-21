@@ -1,7 +1,7 @@
 <?php
 namespace classes;
 
-class Alien extends Characters{
+class FantassinAlien extends Characters{
   protected $CA = 17;
   protected $life = 20;
   private $deg = 8; //Type de Dés

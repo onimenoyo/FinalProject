@@ -30,7 +30,7 @@ public function tour(){
     // Si le joueur ou le monstre n'a pas joué on rentre dans la condition
     if ($PlayerAction == 0 || $MobAction == 0){
       // Si l'initiative du joueur est supérieur à celle du monstre on rentre dans la condition
-      if($player->initiative() > $mob->initiative){
+      if($player->initiative() > $mob->initiative()){
         // Si le joueur n'a pas joué :
         if ($PlayerAction == 0){
           echo '<a href="#?PlayerAction=1">Attaque au Corps à Corps</a>';
