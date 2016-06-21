@@ -380,8 +380,8 @@ class GameController extends Controller{
               }elseif ($lieu == 'Lac' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Ruines' && $lieu != 'Montagne' && $lieu != 'Base_Alien') {
                 $type = ['lieu' => 'Montagne'];
               }elseif ($lieu == 'Montagne' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Ruines' && $lieu != 'Base_Alien') {
-                $type = ['lieu' => 'Base Alien'];
-              }elseif ($lieu == 'Base Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines') {
+                $type = ['lieu' => 'Base_Alien'];
+              }elseif ($lieu == 'Base_Alien' && $lieu != 'Abords' && $lieu != 'Foret' && $lieu != 'Lac' && $lieu != 'Montagne' && $lieu != 'Ruines') {
                 $type = ['lieu' => 'Reacteur'];
               }
           }

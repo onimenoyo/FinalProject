@@ -1,7 +1,7 @@
 <?php $this->layout('interfaceLayout', ['title' => 'Camp']) ?>
 
 <?php $this->start('main_content') ?>
-      <img src=" <?= $this->assetUrl('img/background/Intro_Vortex.jpg')?>" alt="Abords_Pont" />
+      <img src=" <?= $this->assetUrl('img/background/CampBG.jpg')?>" alt="Abords_Pont" />
       <div class="dialogue2">
         <p>
           L’avant poste se trouve dans les ruines d’une ville, plusieurs bâtiments ont été réquisitionnés et renforcés afin de pouvoir résister aux attaques.
@@ -11,7 +11,7 @@
       <div class="conteneur">
         <div class="contenu options">
           <a href="#" id="Command" class='button' name="button">Centre de commandement</a>
-          <a href="#" id="infirmary" class='button' name="button">Infirmerie</a>
+          <a href="<?= $this->url('explore', ['lieu' => 'Infirmerie'])?>" id="infirmary" class='button' name="button">Infirmerie</a>
           <a href="#" id="armory" class='button' name="button">Armurerie</a>
           <a href="<?= $this->url('explore', ['lieu' => 'Ruines'])?>" id="ruins" class='button' name="button">Explorer les ruines </a>
         </div>
