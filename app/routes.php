@@ -65,7 +65,7 @@
 		['GET', '/game/fight/[:equip]/[:id]/[:lieu]/[:cible]', "Game#equip", 'equip'],
 
 		// AJAX
-		['GET', '/game/fight/[:id]/[:lieu]/[:cible]', "Game#attack", 'attack'],
+		['GET', '/game/attack/[:id]/[:lieu]/[:cible]', "Game#attack", 'attack'],
 
 		//MailController
 		['GET', '/test/mail', 'Mail#mail', 'mail'],

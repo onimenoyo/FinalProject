@@ -6,7 +6,7 @@
         <img src="<?= $this->assetUrl('img/bestiaire/'.$cible.'.jpg')?>" alt="pnj" id="pnj"/>
         <div class="mobInfo">
           <div class="info"><strong>Nom : </strong> <?= $ennemi['name']?></div>
-          <div class="info"><strong>Vie : </strong> <?= $ennemi['current_health']?> /  <?= $ennemi['health']?></div>
+          <div class="info"><strong>Vie : </strong> <div id="ennemiHealth"><?= $ennemi['current_health'] ?></div> /  <?= $ennemi['health']?></div>
           <div class="info"><strong>Armure : </strong> <?= $ennemi['armor']?></div>
         </div>
       </div>
@@ -242,15 +242,28 @@ $url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible]);
 
         // en cas de succés :
         success: function(data){
+            console.log(data.cible);
+          //renvoit l'information de la cible
+          msgHtml = data.cible;
+          msgHtml += '<br>';
+          msgHtml += data.weapon;
+          msgHtml += '<br>';
+          msgHtml += data.damage;
+          msgHtml += '<br>';
+          msgHtml += data.deg;
+          msgHtml += '<br>';
+          msgHtml += data.dice;
+          msgHtml += '<br>';
 
-          // renvoit l'information de la cible
-           $('#info').html(data.cible);
-           $('#info').html('hello world');
+           $('#info').html(msgHtml);
+
+           ennemiHtml = data.ennemiHealth;
+           $('#ennemiHealth').html(ennemiHtml);
 
         },
         // si erreur :
         error : function(err){
-        //  console.log (err);
+          console.log (err);
         }
       });
     });

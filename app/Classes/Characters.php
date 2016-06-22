@@ -92,14 +92,14 @@ public function initiative(){
 }
 
 //Retourne Si le personnage touche la cible au CàC
-public function touch_cac($cible, $deg){
+public function touch_cac($cible, $dice, $deg){
   $d20 = $this->diceRoll(1,20,0);
   if ($d20 == 20){
-    return $this->attaque($cible, $deg);
+    return $this->attaque($cible, $dice, $deg);
   }else{
     $touch = $d20 + $this->get_bonus_atkCaC();
     if($touch > $cible->get_CA()){
-      return $this->attaque($cible, $deg);
+      return $this->attaque($cible, $dice, $deg);
     }else{
       return $this->get_name() . ' rate son attaque.';
     }
@@ -107,14 +107,14 @@ public function touch_cac($cible, $deg){
 }
 
 //Retourne Si le personnage touche la cible à distance
-public function touch_distance($cible, $deg){
+public function touch_distance($cible, $dice, $deg){
   $d20 = $this->diceRoll(1,20,0);
   if ($d20 == 20){
-    $this->attaque($cible, $deg);
+    $this->attaque($cible, $dice, $deg);
   }else{
     $touch = $d20 + $this->get_bonus_atkDistance();
     if($touch > $cible->get_CA()){
-      $this->attaque($cible, $deg);
+      $this->attaque($cible, $dice, $deg);
     }else{
       return $this->get_name() . ' rate son attaque.';
     }
