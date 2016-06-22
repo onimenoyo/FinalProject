@@ -47,6 +47,19 @@ section img{
   border-radius: 10px;
 }
 
+.hide {
+  display: none;
+}
+
+.flexinventory {
+  display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.inventoryflex {
+	width: 20%;
+}
+
 .dialogue{
   position: absolute;
   display: flex;

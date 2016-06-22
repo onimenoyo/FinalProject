@@ -26,9 +26,14 @@ class GameController extends Controller{
     $loggedUser = $this->getUser();
     $testModel = new AvatarModel();
     $testModel1 = new CharactersModel();
+    $testModel2 = new InventoryModel();
+    $testModel3 = new ObjectsModel();
     $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
-    $test2 = $testModel1-> find($loggedUser['id']);
-    $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible]);
+    $test2 = $testModel2-> findAllWithId($id);
+    foreach ($test2 as $object) {
+      $test3[] = $testModel3->find($object['object_id']);
+    }
+    $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $test1, 'objects' => $test3]);
   }
 
   public function intro() {

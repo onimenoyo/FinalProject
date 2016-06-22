@@ -1,69 +1,53 @@
 $(document).ready(function() {
     $("#menu").click(function() {
-        if ($("#menu").hasClass('open')) {
-            $("#menu").removeClass('open');
-            $(".options").html('');
-            $('.options').append('<a href="#"><div class="button option">Attaquer</div></a>');
-            $('.options').append('<a href="#"><div class="button option">Se Soigner</div></a>');
-            $('.options').append('<a href="#"><div class="button option">Fuir !</div></a>');
-        } else {
-            $("#menu").addClass('open');
-            $("#Character").removeClass('open');
-            $("#inventaire").removeClass('open');
-            $(".options").html('');
-            $('.options').append('<a href="#"><div class="button option">Déconnexion</div></a>');
-            $('.options').append('<a href="#"><div class="button option">Sauvegarder</div></a>');
-            $('.options').append('<a href="#"><div class="button option">Profil</div></a>');
+      if ($(".menuConnexion").hasClass('hide') && $(".menuAttack").hasClass('hide')) {
+        $(".menuConnexion").removeClass('hide');
+        $(".menuInventory").addClass('hide');
+      }
+      if ($(".menuConnexion").hasClass('hide') || $(".menuAttack").hasClass('hide')) {
+        if ($(".menuConnexion").hasClass('hide')) {
+          $(".menuConnexion").removeClass('hide');
+          $(".menuAttack").addClass('hide');
+          if ($("#playerResponsive").hasClass('hide')) {}
+          else {$("#playerResponsive").addClass('hide');}
+        } else if ($(".menuAttack").hasClass('hide')) {
+          $(".menuAttack").removeClass('hide');
+          $(".menuConnexion").addClass('hide');
+          if ($("#playerResponsive").hasClass('hide')) {}
+          else {$("#playerResponsive").addClass('hide');}
         }
+      }
+
     });
+
 
     $("#inventaire").click(function() {
-        if ($("#inventaire").hasClass('open')) {
-            $("#inventaire").removeClass('open');
-            $(".options").html('');
-            $('.options').append('<a href="#"><div class="button option">Attaquer</div></a>');
-            $('.options').append('<a href="#"><div class="button option">Se Soigner</div></a>');
-            $('.options').append('<a href="#"><div class="button option">Fuir !</div></a>');
+        if ($(".menuInventory").hasClass('hide')) {
+            $(".menuInventory").removeClass('hide');
+            if ($(".menuAttack").hasClass('hide')) {}
+            else {$(".menuAttack").addClass('hide');}
+            if ($(".menuConnexion").hasClass('hide')) {}
+            else {$(".menuConnexion").addClass('hide');}
+            if ($("#playerResponsive").hasClass('hide')) {}
+            else {$("#playerResponsive").addClass('hide');}
         } else {
-            $("#inventaire").addClass('open');
-            $("#Character").removeClass('open');
-            $("#menu").removeClass('open');
-            $(".options").html('');
-            $('.options').append('<div class="contenu slot"><img src="img/armes/Pistol2.png" alt="Pistol2" /><span>$q</span></div>');
-            $('.options').append('<div class="contenu slot"><img src="img/armes/Pistol3.png" alt="Pistol3" /><span>$q</span></div>');
-            $('.options').append('<div class="contenu slot"><img src="img/armes/Pistol2.png" alt="Pistol3" /><span>$q</span></div>');
-            $('.options').append('<div class="contenu slot"></div>');
-            $('.options').append('<div class="contenu slot"></div>');
-            $('.options').append('<div class="contenu slot"></div>');
-            $('.options').append('<div class="contenu slot"></div>');
-            $('.options').append('<div class="contenu slot"></div>');
-            $('.options').append('<div class="contenu slot"></div>');
-            $('.options').append('<div class="contenu slot"></div>');
-            $('.options').append('<div class="contenu">Credit : 0$</div>');
+          $(".menuConnexion").removeClass('hide');
+          $(".menuInventory").addClass('hide');
         }
     });
 
-
-
     $("#Character").click(function() {
-        if ($("#Character").hasClass('open')) {
-            $("#Character").removeClass('open');
-            $(".options").html('');
-            $('.options').append('<a href="#"><div class="button option">Attaquer</div></a>');
-            $('.options').append('<a href="#"><div class="button option">Se Soigner</div></a>');
-            $('.options').append('<a href="#"><div class="button option">Fuir !</div></a>');
+        if ($("#playerResponsive").hasClass('hide')) {
+            $("#playerResponsive").removeClass('hide');
+            if ($(".menuAttack").hasClass('hide')) {}
+            else {$(".menuAttack").addClass('hide');}
+            if ($(".menuConnexion").hasClass('hide')) {}
+            else {$(".menuConnexion").addClass('hide');}
+            if ($(".menuInventory").hasClass('hide')) {}
+            else {$(".menuInventory").addClass('hide');}
         } else {
-            $("#Character").addClass('open');
-            $("#menu").removeClass('open');
-            $("#inventaire").removeClass('open');
-            $(".options").html('');
-            $('.options').append('<div class="infos">');
-            $('.options').append('<div class="info"><strong>Nom : </strong>$player->get_name()</div>');
-            $('.options').append('<div class="info"><strong>Lvl : </strong>$player->get_lvl()</div>');
-            $('.options').append('<div class="info"><strong>Vie : </strong>$player->get_life()</div>');
-            $('.options').append('<div class="info"><strong>Energie : </strong>$player->get_spirit()</div>');
-            $('.options').append('<div class="info"><strong>Armure : </strong>$player->get_ca()</div>');
-            $('.options').append('</div>');
+          $("#playerResponsive").addClass('hide');
+          $(".menuConnexion").removeClass('hide')
         }
     });
 
@@ -107,14 +91,14 @@ $(document).ready(function() {
           modal.style.display = "none";
         }
       });
-    // 
-    // // On définit la croix de la modal dans une variable
-    // var closeModal = document.getElementsByClassName("close")[0];
-    // // Pour fermer la modal en cliquant sur la croix
-    // closeModal.onclick = function() {
+
+    // On définit la croix de la modal dans une variable
+    // var close = document.getElementsByClassName("close")[0];
+    // Pour fermer la modal en cliquant sur la croix
+    // close.onclick = function() {
     //     modal.style.display = "none";
     // }
-    // // Quand on clique a l'extérieur de la modal ca la ferme
+    // Quand on clique a l'extérieur de la modal ca la ferme
     // window.onclick = function(event) {
     //     if (event.target == modal) {
     //         modal.style.display = "none";

@@ -45,7 +45,7 @@
                 <p>Sexe :</p>
                 <div class="radio">
                   <label>
-                    <input type="radio" name="gender" value="1"> Homme
+                    <input checked type="radio" name="gender" value="1"> Homme
                   </label>
                 </div>
                 <div class="radio">
