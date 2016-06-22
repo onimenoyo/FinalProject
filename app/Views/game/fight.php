@@ -5,16 +5,14 @@
       <div id="Mob">
         <img src="<?= $this->assetUrl('img/bestiaire/'.$cible.'.jpg')?>" alt="pnj" id="pnj"/>
         <div class="mobInfo">
-          <div class="info"><strong>Nom : </strong>$mob->get_name()</div>
-          <div class="info"><strong>Lvl : </strong>$mob->get_lvl()</div>
-          <div class="info"><strong>Vie : </strong>$mob->get_life()</div>
-          <div class="info"><strong>Armure : </strong>$mob->get_ca()</div>
+          <div class="info"><strong>Nom : </strong> <?= $ennemi['name']?></div>
+          <div class="info"><strong>Vie : </strong> <?= $ennemi['current_health']?> /  <?= $ennemi['health']?></div>
+          <div class="info"><strong>Armure : </strong> <?= $ennemi['armor']?></div>
         </div>
       </div>
       <img src="<?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords_Pont" />
       <div class="dialogue">
 <div id="info">
-
 </div>
 
       </div>
@@ -28,8 +26,8 @@
         </div>
         <div class="contenu options">
 
-          <div class="menuAttack hide">
-            <button class="button option" id="attack">Attaquer</button>
+          <div class="menuAttack">
+            <a href="#"><button class="button option" id="attack">Attaquer</button></a>
             <a href="#"><div class="button option" id="heal">Se Soigner</div></a>
             <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
           </div>
@@ -39,9 +37,24 @@
               <div class="inventoryflex">
                 <?php $i=0;
                 if (count($objects) >0){
-                foreach ($objects as $object) {
-                  ?><div class="contenu slot"><img src="<?= $this->assetUrl('img/armes/'.$object['name'].'.png')?>" alt="<?= $object['name']; ?>" /><span>$q</span></div><?php
-                  if (++$i == 2) break;
+                for ($i=0; $i < 2 ; $i++) {
+                  ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
+                                                      'id' => $id,
+                                                      'lieu' => $lieu,
+                                                      'cible' => $cible,
+                                                      'avatar' => $avatar,
+                                                      'objects' => $objects ,
+                                                      'character' => $character,
+                                                      'ennemi' => $ennemi ])
+                    ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
+                      <span class="valueObject"><?= $objects[$i]['value'] ?> $</span><span class="amount"><?= $inventory[$i]['amount']?></span>
+
+                  <?php if ($character['weapon_id'] == $objects[$i]['id']) {
+                    ?> <span class="equip"> Eq </span></a></div> <?php
+                  } else {
+                    ?> </a></div> <?php
+                  } ?>
+                  <?php
                 }
                 if (count($objects) == 1) {
                   ?><div class="contenu slot"><img src="" /></div> <?php
@@ -53,9 +66,29 @@
               </div>
 
               <div class="inventoryflex">
-                <?php if (count($objects) >2){
-                 for ($i=2; $i < count($objects) ; $i++) {
-                ?><div class="contenu slot"><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" /><span>$q</span></div><?php
+                <?php
+                if (count($objects) >2){
+                 for ($i=2; $i < 4 ; $i++) {
+                ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
+                                                    'id' => $id,
+                                                    'lieu' => $lieu,
+                                                    'cible' => $cible,
+                                                    'avatar' => $avatar,
+                                                    'objects' => $objects ,
+                                                    'character' => $character,
+                                                    'ennemi' => $ennemi ])
+                  ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
+                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $ </span><span class="amount"><?= $inventory[$i]['amount']?></span>
+
+                  <?php if ($character['weapon_id'] == $objects[$i]['id']) {
+                    ?> <span  class="equip"> Eq </span><a/></div> <?php
+                  } else {
+                    ?> </a></div> <?php
+                  } ?>
+                  <?php if (count($objects) <= 3) {
+                    break;
+                  } ?>
+                <?php
               } if (count($objects) == 3) {
                 ?><div class="contenu slot"><img src="" /></div> <?php
               }
@@ -66,9 +99,27 @@
               </div>
 
               <div class="inventoryflex">
-                <?php if (count($objects) >4){
-                 for ($i=2; $i < count($objects) ; $i++) {
-                ?><div class="contenu slot"><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" /><span>$q</span></div><?php
+                <?php
+                 if (count($objects) >4){
+                 for ($i=4; $i < 6 ; $i++) {
+                ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
+                                                    'id' => $id,
+                                                    'lieu' => $lieu,
+                                                    'cible' => $cible,
+                                                    'avatar' => $avatar,
+                                                    'objects' => $objects ,
+                                                    'character' => $character,
+                                                    'ennemi' => $ennemi ])
+                  ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
+                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span><span class="amount"><?= $inventory[$i]['amount']?></span>
+                <?php if ($character['weapon_id'] == $objects[$i]['id']) {
+                  ?> <span  class="equip"> Eq </span></a></div> <?php
+                }else {
+                  ?> </a></div> <?php
+                }
+                 if (count($objects) <= 5) {
+                  break;
+                }
               } if (count($objects) == 5) {
                 ?><div class="contenu slot"><img src="" /></div> <?php
               }
@@ -76,13 +127,31 @@
               ?><div class="contenu slot"><img src="" /></div>
               <div class="contenu slot"><img src="" /></div> <?php
             } ?>
-                <div class="contenu">Credit : 0$</div>
+                <div class="contenu">Credit : <?= $character['gold'] ?> $</div>
               </div>
 
               <div class="inventoryflex">
-                <?php if (count($objects) >6){
-                 for ($i=2; $i < count($objects) ; $i++) {
-                ?><div class="contenu slot"><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" /><span>$q</span></div><?php
+                <?php
+                 if (count($objects) >6){
+                 for ($i=6; $i < 8 ; $i++) {
+                ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
+                                                    'id' => $id,
+                                                    'lieu' => $lieu,
+                                                    'cible' => $cible,
+                                                    'avatar' => $avatar,
+                                                    'objects' => $objects ,
+                                                    'character' => $character,
+                                                    'ennemi' => $ennemi ])
+                  ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
+                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span><span class="amount"><?= $inventory[$i]['amount']?></span>
+                <?php if ($character['weapon_id'] == $objects[$i]['id']) {
+                  ?> <span  class="equip"> Eq </span></a></div> <?php
+                }else {
+                  ?> </a></div> <?php
+                }
+                if (count($objects) <= 7) {
+                  break;
+                }
               } if (count($objects) == 7) {
                 ?><div class="contenu slot"><img src="" /></div> <?php
               }
@@ -95,7 +164,25 @@
               <div class="inventoryflex">
                 <?php if (count($objects) >8){
                  for ($i=2; $i < count($objects) ; $i++) {
-                ?><div class="contenu slot"><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" /><span>$q</span></div><?php
+                ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
+                                                    'id' => $id,
+                                                    'lieu' => $lieu,
+                                                    'cible' => $cible,
+                                                    'avatar' => $avatar,
+                                                    'objects' => $objects ,
+                                                    'character' => $character,
+                                                    'ennemi' => $ennemi ])
+                  ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
+                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span><span class="amount"><?= $inventory[$i]['amount']?></span>
+                <?php
+                 if ($character['weapon_id'] == $objects[$i]['id']) {
+                  ?> <span  class="equip"> Eq </span></a></div> <?php
+                }else {
+                  ?> </a></div> <?php
+                }
+                if (count($objects) <= 5) {
+                 break;
+               }
               } if (count($objects) == 9) {
                 ?><div class="contenu slot"><img src="" /></div> <?php
               }
@@ -107,27 +194,27 @@
             </div>
           </div>
 
-          <div class="menuConnexion">
+          <div class="menuConnexion hide">
             <a href="#"><div class="button option">Déconnexion</div></a>
             <a href="#"><div class="button option">Sauvegarder</div></a>
             <a href="#"><div class="button option">Profil</div></a>
           </div>
 
           <div class="hide" id="playerResponsive" >
-            <div class="info"><strong>Nom : </strong>$player->get_name()</div>
-            <div class="info"><strong>Lvl : </strong>$player->get_lvl()</div>
-            <div class="info"><strong>Vie : </strong>$player->get_life()</div>
-            <div class="info"><strong>Energie : </strong>$player->get_spirit()</div>
-            <div class="info"><strong>Armure : </strong>$player->get_ca()</div>
+            <div class="info"><strong>Nom : </strong><?= $character['name']; ?></div><br>
+            <div class="info"><strong>Lvl : </strong><?= $character['lvl']; ?></div><br>
+            <div class="info"><strong>Vie : </strong><?= $character['current_health']; ?> / <?= $character['health']; ?></div><br>
+            <div class="info"><strong>Energie : </strong><?= $character['energy']; ?></div><br>
+            <div class="info"><strong>Armure : </strong><?= $character['armor']; ?></div>
           </div>
         </div>
 
-        <div class="contenu infos " id="player">
-          <div class="info"><strong>Nom : </strong>$player->get_name()</div>
-          <div class="info"><strong>Lvl : </strong>$player->get_lvl()</div>
-          <div class="info"><strong>Vie : </strong>$player->get_life()</div>
-          <div class="info"><strong>Energie : </strong>$player->get_spirit()</div>
-          <div class="info"><strong>Armure : </strong>$player->get_ca()</div>
+        <div class="contenuinfo infos " id="player">
+          <div class="info"><strong>Nom : </strong><?= $character['name']; ?></div><br>
+          <div class="info"><strong>Lvl : </strong><?= $character['lvl']; ?></div><br>
+          <div class="info"><strong>Vie : </strong><?= $character['current_health']; ?> / <?= $character['health']; ?></div><br>
+          <div class="info"><strong>Energie : </strong><?= $character['energy']; ?></div><br>
+          <div class="info"><strong>Armure : </strong><?= $character['armor']; ?></div>
         </div>
 
       </div>

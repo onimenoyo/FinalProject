@@ -4,6 +4,7 @@ namespace classes;
 class Drone extends Characters{
   protected $CA = 14;
   protected $life = 9;
+  protected $lifeMax = 9;
   private $deg = 4; //Type de Dés
 
   //Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée et définit ses PV en fonction de son lvl
@@ -15,10 +16,11 @@ class Drone extends Characters{
   public function set_lvl($lvl = 1){
     $this->lvl = $lvl;
     $this->set_life();
+    $this->set_lifeMax();
     return $lvl;
   }
   public function set_life(){
-    $this->life = $this->lifeMax * $this->lvl;
+    $this->life = $this->life * $this->lvl;
   }
 
   // Retourne les dégats du drone

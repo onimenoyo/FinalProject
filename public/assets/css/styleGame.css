@@ -125,6 +125,7 @@ section img{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   width: 60%;
   height: 60%;
@@ -174,7 +175,16 @@ section img{
 .contenu{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;;
+  justify-content: space-around;
+  align-items: center;
+  font-variant: small-caps;
+  color: rgb(194, 232, 249);
+}
+.contenuinfo{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
   font-variant: small-caps;
   color: rgb(194, 232, 249);
@@ -279,13 +289,33 @@ justify-content: space-between;
   border-radius: 8px;
   border: 1px solid rgb(134, 125, 0);
 }
-.slot span{
+.valueObject{
   position: absolute;
   bottom: 2px;
   right: 2px;
   color: rgb(28, 245, 193);
   text-shadow: 2px 2px black;
   font-weight: bold;
+}
+
+.equip {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  font-size: 1.5em;
+  color: rgb(0, 117, 255);
+  text-shadow: 2px 2px black;
+  font-weight: bolder;
+}
+
+.amount {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  font-size: 1.5em;
+  color: white;
+  text-shadow: 2px 2px black;
+  font-weight: bolder;
 }
 .slot img{
   border-radius: 8px;

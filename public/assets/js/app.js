@@ -31,7 +31,7 @@ $(document).ready(function() {
             if ($("#playerResponsive").hasClass('hide')) {}
             else {$("#playerResponsive").addClass('hide');}
         } else {
-          $(".menuConnexion").removeClass('hide');
+          $(".menuAttack").removeClass('hide');
           $(".menuInventory").addClass('hide');
         }
     });
@@ -47,7 +47,7 @@ $(document).ready(function() {
             else {$(".menuInventory").addClass('hide');}
         } else {
           $("#playerResponsive").addClass('hide');
-          $(".menuConnexion").removeClass('hide')
+          $(".menuAttack").removeClass('hide')
         }
     });
 

@@ -171,6 +171,15 @@ public function get_life(){
   return $this->life;
 }
 
+//Définit la vie Max
+public function set_lifeMax(){
+  $this->lifeMax = $this->life * $this->lvl;
+}
+
+//Retourne la vie Max
+public function get_lifeMax(){
+  return $this->lifeMax;
+}
 // Met la spirit au max si la régèneration fait dépasser la spirit max du personnage
 protected function spiritMax($spiritMax){
   if($this->spirit >= $spiritmax){

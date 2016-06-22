@@ -11,6 +11,7 @@ use \classes\Characters;
 use \classes\Drone;
 use \classes\FantassinAlien;
 use \classes\Player;
+use \classes\Renegat;
 use \classes\Ravageur;
 use \classes\Robot;
 use \classes\Traqueur;
@@ -28,14 +29,138 @@ class GameController extends Controller{
     $testModel1 = new CharactersModel();
     $testModel2 = new InventoryModel();
     $testModel3 = new ObjectsModel();
+    $drone = new Drone('Drone');
+    $fantassinAlien = new FantassinAlien('FantassinAlien');
+    $ravageur = new Ravageur('Ravageur');
+    $renegat = new Renegat('Renegat');
+    $robot = new Robot('Robot');
+    $traqueur = new Traqueur('Traqueur');
+    if ($cible == 'Drone') {
+      $ennemi = array('name' => $drone->get_name(),
+                      'current_health' => $drone->get_life(),
+                      'health' => $drone->get_lifeMax(),
+                      'armor' => $drone->get_CA(),
+                      );
+    }
+    if ($cible == 'FantassinAlien') {
+      $ennemi = array('name' => $fantassinAlien->get_name(),
+                      'current_health' => $fantassinAlien->get_life(),
+                      'health' => $fantassinAlien->get_lifeMax(),
+                      'armor' => $fantassinAlien->get_CA(),
+                      );
+    }
+    if ($cible == 'Ravageur') {
+      $ennemi = array('name' => $ravageur->get_name(),
+                      'current_health' => $ravageur->get_life(),
+                      'health' => $ravageur->get_lifeMax(),
+                      'armor' => $ravageur->get_CA(),
+                      );
+    }
+    if ($cible == 'Renegat') {
+      $ennemi = array('name' => $renegat->get_name(),
+                      'current_health' => $renegat->get_life(),
+                      'health' => $renegat->get_lifeMax(),
+                      'armor' => $renegat->get_CA(),
+                      );
+    }
+    if ($cible == 'Robot') {
+      $ennemi = array('name' => $robot->get_name(),
+                      'current_health' => $robot->get_life(),
+                      'health' => $robot->get_lifeMax(),
+                      'armor' => $robot->get_CA(),
+                      );
+    }
+    if ($cible == 'Traqueur') {
+      $ennemi = array('name' => $traqueur->get_name(),
+                      'current_health' => $traqueur->get_life(),
+                      'health' => $traqueur->get_lifeMax(),
+                      'armor' => $traqueur->get_CA(),
+                      );
+    }
+
     $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
+    $test4 = $testModel1-> find($id);
     $test2 = $testModel2-> findAllWithId($id);
     foreach ($test2 as $object) {
       $test3[] = $testModel3->find($object['object_id']);
     }
-    $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $test1, 'objects' => $test3]);
+    $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $test1, 'objects' => $test3 , 'character' => $test4, 'ennemi' => $ennemi, 'inventory' => $test2]);
   }
 
+  public function equip($equip, $id, $lieu, $cible) {
+    //récupération des infos de l'utilisateur connecté
+    $loggedUser = $this->getUser();
+    $testModel = new AvatarModel();
+    $testModel1 = new CharactersModel();
+    $testModel2 = new InventoryModel();
+    $testModel3 = new ObjectsModel();
+    $drone = new Drone('Drone');
+    $fantassinAlien = new FantassinAlien('FantassinAlien');
+    $ravageur = new Ravageur('Ravageur');
+    $renegat = new Renegat('Renegat');
+    $robot = new Robot('Robot');
+    $traqueur = new Traqueur('Traqueur');
+
+    $test = $testModel1->find($id);
+    $test5 = $testModel3->find($equip);
+    if ($test5['wearable'] == 1 ) {
+      $testModel1->update(array(
+                  'weapon_id' => $equip,
+        ), $test['id']
+      );
+    }
+
+    if ($cible == 'Drone') {
+      $ennemi = array('name' => $drone->get_name(),
+                      'current_health' => $drone->get_life(),
+                      'health' => $drone->get_lifeMax(),
+                      'armor' => $drone->get_CA(),
+                      );
+    }
+    if ($cible == 'FantassinAlien') {
+      $ennemi = array('name' => $fantassinAlien->get_name(),
+                      'current_health' => $fantassinAlien->get_life(),
+                      'health' => $fantassinAlien->get_lifeMax(),
+                      'armor' => $fantassinAlien->get_CA(),
+                      );
+    }
+    if ($cible == 'Ravageur') {
+      $ennemi = array('name' => $ravageur->get_name(),
+                      'current_health' => $ravageur->get_life(),
+                      'health' => $ravageur->get_lifeMax(),
+                      'armor' => $ravageur->get_CA(),
+                      );
+    }
+    if ($cible == 'Renegat') {
+      $ennemi = array('name' => $renegat->get_name(),
+                      'current_health' => $renegat->get_life(),
+                      'health' => $renegat->get_lifeMax(),
+                      'armor' => $renegat->get_CA(),
+                      );
+    }
+    if ($cible == 'Robot') {
+      $ennemi = array('name' => $robot->get_name(),
+                      'current_health' => $robot->get_life(),
+                      'health' => $robot->get_lifeMax(),
+                      'armor' => $robot->get_CA(),
+                      );
+    }
+    if ($cible == 'Traqueur') {
+      $ennemi = array('name' => $traqueur->get_name(),
+                      'current_health' => $traqueur->get_life(),
+                      'health' => $traqueur->get_lifeMax(),
+                      'armor' => $traqueur->get_CA(),
+                      );
+    }
+
+    $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
+    $test4 = $testModel1-> find($id);
+    $test2 = $testModel2-> findAllWithId($id);
+    foreach ($test2 as $object) {
+      $test3[] = $testModel3->find($object['object_id']);
+    }
+    $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $test1, 'objects' => $test3 , 'character' => $test4, 'ennemi' => $ennemi,  'inventory' => $test2]);
+  }
   public function intro() {
     $this->show('game/intro');
   }
@@ -85,6 +210,7 @@ class GameController extends Controller{
                     'class' => $class,
                     'name' => $_POST['name'],
                     'health' => 6,
+                    'current_health' => 6,
                     'energy' => 20,
                     'armor' => 13,
                     'lvl' => 1,
@@ -96,6 +222,8 @@ class GameController extends Controller{
                     'lvl_spell' => 1,
                     'exp' => 0,
                     'gender' => $gender,
+                    'weapon_id' => 2,
+                    'gold' => 20,
                 )
             );
         // injection équipement de départ
@@ -131,6 +259,7 @@ class GameController extends Controller{
                     'class' => $class,
                     'name' => $_POST['name'],
                     'health' => 7,
+                    'current_health' => 7,
                     'energy' => 11,
                     'armor' => 18,
                     'lvl' => 1,
@@ -142,6 +271,8 @@ class GameController extends Controller{
                     'lvl_spell' => 1,
                     'exp' => 0,
                     'gender' => $gender,
+                    'weapon_id' => 6,
+                    'gold' => 20,
                 )
             );
 
@@ -178,6 +309,7 @@ class GameController extends Controller{
                     'class' => $class,
                     'name' => $_POST['name'],
                     'health' => 10,
+                    'current_health' => 10,
                     'energy' => 8,
                     'armor' => 18,
                     'lvl' => 1,
@@ -189,6 +321,8 @@ class GameController extends Controller{
                     'lvl_spell' => 1,
                     'exp' => 0,
                     'gender' => $gender,
+                    'weapon_id' => 1,
+                    'gold' => 20,
                 )
             );
 

@@ -4,6 +4,7 @@ namespace classes;
 class Ravageur extends Characters{
   protected $CA = 18;
   protected $life = 252;
+  protected $lifeMax = 252;
   private $deg = 8; //Type de dés
 
   //Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée et définit ses PV en fonction de son lvl
@@ -14,6 +15,7 @@ class Ravageur extends Characters{
   function set_lvl($lvl = 1){
     $this->lvl = $lvl;
     $this->set_life();
+    $this->set_lifeMax();
     return $lvl;
   }
   function set_life(){

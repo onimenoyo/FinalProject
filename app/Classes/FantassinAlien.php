@@ -4,6 +4,7 @@ namespace classes;
 class FantassinAlien extends Characters{
   protected $CA = 17;
   protected $life = 20;
+  protected $lifeMax = 20;
   private $deg = 8; //Type de Dés
 
   //Fonction __construct est une fonction d'origine qui permet de définir directement quand on crée et définit ses PV en fonction de son lvl
@@ -14,6 +15,7 @@ class FantassinAlien extends Characters{
   function set_lvl($lvl = 1){
     $this->lvl = $lvl;
     $this->set_life();
+    $this->set_lifeMax();
     return $lvl;
   }
   function set_life(){
