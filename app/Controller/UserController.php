@@ -28,21 +28,20 @@ class UserController extends Controller
     $result = $valid->validateText($_POST['password'], 3, 50);
     if (!empty($result)) {$errors['password'] = $result;}
     // Verification que le pseudo/email et password correspondent aux infos dans la base de donnée
-    $testAuthentification = new AuthentificationModel();
-    $test = $testAuthentification->isValidLoginInfo($_POST['pseudo_or_email'],$_POST['password']);
-    if ($test == 0) { $errors['password'] = 'mauvais password ou mauvais login';}
-    $testModel1 = new UserModel();
-    $test1 = $testModel1-> getUserByUsernameOrEmail($_POST['pseudo_or_email']);
-    if ($test1['actif'] == 0) {
+    $Authentification = new AuthentificationModel();
+    $Authentification_login_infos = $Authentification->isValidLoginInfo($_POST['pseudo_or_email'],$_POST['password']);
+    if ($Authentification_login_infos == 0) { $errors['password'] = 'mauvais password ou mauvais login';}
+    $users = new UserModel();
+    $user = $users-> getUserByUsernameOrEmail($_POST['pseudo_or_email']);
+    if ($user['actif'] == 0) {
         $errors['pseudo_or_email'] = 'Veuillez activer votre e-mail';
     }
     //Si il n'y a pas d'erreurs
     if (count($errors) == 0) {
-      $testModel1 = new UserModel();
       // récupère les infos utilisateurs
-      $testAuthentification1 = new AuthentificationModel();
+      $Authentification = new AuthentificationModel();
       // connecte l'utilisateur
-      $testAuthentification1->logUserIn($test1);
+      $Authentification->logUserIn($user);
       // rammène l'utilisateur a l'accueil
       $this->redirectToRoute('default_home');
     } else {
@@ -84,12 +83,11 @@ class UserController extends Controller
     // On vérifie que les passwords sont identiques
     if ($_POST['password1'] != $_POST['password2']) {$error['password2'] = "Vos mots de passes sont différents !";}
     // On verifie que l'email et pseudo ne sont pas déja utilisé dans la base de donnée
-    $testModel1 = new UserModel();
-    $test1 = $testModel1->emailExists($_POST['mail']);
-    $testModel2 = new UserModel();
-    $test2 = $testModel2->usernameExists($_POST['pseudo']);
-    if ($test1) {$error['mail'] = "l'email existe déjà";}
-    if ($test2) {$error['pseudo'] = "le pseudo existe déjà";}
+    $users = new UserModel();
+    $user_mail = $users->emailExists($_POST['mail']);
+    $user_pseudo = $users->usernameExists($_POST['pseudo']);
+    if ($user_mail) {$error['mail'] = "l'email existe déjà";}
+    if ($user_pseudo) {$error['pseudo'] = "le pseudo existe déjà";}
     // Si il n'y a pas d'erreur
     if (count($error) == 0) {
         // récupération du nouveau mot de passe et on le crypte
@@ -100,8 +98,8 @@ class UserController extends Controller
         $token1 = new StringUtils();
         $token = $token1->randomString();
         // insertion du nouvel utilisateur dans la base de donnée
-        $testModel = new UserModel();
-        $testModel->insert(array(
+        $users = new UserModel();
+        $users->insert(array(
                 'pseudo' => $_POST['pseudo'],
                 'firstname' => $_POST['firstname'],
                 'lastname' => $_POST['lastname'],
@@ -120,8 +118,8 @@ class UserController extends Controller
         );
         // rammène l'utilisateur a l'accueil
         $body = 'http://localhost/FinalProject/public/validmail/'.$token;
-        $testModel2 = new MailController();
-        $testModel2->email_validation($body , $_POST['mail']);
+        $mails = new MailController();
+        $mails->email_validation($body , $_POST['mail']);
         $this->show('user/sent_mail', ['token'=> $token, 'mail'=>$_POST['mail']]);
     } else {
       // récupère les erreurs et permet de les réutiliser dans register.php
@@ -132,11 +130,11 @@ class UserController extends Controller
     public function validmail($token)
   {
     // affiche la page validmail.php
-        $testModel = new UserModel();
-        $get_id = $testModel->getUserByToken($token);
+        $users = new UserModel();
+        $get_id = $users->getUserByToken($token);
         $id = $get_id['id'];
         // met a jour l'utilisateur avec le nouveau mot de passe
-        $testModel->update(array(
+        $users->update(array(
                 'actif' => 1,
             ), $id
         );
@@ -164,18 +162,18 @@ class UserController extends Controller
     $result = $valid->validateText($_POST['email'], 3, 50);
     if (!empty($result)) {$error['email'] = $result;}
     // Vérifie si le mail existe déja dans la base de donnée
-    $testModel = new UserModel();
-    $test = $testModel->emailExists($_POST['email']);
+    $users = new UserModel();
+    $user_mail = $users->emailExists($_POST['email']);
     // Si aucune erreur
     if (count($error) == 0) {
-      if ($test) {
+      if ($user_mail) {
         //génére la page de modification de mot de passe en utilisant le token
-        $testModel1 = new UserModel();
-        $test1 = $testModel1-> getUserByUsernameOrEmail($_POST['email']);
+        $users = new UserModel();
+        $test1 = $users-> getUserByUsernameOrEmail($_POST['email']);
         $token = $test1['token'];
         $body = 'http://localhost/FinalProject/public/forgotpassword/'.$token;
-        $testModel2 = new MailController();
-        $testModel2->email($body , $_POST['email']);
+        $mail = new MailController();
+        $mail->email($body , $_POST['email']);
         $this->show('user/sent_mail', ['token'=> $token, 'email'=>$_POST['email']]);
       }
     }
@@ -209,12 +207,11 @@ class UserController extends Controller
         $new_token1 = new StringUtils();
         $new_token = $new_token1->randomString();
         // récupération de l'utilisateur dans la base de donnée
-        $testModel2 = new UserModel();
-        $get_id = $testModel2->getUserByToken($token);
+        $users = new UserModel();
+        $get_id = $users->getUserByToken($token);
         $id = $get_id['id'];
-        $testModel = new UserModel();
         // met a jour l'utilisateur avec le nouveau mot de passe
-        $testModel->update(array(
+        $users->update(array(
                 'password' => $password,
                 'token' => $new_token,
                 'modified_at' => date('Y-m-d H:i:s'),
@@ -232,8 +229,8 @@ class UserController extends Controller
     //récupération des infos de l'utilisateur connecté
     $loggedUser = $this->getUser();
     // affiche la page de profil de l'utilisateur et récupere l'image de profil
-    $testModel = new AvatarModel();
-    $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
+    $avatars = new AvatarModel();
+    $test1 = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
     $this->show('user/profil', ['img_path'=> $test1['img_path']]);
   }
 
@@ -285,10 +282,10 @@ class UserController extends Controller
         // si le telechargement de l'image c'est bien passer
         if(move_uploaded_file ($file['tmp_name'], $destination)){
           $success = true;
-          $testModel1 = new AvatarModel();
+          $avatars = new AvatarModel();
           $loggedUser = $this->getUser();
           // ajoute l'image à la base de donnée
-          $testModel1->insert(array(
+          $avatars->insert(array(
                         'user_id' => $loggedUser['id'],
                         'name' => $newName,
                         'img_path' => $path,
@@ -297,28 +294,27 @@ class UserController extends Controller
                       )
                     );
           // récupère l'id de l'avatar_id et l'ajoute dans la base de donnée utilisateur
-          $testModel2 = new UserModel();
-          $testModel3 = new AvatarModel();
-          $test3 = $testModel3->getIdByUserId($newName);
-          $testModel2->update(array(
-                        'avatar_id' => $test3['id']
+          $users = new UserModel();
+          $avatar = $avatars->getIdByUserId($newName);
+          $users->update(array(
+                        'avatar_id' => $avatar['id']
             ), $loggedUser['id']
           );
           if (!empty($file['name'])) {
             // raffraichit les donnée de l'utilisateur pour que les modification soit mit à jour et affiche la page de proifil avec la nouvelle image
-            $testModel = new AvatarModel();
-            $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
+            $avatars = new AvatarModel();
+            $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
             $authentificationModel = new AuthentificationModel();
             $authentificationModel->refreshUser();
-            $this->show('user/profil', ['img_path'=> $test1['img_path']]);
+            $this->show('user/profil', ['img_path'=> $avatar['img_path']]);
           }
         }
       }else {
         // affiches profil.php avec les erreurs
         $loggedUser = $this->getUser();
-        $testModel = new AvatarModel();
-        $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
-        $this->show('user/profil', ['img_path'=> $test1['img_path'], 'errors'=> $errors]);
+        $avatars = new AvatarModel();
+        $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
+        $this->show('user/profil', ['img_path'=> $avatar['img_path'], 'errors'=> $errors]);
       }
     }
 
@@ -327,17 +323,17 @@ class UserController extends Controller
       //récupération des infos de l'utilisateur connecté
       $loggedUser = $this->getUser();
       // remet l'image de profil classique
-      $testModel = new UserModel();
-      $testModel->update(array(
+      $users = new UserModel();
+      $users->update(array(
           'avatar_id' => 1
         ), $loggedUser['id']
       );
       // raffraichit l'utilisateur, affiche le profil.php et recupere l'avatar_id de l'utilisateur
-      $testModel1 = new AvatarModel();
-      $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar_id']);
+      $avatars = new AvatarModel();
+      $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
       $authentificationModel = new AuthentificationModel();
       $authentificationModel->refreshUser();
-      $this->show('user/profil', ['img_path'=> $test1['img_path']]);
+      $this->show('user/profil', ['img_path'=> $avatar['img_path']]);
     }
     // sur la validation du formulaire de mise à jour des infos utilisateur
     if(!empty($_POST['submitfile2'])) {
@@ -358,25 +354,25 @@ class UserController extends Controller
       $result = $valid->validateText($_POST['mail'], 3, 50);
       if (!empty($result)) {$error['mail'] = $result;}
       // On verifie que si l'email ou le pseudo est déja dans la base de donnée on ne l'accepte pas
-      $testModel2 = new UserModel();
-      $test2 = $testModel2->usernameExists($_POST['pseudo']);
+      $users = new UserModel();
+      $user_exist = $users->usernameExists($_POST['pseudo']);
       if ($_POST['mail'] == $loggedUser['email']) {}
       else {
-          $testModel1 = new UserModel();
-          $test1 = $testModel1->emailExists($_POST['mail']);
-          if ($test1) {$error['mail'] = "l'email existe déjà";}
+          $users = new UserModel();
+          $user_mail_exist = $users->emailExists($_POST['mail']);
+          if ($user_mail_exist) {$error['mail'] = "l'email existe déjà";}
         }
       if ($_POST['pseudo'] == $loggedUser['pseudo']) {}
         else {
-          $testModel2 = new UserModel();
-          $test2 = $testModel2->usernameExists($_POST['pseudo']);
-          if ($test2) {$error['pseudo'] = "le pseudo existe déjà";}
+          $users = new UserModel();
+          $user_exist = $users->usernameExists($_POST['pseudo']);
+          if ($user_exist) {$error['pseudo'] = "le pseudo existe déjà";}
         }
       // si aucune erreur
       if (count($error) == 0) {
         // met à jour l'utilisateur avec les nouvelles infos inserer
-        $testModel = new UserModel();
-        $testModel->update(array(
+        $users = new UserModel();
+        $users->update(array(
                   'pseudo' => $_POST['pseudo'],
                   'firstname' => $_POST['firstname'],
                   'lastname' => $_POST['lastname'],
@@ -386,19 +382,19 @@ class UserController extends Controller
               ), $loggedUser['id']
           );
           // raffraichit les infos utilisateur, affiche la page profil  en recuperant l'image de profil
-          $testModel1 = new AvatarModel();
-          $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar_id']);
+          $avatars = new AvatarModel();
+          $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
           $authentificationModel = new AuthentificationModel();
           $authentificationModel->refreshUser();
-          $this->show('user/profil', ['img_path'=> $test1['img_path']]);
+          $this->show('user/profil', ['img_path'=> $avatar['img_path']]);
       } else {
         // raffraichit les infos utilisateur, affiche la page profil  en recuperant l'image de profil
         $loggedUser = $this->getUser();
-        $testModel = new AvatarModel();
-        $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
+        $avatars = new AvatarModel();
+        $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
         $authentificationModel = new AuthentificationModel();
         $authentificationModel->refreshUser();
-        $this->show('user/profil', ['img_path'=> $test1['img_path'], 'error'=> $error]);
+        $this->show('user/profil', ['img_path'=> $avatar['img_path'], 'error'=> $error]);
       }
     }
     // sur la validation du formulaire de changement de mot de passe
@@ -416,10 +412,10 @@ class UserController extends Controller
       $result = $valid->validateText($_POST['newPassword2'], 3, 50);
       if (!empty($result)) {$error['newPassword2'] = $result;}
       // On vérifie si les mots de passes sont identiques et que l'ancien mot de passe soit bien identique dans la base de donnée
-      $testModel = new AuthentificationModel();
-      $test = $testModel -> isValidPassword($loggedUser['pseudo'], $_POST['oldPassword']);
+      $authentificationModel = new AuthentificationModel();
+      $authentification_password = $authentificationModel -> isValidPassword($loggedUser['pseudo'], $_POST['oldPassword']);
       if ($_POST['newPassword'] != $_POST['newPassword2']) {$error['newPassword2'] = "Vos nouveaux mots de passes sont différents !";}
-      if ($test) {$error['oldPassword'] = 'Votre mot de passe ne correspond pas';}
+      if ($authentification_password) {$error['oldPassword'] = 'Votre mot de passe ne correspond pas';}
       // si aucune erreur
       if (count($error) == 0) {
         // on crypte le nouveau mot de passe
@@ -430,27 +426,27 @@ class UserController extends Controller
         $new_token1 = new StringUtils();
         $new_token = $new_token1->randomString();
         // on met a jour le nouveau mot de passe dans la base de donnée
-        $testModel = new UserModel();
-        $testModel->update(array(
+        $users = new UserModel();
+        $users->update(array(
                 'password' => $password,
                 'token' => $new_token,
                 'modified_at' => date('Y-m-d H:i:s'),
             ), $loggedUser['id']
         );
         // on raffraichit les infos utilisateur et on affiche le profil
-        $testModel1 = new AvatarModel();
-        $test1 = $testModel1-> getUserWithAvatar($loggedUser['avatar_id']);
+        $avatars = new AvatarModel();
+        $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
         $authentificationModel = new AuthentificationModel();
         $authentificationModel->refreshUser();
-        $this->show('user/profil', ['img_path'=> $test1['img_path'],]);
+        $this->show('user/profil', ['img_path'=> $avatar['img_path'],]);
       }
       else {
        // on raffraichit les infos utilisateur et on affiche le profil en envoyant les erreurs
-       $testModel = new AvatarModel();
-       $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
+       $avatars = new AvatarModel();
+       $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
        $authentificationModel = new AuthentificationModel();
        $authentificationModel->refreshUser();
-       $this->show('user/profil', ['img_path'=> $test1['img_path'], 'error'=> $error]);
+       $this->show('user/profil', ['img_path'=> $avatar['img_path'], 'error'=> $error]);
      }
     }
   }

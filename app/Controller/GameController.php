@@ -63,11 +63,11 @@ class GameController extends Controller{
         if (count($error) == 0) {
           $loggedUser = $this->getUser();
           // met à jour l'utilisateur avec les nouvelles infos inserer
-          $testModel = new CharactersModel();
-          $testModel1 = new InventoryModel();
+          $characters = new CharactersModel();
+          $inventory = new InventoryModel();
           //si le joueur prend la classe psy
           if ($class == 'psy') {
-            $testModel->insert(array(
+            $characters->insert(array(
                       'user_id' => $loggedUser['id'],
                       'class' => $class,
                       'name' => $_POST['name'],
@@ -89,25 +89,25 @@ class GameController extends Controller{
                   )
               );
           // injection équipement de départ
-          $test = $testModel->findWithUserId($loggedUser['id']);
-          $testModel1->insert(array(
-                      'character_id' => $test['id'],
+          $character = $characters->findWithUserId($loggedUser['id']);
+          $inventory->insert(array(
+                      'character_id' => $character['id'],
                       'object_id' => 2,
                       'amount' => 1
                     )
                   );
 
-          $test = $testModel->findWithUserId($loggedUser['id']);
-          $testModel1->insert(array(
-                              'character_id' => $test['id'],
+          $character = $characters->findWithUserId($loggedUser['id']);
+          $inventory->insert(array(
+                              'character_id' => $character['id'],
                               'object_id' => 5,
                               'amount' => 1
                             )
                           );
 
-            $test = $testModel->findWithUserId($loggedUser['id']);
-            $testModel1->insert(array(
-                                      'character_id' => $test['id'],
+            $character = $characters->findWithUserId($loggedUser['id']);
+            $inventory->insert(array(
+                                      'character_id' => $character['id'],
                                       'object_id' => 16,
                                       'amount' => 2
                                     )
@@ -116,7 +116,7 @@ class GameController extends Controller{
 
           // si le joueur prend la classe ranger
           if ($class == 'ranger') {
-            $testModel->insert(array(
+            $characters->insert(array(
                       'user_id' => $loggedUser['id'],
                       'class' => $class,
                       'name' => $_POST['name'],
@@ -139,25 +139,25 @@ class GameController extends Controller{
               );
 
               // injection équipement de départ
-              $test = $testModel->findWithUserId($loggedUser['id']);
-              $testModel1->insert(array(
-                          'character_id' => $test['id'],
+              $character = $characters->findWithUserId($loggedUser['id']);
+              $inventory->insert(array(
+                          'character_id' => $character['id'],
                           'object_id' => 2,
                           'amount' => 1,
                         )
                       );
 
-              $test = $testModel->findWithUserId($loggedUser['id']);
-              $testModel1->insert(array(
-                          'character_id' => $test['id'],
+              $character = $characters->findWithUserId($loggedUser['id']);
+              $inventory->insert(array(
+                          'character_id' => $character['id'],
                           'object_id' => 6,
                           'amount' => 1,
                         )
                       );
 
-              $test = $testModel->findWithUserId($loggedUser['id']);
-              $testModel1->insert(array(
-                          'character_id' => $test['id'],
+              $character = $characters->findWithUserId($loggedUser['id']);
+              $inventory->insert(array(
+                          'character_id' => $character['id'],
                           'object_id' => 16,
                           'amount' => 2,
                         )
@@ -166,7 +166,7 @@ class GameController extends Controller{
 
           // si le joueur prend la classe soldier
           if ($class == 'soldier') {
-            $testModel->insert(array(
+            $characters->insert(array(
                       'user_id' => $loggedUser['id'],
                       'class' => $class,
                       'name' => $_POST['name'],
@@ -189,32 +189,32 @@ class GameController extends Controller{
               );
 
               // injection équipement de départ
-              $test = $testModel->findWithUserId($loggedUser['id']);
-              $testModel1->insert(array(
-                          'character_id' => $test['id'],
+              $character = $characters->findWithUserId($loggedUser['id']);
+              $inventory->insert(array(
+                          'character_id' => $character['id'],
                           'object_id' => 1,
                           'amount' => 1,
                         )
                       );
 
-              $test = $testModel->findWithUserId($loggedUser['id']);
-              $testModel1->insert(array(
-                          'character_id' => $test['id'],
+              $character = $characters->findWithUserId($loggedUser['id']);
+              $inventory->insert(array(
+                          'character_id' => $character['id'],
                           'object_id' => 5,
                           'amount' => 1,
                         )
                       );
 
-              $test = $testModel->findWithUserId($loggedUser['id']);
-              $testModel1->insert(array(
-                          'character_id' => $test['id'],
+              $character = $characters->findWithUserId($loggedUser['id']);
+              $inventory->insert(array(
+                          'character_id' => $character['id'],
                           'object_id' => 16,
                           'amount' => 2,
                         )
                       );
           }
             // affiche admin_user.php
-            $this->redirectToRoute('intro3', ['id' => $test['id'] ]);
+            $this->redirectToRoute('intro3', ['id' => $character['id'] ]);
         } else {
           $this->show('game/intro2', ['error' => $error
                                                  ]);
@@ -225,10 +225,10 @@ class GameController extends Controller{
     public function equip($equip, $id, $lieu, $cible) {
       //récupération des infos de l'utilisateur connecté
       $loggedUser = $this->getUser();
-      $testModel = new AvatarModel();
-      $testModel1 = new CharactersModel();
-      $testModel2 = new InventoryModel();
-      $testModel3 = new ObjectsModel();
+      $avatars = new AvatarModel();
+      $characters = new CharactersModel();
+      $inventories = new InventoryModel();
+      $objects = new ObjectsModel();
       $drone = new Drone('Drone');
       $fantassinAlien = new FantassinAlien('FantassinAlien');
       $ravageur = new Ravageur('Ravageur');
@@ -236,12 +236,12 @@ class GameController extends Controller{
       $robot = new Robot('Robot');
       $traqueur = new Traqueur('Traqueur');
 
-      $test = $testModel1->find($id);
-      $test5 = $testModel3->find($equip);
-      if ($test5['wearable'] == 1 ) {
-        $testModel1->update(array(
+      $character = $characters->find($id);
+      $object = $objects->find($equip);
+      if ($object['wearable'] == 1 ) {
+        $characters->update(array(
                     'weapon_id' => $equip,
-          ), $test['id']
+          ), $character['id']
         );
       }
 
@@ -288,13 +288,12 @@ class GameController extends Controller{
                         );
       }
 
-      $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
-      $test4 = $testModel1-> find($id);
-      $test2 = $testModel2-> findAllWithId($id);
-      foreach ($test2 as $object) {
-        $test3[] = $testModel3->find($object['object_id']);
+      $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
+      $inventory = $inventories-> findAllWithId($id);
+      foreach ($inventory as $object) {
+        $item[] = $objects->find($object['object_id']);
       }
-      $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $test1, 'objects' => $test3 , 'character' => $test4, 'ennemi' => $ennemi,  'inventory' => $test2]);
+      $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'ennemi' => $ennemi,  'inventory' => $inventory]);
     }
 
 
@@ -487,10 +486,10 @@ class GameController extends Controller{
     public function fight($id, $lieu, $cible) {
       //récupération des infos de l'utilisateur connecté
       $loggedUser = $this->getUser();
-      $testModel = new AvatarModel();
-      $testModel1 = new CharactersModel();
-      $testModel2 = new InventoryModel();
-      $testModel3 = new ObjectsModel();
+      $avatars = new AvatarModel();
+      $characters = new CharactersModel();
+      $inventories = new InventoryModel();
+      $objects = new ObjectsModel();
 
       // appel de la classe du monstre en fonction de la cible
       if ($cible == 'Drone'){$target = new Drone('Drone');  }
@@ -507,13 +506,13 @@ class GameController extends Controller{
                       'armor' => $target->get_CA(),
                       );
 
-      $test1 = $testModel-> getUserWithAvatar($loggedUser['avatar_id']);
-      $test4 = $testModel1-> find($id);
-      $test2 = $testModel2-> findAllWithId($id);
-      foreach ($test2 as $object) {
-        $test3[] = $testModel3->find($object['object_id']);
+      $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
+      $character = $characters-> find($id);
+      $inventory = $inventories-> findAllWithId($id);
+      foreach ($inventory as $object) {
+        $item[] = $objects->find($object['object_id']);
       }
-      $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $test1, 'objects' => $test3 , 'character' => $test4, 'ennemi' => $ennemi, 'inventory' => $test2]);
+      $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'ennemi' => $ennemi, 'inventory' => $test2]);
 
     }
 

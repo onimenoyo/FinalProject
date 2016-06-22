@@ -22,22 +22,22 @@ class AdminController extends Controller
 
   public function admin_user()
   {
-    $testModel = new UserModel();
-    $tests= $testModel->findAll();
+    $users = new UserModel();
+    $all_users= $users->findAll();
     // affiche admin_user.php
-    $this->show('admin/admin_user', ['users'=> $tests]);
+    $this->show('admin/admin_user', ['users'=> $all_users]);
   }
 
   public function admin_user_modif($id)
   {
     // On affiche modif_user.php en récupérant toutes les infos de l'utilisateur
-    $testModel = new UserModel();
-    $test= $testModel->find($id);
+    $users = new UserModel();
+    $user= $users->find($id);
     $this->show('admin/modif_user', ['id'=> $id,
-                                     'pseudo'=> $test['pseudo'],
-                                     'firstname'=> $test['firstname'],
-                                     'lastname'=> $test['lastname'],
-                                     'email'=> $test['email']
+                                     'pseudo'=> $user['pseudo'],
+                                     'firstname'=> $user['firstname'],
+                                     'lastname'=> $user['lastname'],
+                                     'email'=> $user['email']
                                    ]);
   }
 
@@ -66,24 +66,22 @@ class AdminController extends Controller
       $result = $valid->validateText($_POST['mail'], 3, 50);
       if (!empty($result)) {$error['mail'] = $result;}
       // On verifie que si l'email ou le pseudo est déja dans la base de donnée on ne l'accepte pas
-      $testModel3 = new UserModel();
-      $test3 = $testModel3->find($id);
-      $testModel1 = new UserModel();
-      $test1 = $testModel1->emailExists($_POST['mail']);
-      if ($test3['email'] =! $_POST['mail'] ) {
-        if ($test1) {$error['mail'] = "l'email existe déjà";}
+      $users = new UserModel();
+      $user = $users->find($id);
+      $user_mail = $users->emailExists($_POST['mail']);
+      if ($user['email'] =! $_POST['mail'] ) {
+        if ($user_mail) {$error['mail'] = "l'email existe déjà";}
       }
-      $testModel2 = new UserModel();
-      $test2 = $testModel2->usernameExists($_POST['pseudo']);
-      if ($test3['pseudo'] =! $_POST['pseudo'] ) {
-        if ($test2) {$error['pseudo'] = "le pseudo existe déjà";}
+      $user_pseudo = $users->usernameExists($_POST['pseudo']);
+      if ($user['pseudo'] =! $_POST['pseudo'] ) {
+        if ($user_pseudo) {$error['pseudo'] = "le pseudo existe déjà";}
       }
 
       // si aucune erreur
       if (count($error) == 0) {
         // met à jour l'utilisateur avec les nouvelles infos inserer
-        $testModel = new UserModel();
-        $testModel->update(array(
+        $users = new UserModel();
+        $users->update(array(
                   'pseudo' => $_POST['pseudo'],
                   'firstname' => $_POST['firstname'],
                   'lastname' => $_POST['lastname'],
@@ -93,38 +91,36 @@ class AdminController extends Controller
                   'modified_at' => date('Y-m-d H:i:s'),
               ), $id
           );
-          $testModel = new UserModel();
-          $tests= $testModel->findAll();
+          $all_users= $users->findAll();
           // affiche admin_user.php
-          $this->show('admin/admin_user', ['users'=> $tests]);
+          $this->show('admin/admin_user', ['users'=> $all_users]);
       } else {
-        $testModel = new UserModel();
-        $test= $testModel->find($id);
+        $users = new UserModel();
+        $user= $users->find($id);
         $this->show('admin/modif_user', ['error' => $error,
                                          'id'=> $id,
-                                         'pseudo'=> $test['pseudo'],
-                                         'firstname'=> $test['firstname'],
-                                         'lastname'=> $test['lastname'],
-                                         'email'=> $test['email']
+                                         'pseudo'=> $user['pseudo'],
+                                         'firstname'=> $user['firstname'],
+                                         'lastname'=> $user['lastname'],
+                                         'email'=> $user['email']
                                        ]);
       }
     }
   }
 
   public function admin_user_delete($id) {
-    $testModel1 = new UserModel();
-    $testModel1->delete($id);
-    $testModel = new UserModel();
-    $tests= $testModel->findAll();
+    $users = new UserModel();
+    $users->delete($id);
+    $all_users= $users->findAll();
     // affiche admin_user.php
-    $this->redirectToRoute('admin_user', ['users'=> $tests]);
+    $this->redirectToRoute('admin_user', ['users'=> $all_users]);
   }
 
   public function admin_news() {
-    $testModel = new NewsModel();
-    $tests= $testModel->findAll();
+    $news = new NewsModel();
+    $all_news= $news->findAll();
     // affiche admin_news.php
-    $this->show('admin/admin_news', ['news'=> $tests]);
+    $this->show('admin/admin_news', ['news'=> $all_news]);
   }
 
   public function admin_news_add() {
@@ -145,8 +141,8 @@ class AdminController extends Controller
         // récupération des infos utilisateur
         $loggedUser = $this->getUser();
         // insertion de la news dans la base de donnée
-        $testModel = new NewsModel();
-        $testModel->insert(array(
+        $news = new NewsModel();
+        $news->insert(array(
                 'title' => $_POST['title'],
                 'content' => $_POST['content'],
                 'created_at' => date('Y-m-d H:i:s'),
@@ -154,10 +150,9 @@ class AdminController extends Controller
             )
         );
         // rammène l'utilisateur a l'accueil
-        $testModel = new NewsModel();
-        $tests= $testModel->findAll();
+        $all_news= $news->findAll();
         // affiche admin_news.php
-        $this->redirectToRoute('admin_news', ['news'=> $tests]);
+        $this->redirectToRoute('admin_news', ['news'=> $all_news]);
     } else {
       // récupère les erreurs et permet de les réutiliser dans register.php
       $this->show('admin/admin_news_add', ['error' => $error]);
@@ -165,22 +160,21 @@ class AdminController extends Controller
   }
 
   public function admin_news_delete($id) {
-    $testModel1 = new NewsModel();
-    $testModel1->delete($id);
-    $testModel = new NewsModel();
-    $tests= $testModel->findAll();
+    $news = new NewsModel();
+    $news->delete($id);
+    $all_news= $news->findAll();
     // affiche admin_user.php
-    $this->redirectToRoute('admin_news', ['news'=> $tests]);
+    $this->redirectToRoute('admin_news', ['news'=> $all_news]);
   }
 
     public function admin_news_modif($id)
     {
       // On affiche modif_user.php en récupérant toutes les infos de l'utilisateur
-      $testModel = new NewsModel();
-      $test= $testModel->find($id);
+      $news = new NewsModel();
+      $new= $news->find($id);
       $this->show('admin/admin_news_modif', ['id'=> $id,
-                                       'title'=> $test['title'],
-                                       'content'=> $test['content'],
+                                       'title'=> $new['title'],
+                                       'content'=> $new['content'],
                                      ]);
     }
 
@@ -197,53 +191,52 @@ class AdminController extends Controller
         // si aucune erreur
         if (count($error) == 0) {
           // met à jour l'utilisateur avec les nouvelles infos inserer
-          $testModel = new NewsModel();
+          $news = new NewsModel();
           // récupération des infos utilisateur
           $loggedUser = $this->getUser();
-          $testModel->update(array(
+          $news->update(array(
             'title' => $_POST['title'],
             'content' => $_POST['content'],
             'modified_at' => date('Y-m-d H:i:s'),
             'modified_by' => $loggedUser['pseudo'],
                 ), $id
             );
-            $testModel = new NewsModel();
-            $tests= $testModel->findAll();
+            $all_news= $news->findAll();
             // affiche admin_news.php
-            $this->redirectToRoute('admin_news', ['news'=> $tests]);
+            $this->redirectToRoute('admin_news', ['news'=> $all_news]);
         } else {
-          $testModel = new NewsModel();
-          $test= $testModel->find($id);
+          $news = new NewsModel();
+          $new= $news->find($id);
           $this->show('admin/admin_news_modif', ['error' => $error,
                                                  'id'=> $id,
-                                                 'title'=> $test['title'],
-                                                 'content'=> $test['content'],
+                                                 'title'=> $new['title'],
+                                                 'content'=> $new['content'],
                                                  ]);
         }
     }
     public function admin_characters() {
-      $testModel = new CharactersModel();
-      $tests= $testModel->findAll();
+      $characters = new CharactersModel();
+      $all_characters = $characters->findAll();
       // affiche admin_characters.php
-      $this->show('admin/admin_characters', ['characters'=> $tests]);
+      $this->show('admin/admin_characters', ['characters'=> $all_characters]);
     }
 
     public function admin_characters_modif($id) {
       // On affiche modif_user.php en récupérant toutes les infos de l'utilisateur
-      $testModel = new CharactersModel();
-      $test= $testModel->find($id);
+      $characters = new CharactersModel();
+      $character= $characters->find($id);
       $this->show('admin/admin_characters_modif', ['id'=> $id,
-                                       'name'=> $test['name'],
-                                       'health'=> $test['health'],
-                                       'energy'=> $test['energy'],
-                                       'armor'=> $test['armor'],
-                                       'lvl'=> $test['lvl'],
-                                       'strength'=> $test['strength'],
-                                       'dexterity'=> $test['dexterity'],
-                                       'spirit'=> $test['spirit'],
-                                       'social'=> $test['social'],
-                                       'lvl_spell'=> $test['lvl_spell'],
-                                       'exp'=> $test['exp'],
+                                       'name'=> $character['name'],
+                                       'health'=> $character['health'],
+                                       'energy'=> $character['energy'],
+                                       'armor'=> $character['armor'],
+                                       'lvl'=> $character['lvl'],
+                                       'strength'=> $character['strength'],
+                                       'dexterity'=> $character['dexterity'],
+                                       'spirit'=> $character['spirit'],
+                                       'social'=> $character['social'],
+                                       'lvl_spell'=> $character['lvl_spell'],
+                                       'exp'=> $character['exp'],
                                      ]);
     }
 
@@ -287,8 +280,8 @@ class AdminController extends Controller
         // si aucune erreur
         if (count($error) == 0) {
           // met à jour le personnage avec les nouvelles infos inseré
-          $testModel = new CharactersModel();
-          $testModel->update(array(
+          $characters = new CharactersModel();
+          $characters->update(array(
             'name' => $_POST['name'],
             'health'=> $_POST['health'],
             'energy'=> $_POST['energy'],
@@ -302,53 +295,51 @@ class AdminController extends Controller
             'exp' => $_POST['exp'],
                 ), $id
             );
-            $testModel = new CharactersModel();
-            $tests= $testModel->findAll();
+            $all_characters= $characters->findAll();
             // affiche admin_characters.php
-            $this->show('admin/admin_characters', ['characters'=> $tests]);
+            $this->show('admin/admin_characters', ['characters'=> $all_characters]);
         } else {
       // On affiche modif_user.php en récupérant toutes les infos de l'utilisateur
-      $testModel = new CharactersModel();
-      $test= $testModel->find($id);
+      $characters = new CharactersModel();
+      $character= $characters->find($id);
       $this->show('admin/admin_characters_modif', ['id'=> $id,
                                        'error'=> $error,
-                                       'name'=> $test['name'],
-                                       'health'=> $test['health'],
-                                       'energy'=> $test['energy'],
-                                       'armor'=> $test['armor'],
-                                       'lvl'=> $test['lvl'],
-                                       'strength'=> $test['strength'],
-                                       'dexterity'=> $test['dexterity'],
-                                       'spirit'=> $test['spirit'],
-                                       'social'=> $test['social'],
-                                       'lvl_spell'=> $test['lvl_spell'],
-                                       'exp'=> $test['exp'],
+                                       'name'=> $character['name'],
+                                       'health'=> $character['health'],
+                                       'energy'=> $character['energy'],
+                                       'armor'=> $character['armor'],
+                                       'lvl'=> $character['lvl'],
+                                       'strength'=> $character['strength'],
+                                       'dexterity'=> $character['dexterity'],
+                                       'spirit'=> $character['spirit'],
+                                       'social'=> $character['social'],
+                                       'lvl_spell'=> $character['lvl_spell'],
+                                       'exp'=> $character['exp'],
                                      ]);
         }
     }
 
     public function admin_characters_delete($id) {
-      $testModel1 = new CharactersModel();
-      $testModel1->delete($id);
-      $testModel = new CharactersModel();
-      $tests= $testModel->findAll();
+      $characters = new CharactersModel();
+      $characters->delete($id);
+      $all_characters= $characters->findAll();
       // affiche admin_user.php
-      $this->redirectToRoute('admin_characters', ['characters'=> $tests]);
+      $this->redirectToRoute('admin_characters', ['characters'=> $all_characters]);
     }
 
     public function admin_inventory() {
-      $testModel = new InventoryModel();
-      $tests= $testModel->findAll();
+      $inventories = new InventoryModel();
+      $all_inventories= $inventories->findAll();
       // affiche admin_inventory.php
-      $this->show('admin/admin_inventory', ['inventory'=> $tests]);
+      $this->show('admin/admin_inventory', ['inventory'=> $all_inventories]);
     }
 
     public function admin_inventory_modif($id) {
       // On affiche modif_inventory.php
-      $testModel = new InventoryModel();
-      $test= $testModel->find($id);
+      $inventories = new InventoryModel();
+      $inventory= $inventories->find($id);
       $this->show('admin/admin_inventory_modif', ['id'=> $id,
-                                       'amount'=> $test['amount'],
+                                       'amount'=> $inventory['amount'],
                                      ]);
     }
 
@@ -362,54 +353,53 @@ class AdminController extends Controller
         // si aucune erreur
         if (count($error) == 0) {
           // met à jour le personnage avec les nouvelles infos inseré
-          $testModel = new InventoryModel();
-          $testModel->update(array(
+          $inventories = new InventoryModel();
+          $inventories->update(array(
             'amount' => $_POST['amount'],
                 ), $id
             );
-            $tests= $testModel->findAll();
+            $all_inventories= $inventories->findAll();
             // affiche admin_characters.php
-            $this->show('admin/admin_inventory', ['inventory'=> $tests]);
+            $this->show('admin/admin_inventory', ['inventory'=> $all_inventories]);
         } else {
           // On affiche modif_inventory.php
-          $testModel = new InventoryModel();
-          $test= $testModel->find($id);
+          $inventories = new InventoryModel();
+          $inventory= $inventories->find($id);
           $this->show('admin/admin_inventory_modif', ['id'=> $id,
                                            'error'=>$error,
-                                           'amount'=> $test['amount'],
+                                           'amount'=> $inventory['amount'],
                                          ]);
         }
     }
 
     public function admin_inventory_delete($id) {
-      $testModel1 = new InventoryModel();
-      $testModel1->delete($id);
-      $testModel = new InventoryModel();
-      $tests= $testModel->findAll();
+      $inventories = new InventoryModel();
+      $inventories->delete($id);
+      $all_inventories= $inventories->findAll();
       // affiche admin_inventory.php
-      $this->redirectToRoute('admin_inventory', ['inventory'=> $tests]);
+      $this->redirectToRoute('admin_inventory', ['inventory'=> $all_inventories]);
     }
 
     public function admin_objects() {
-      $testModel = new ObjectsModel();
-      $tests= $testModel->findAll();
+      $objects = new ObjectsModel();
+      $all_objects= $objects->findAll();
       // affiche admin_objects.php
-      $this->show('admin/admin_objects', ['objects'=> $tests]);
+      $this->show('admin/admin_objects', ['objects'=> $all_objects]);
     }
 
     public function admin_objects_modif($id) {
       // On affiche modif_objects.php
-      $testModel = new ObjectsModel();
-      $test= $testModel->find($id);
+      $objects = new ObjectsModel();
+      $object= $objects->find($id);
       $this->show('admin/admin_objects_modif', ['id'=> $id,
-                                       'name'=> $test['name'],
-                                       'dice'=> $test['dice'],
-                                       'damage'=> $test['damage'],
-                                       'defense'=> $test['defense'],
-                                       'value'=> $test['value'],
-                                       'weight'=> $test['weight'],
-                                       'heal'=> $test['heal'],
-                                       'energy'=> $test['energy'],
+                                       'name'=> $object['name'],
+                                       'dice'=> $object['dice'],
+                                       'damage'=> $object['damage'],
+                                       'defense'=> $object['defense'],
+                                       'value'=> $object['value'],
+                                       'weight'=> $object['weight'],
+                                       'heal'=> $object['heal'],
+                                       'energy'=> $object['energy'],
                                      ]);
     }
 
@@ -444,8 +434,8 @@ class AdminController extends Controller
         // si aucune erreur
         if (count($error) == 0) {
           // met à jour le personnage avec les nouvelles infos inseré
-          $testModel = new ObjectsModel();
-          $testModel->update(array(
+          $objects = new ObjectsModel();
+          $objects->update(array(
             'name' => $_POST['name'],
             'dice' => $_POST['dice'],
             'damage' => $_POST['damage'],
@@ -456,56 +446,54 @@ class AdminController extends Controller
             'energy' => $_POST['energy'],
                 ), $id
             );
-            $testModel = new ObjectsModel();
-            $tests= $testModel->findAll();
+            $all_objects= $objects->findAll();
             // affiche admin_objects.php
-            $this->show('admin/admin_objects', ['objects'=> $tests]);
+            $this->show('admin/admin_objects', ['objects'=> $all_objects]);
         } else {
           // On affiche modif_objects.php
-          $testModel = new ObjectsModel();
-          $test= $testModel->find($id);
+          $objects = new ObjectsModel();
+          $object= $objects->find($id);
           $this->show('admin/admin_objects_modif', ['id'=> $id,
                                            'error'=> $error,
-                                           'name'=> $test['name'],
-                                           'dice'=> $test['dice'],
-                                           'damage'=> $test['damage'],
-                                           'defense'=> $test['defense'],
-                                           'value'=> $test['value'],
-                                           'weight'=> $test['weight'],
-                                           'heal'=> $test['heal'],
-                                           'energy'=> $test['energy'],
+                                           'name'=> $object['name'],
+                                           'dice'=> $object['dice'],
+                                           'damage'=> $object['damage'],
+                                           'defense'=> $object['defense'],
+                                           'value'=> $object['value'],
+                                           'weight'=> $object['weight'],
+                                           'heal'=> $object['heal'],
+                                           'energy'=> $object['energy'],
                                          ]);
         }
     }
 
     public function admin_objects_delete($id) {
-      $testModel1 = new ObjectsModel();
-      $testModel1->delete($id);
-      $testModel = new ObjectsModel();
-      $tests= $testModel->findAll();
+      $objects = new ObjectsModel();
+      $objects->delete($id);
+      $all_objects= $objects->findAll();
       // affiche admin_objects.php
-      $this->redirectToRoute('admin_objects', ['objects'=> $tests]);
+      $this->redirectToRoute('admin_objects', ['objects'=> $all_objects]);
     }
 
     public function admin_pnj() {
-      $testModel = new PnjModel();
-      $tests= $testModel->findAll();
+      $pnjs = new PnjModel();
+      $all_pnjs= $pnjs->findAll();
       // affiche admin_pnj.php
-      $this->show('admin/admin_pnj', ['pnj'=> $tests]);
+      $this->show('admin/admin_pnj', ['pnj'=> $all_pnjs]);
     }
 
     public function admin_pnj_modif($id) {
       // On affiche modif_pnj.php en récupérant toutes les infos de l'utilisateur
-      $testModel = new PnjModel();
-      $test= $testModel->find($id);
+      $pnjs = new PnjModel();
+      $pnj= $pnjs->find($id);
       $this->show('admin/admin_pnj_modif', ['id'=> $id,
-                                       'name'=> $test['name'],
-                                       'exp'=> $test['exp'],
-                                       'strength'=> $test['strength'],
-                                       'dexterity'=> $test['dexterity'],
-                                       'spirit'=> $test['spirit'],
-                                       'social'=> $test['social'],
-                                       'attack'=> $test['attack'],
+                                       'name'=> $pnj['name'],
+                                       'exp'=> $pnj['exp'],
+                                       'strength'=> $pnj['strength'],
+                                       'dexterity'=> $pnj['dexterity'],
+                                       'spirit'=> $pnj['spirit'],
+                                       'social'=> $pnj['social'],
+                                       'attack'=> $pnj['attack'],
                                      ]);
     }
 
@@ -536,8 +524,8 @@ class AdminController extends Controller
       // si aucune erreur
       if (count($error) == 0) {
         // met à jour le personnage avec les nouvelles infos inseré
-        $testModel = new PnjModel();
-        $testModel->update(array(
+        $pnjs = new PnjModel();
+        $pnjs->update(array(
           'name' => $_POST['name'],
           'exp' => $_POST['exp'],
           'strength' => $_POST['strength'],
@@ -547,32 +535,31 @@ class AdminController extends Controller
           'attack' => $_POST['attack'],
               ), $id
           );
-          $testModel = new PnjModel();
-          $tests= $testModel->findAll();
+          $pnjs = new PnjModel();
+          $all_pnjs= $pnjs->findAll();
           // affiche admin_pnj.php
-          $this->show('admin/admin_pnj', ['pnj'=> $tests]);
+          $this->show('admin/admin_pnj', ['pnj'=> $all_pnjs]);
       } else {
         // On affiche modif_pnj.php en récupérant toutes les infos de l'utilisateur
-        $testModel = new PnjModel();
-        $test= $testModel->find($id);
+        $pnjs = new PnjModel();
+        $pnj= $pnjs->find($id);
         $this->show('admin/admin_pnj_modif', ['id'=> $id,
-                                         'name'=> $test['name'],
-                                         'exp'=> $test['exp'],
-                                         'strength'=> $test['strength'],
-                                         'dexterity'=> $test['dexterity'],
-                                         'spirit'=> $test['spirit'],
-                                         'social'=> $test['social'],
-                                         'attack'=> $test['attack'],
+                                         'name'=> $pnj['name'],
+                                         'exp'=> $pnj['exp'],
+                                         'strength'=> $pnj['strength'],
+                                         'dexterity'=> $pnj['dexterity'],
+                                         'spirit'=> $pnj['spirit'],
+                                         'social'=> $pnj['social'],
+                                         'attack'=> $pnj['attack'],
                                        ]);
       }
     }
 
     public function admin_pnj_delete($id) {
-      $testModel1 = new PnjModel();
-      $testModel1->delete($id);
-      $testModel = new PnjModel();
-      $tests= $testModel->findAll();
+      $pnjs = new PnjModel();
+      $pnjs->delete($id);
+      $all_pnjs= $pnjs->findAll();
       // affiche admin_pnj.php
-      $this->redirectToRoute('admin_pnj', ['pnj'=> $tests]);
+      $this->redirectToRoute('admin_pnj', ['pnj'=> $all_pnjs]);
     }
 }
