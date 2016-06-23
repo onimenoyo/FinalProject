@@ -25,6 +25,8 @@ a{
   padding: 12px 4px;
 }
 
+
+
 section img{
   max-width: 1170px;
   width: 100%;
@@ -69,6 +71,8 @@ section img{
   height: 20%;
   left: 4%;
   top: 45%;
+  color: rgb(205, 32, 32);
+  font-size: 1.5em;
   box-shadow: 0 0 2px 2px rgb(134, 125, 0);
   border-radius: 10px;
   background-color: rgba(55, 56, 56, 0.73);

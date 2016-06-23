@@ -491,7 +491,7 @@ class GameController extends Controller{
       $inventories = new InventoryModel();
       $objects = new ObjectsModel();
 
-      // appel de la classe du monstre en fonction de la cible
+      // instance de la classe du monstre en fonction de la cible
       if ($cible == 'Drone'){$target = new Drone('Drone');  }
       elseif ($cible == 'FantassinAlien'){ $target = new FantassinAlien('FantassinAlien'); }
       elseif ($cible == 'Ravageur'){ $target = new Ravageur('Ravageur'); }
@@ -505,11 +505,14 @@ class GameController extends Controller{
       $player->set_life($character['health']);
       $pvjoueur = $player->get_life();
 
+      // on place dans un array les informations de l'ennemi
       $ennemi = array('name' => $target->get_name(),
                       'current_health' => $target->get_life(),
                       'health' => $target->get_lifeMax(),
                       'armor' => $target->get_CA(),
                       );
+
+      // on place dans un array les informations du joueur
       $joueur = array('name' => $target->get_name(),
                       'current_health' => $character['health'],
                       'health' => $character['health'],
@@ -525,7 +528,6 @@ class GameController extends Controller{
         $item[] = $objects->find($object['object_id']);
       }
       $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'joueur'=> $joueur, 'ennemi' => $ennemi, 'inventory' => $inventory, 'pvcible' => $pvcible, 'pvjoueur' => $pvjoueur]);
-
     }
 
 
@@ -534,6 +536,8 @@ class GameController extends Controller{
       $inventories = new InventoryModel();
       $objects = new ObjectsModel();
       $char = new CharactersModel();
+      $monster = new PnjModel();
+
         // appel de la classe du monstre en fonction de la cible
         if ($cible == 'Drone'){ $target = new Drone('Drone'); }
         elseif ($cible == 'FantassinAlien'){ $target = new FantassinAlien('FantassinAlien'); }
@@ -569,22 +573,33 @@ class GameController extends Controller{
           }else {
             $playerTouch = $player->get_name(). ' touche ' .$target->get_name();
           }
+          // si l'ennemi est mort :
           if($target->is_dead()){
-            echo $target->get_name() . ' est mort !<br>';
-            die();
+            $playerTouch = $target->get_name() . ' est mort !<br> ' ;
+
+            // ajout xp :
+            // récupérer l'exp du monstre dans sa table et l'injecter dans celle du joueur
+
           }
+
           // attaque de l'ennemi
           $pvjoueur = $target->touch_cac($player,1, $target->get_deg());
-          if (!$pvjoueur){
-            $targetTouch = $target->get_name(). ' rate son attaque.';
-            $pvjoueur = $ancienpvjoueur;
-          }else {
-            $targetTouch = $target->get_name(). ' touche ' .$target->get_name();
+          if(!$target->is_dead()){
+            if (!$pvjoueur){
+              $targetTouch = $target->get_name(). ' rate son attaque.';
+              $pvjoueur = $ancienpvjoueur;
+            }else {
+              $targetTouch = $target->get_name(). ' touche ' .$target->get_name();
+            }
+          }else{
+            $targetTouch = '';
           }
+          // si le joueur est mort :
           if($player->is_dead()){
             echo $player->get_name() . ' est mort ! <br> Vous Avez Perdu ! <br>';
             die();
           }
+
           $ennemi = array('name' => $target->get_name(),
           'current_health' => $pvcible,
           'health' => $target->get_lifeMax(),

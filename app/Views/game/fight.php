@@ -31,9 +31,13 @@
         <div class="contenu options">
 
           <div class="menuAttack">
-            <a href="<?= $this->url('attack', ['id' => $id, 'cible' => $cible, 'lieu' => $lieu,'avatar' => $avatar, 'objects' => $objects, 'character' => $character, "pvcible" => $pvcible, "pvjoueur" => $pvjoueur ])?>"><button class="button option" id="attack">Attaquer</button></a>
-            <a href="#"><div class="button option" id="heal">Se Soigner</div></a>
-            <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
+            <?php if($ennemi['current_health'] >= 0){ ?>
+              <a href="<?= $this->url('attack', ['id' => $id, 'cible' => $cible, 'lieu' => $lieu,'avatar' => $avatar, 'objects' => $objects, 'character' => $character, "pvcible" => $pvcible, "pvjoueur" => $pvjoueur ])?>"><div class="button option" id="run">Attaquer</div></a>
+              <a href="#"><div class="button option" id="heal">Se Soigner</div></a>
+              <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
+            <?php }else{ ?>
+              <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => $lieu ])?>"><div class="button option" id="run">Continuer l'aventure !</div></a>
+            <?php }  ?>
           </div>
 
           <div class="menuInventory conteneur2 hide">
