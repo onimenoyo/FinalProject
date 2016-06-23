@@ -6,6 +6,7 @@ use \Model\UserModel;
 use \Model\CharactersModel;
 use \Model\InventoryModel;
 use \Model\ObjectsModel;
+use \Model\PnjModel;
 use \Services\Validation;
 use \Classes\Characters;
 use \Classes\Drone;
