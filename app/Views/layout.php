@@ -19,7 +19,7 @@
         <ul class="menuSite">
 					<?php if ($w_user['role'] == 'admin') {}
 						else {
-							?><li><a href="#">Nous contacter</a></li>
+							?><li><a href="<?= $this->url("contact")?>">Nous contacter</a></li>
 					<?php } if (!empty($w_user)) {
 						if ($w_user['role'] == 'admin') {?>
 							<li><a href="<?= $this->url("dashboard")?>">Administration</a></li>
@@ -39,11 +39,11 @@
         <a href="#"  class="menuBurger"><i class="burger fa fa-bars" aria-hidden="true"></i></a>
         <div class="burgerDropDown hide">
           <ul>
-            <li><a href="#">Se Connecter</a></li>
+            <li><a href="<?= $this->url("login")?>">Se Connecter</a></li>
 						<hr>
 						<li><a href="<?= $this->url("register")?>">S'inscrire</a></li>
             <hr>
-            <li><a href="#">Nous Contacter</a></li>
+            <li><a href="<?= $this->url("contact")?>">Nous Contacter</a></li>
           </ul>
         </div>
       </div>

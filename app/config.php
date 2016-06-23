@@ -24,7 +24,7 @@ $w_config = [
 	'security_created_at_property' => 'created_at',						//nom de la colonne pour le "created_at"
 	'security_modified_at_property' => 'modified_at',					//nom de la colonne pour le "modified_at"
 
-
+	'baseurl' => 'http://localhost/FinalProject/public',
 	'security_login_route_name' => 'login',										//nom de la route affichant le formulaire de connexion
 ];
 

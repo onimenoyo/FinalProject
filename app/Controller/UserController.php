@@ -117,7 +117,7 @@ class UserController extends Controller
             )
         );
         // rammène l'utilisateur a l'accueil
-        $body = 'http://localhost/FinalProject/public/validmail/'.$token;
+        $body = '/validmail/'.$token;
         $mails = new MailController();
         $mails->email_validation($body , $_POST['mail']);
         $this->show('user/sent_mail', ['token'=> $token, 'mail'=>$_POST['mail']]);
@@ -171,7 +171,7 @@ class UserController extends Controller
         $users = new UserModel();
         $test1 = $users-> getUserByUsernameOrEmail($_POST['email']);
         $token = $test1['token'];
-        $body = 'http://localhost/FinalProject/public/forgotpassword/'.$token;
+        $body = '/forgotpassword/'.$token;
         $mail = new MailController();
         $mail->email($body , $_POST['email']);
         $this->show('user/sent_mail', ['token'=> $token, 'email'=>$_POST['email']]);

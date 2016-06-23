@@ -67,6 +67,9 @@
 		// AJAX
 		['GET', '/game/attack/[:id]/[:lieu]/[:cible]', "Game#attack", 'attack'],
 
+		// CONTACT
+		['GET', '/contact', 'User#contact', 'contact'],
+		['POST', '/contact', 'User#contact_post', 'contact_post'],
 		//MailController
 		['GET', '/test/mail', 'Mail#mail', 'mail'],
 	);

@@ -290,6 +290,7 @@ class GameController extends Controller{
 
       $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
       $inventory = $inventories-> findAllWithId($id);
+      $character = $characters-> find($id);
       foreach ($inventory as $object) {
         $item[] = $objects->find($object['object_id']);
       }
