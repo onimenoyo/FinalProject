@@ -512,7 +512,7 @@ class GameController extends Controller{
       foreach ($inventory as $object) {
         $item[] = $objects->find($object['object_id']);
       }
-      $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'ennemi' => $ennemi, 'inventory' => $test2]);
+      $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'ennemi' => $ennemi, 'inventory' => $inventory]);
 
     }
 
@@ -533,7 +533,7 @@ class GameController extends Controller{
         $char = new CharactersModel();
         $character = $char->find($id);
         $player = new Player($character['name']);
-        $target->set_newLife()
+        $target->set_newLife($target->get_lifeMax());
         $player->set_strength($character['strength']);
         $player->set_dexterity($character['dexterity']);
         $player->set_spirit($character['spirit']);
@@ -566,7 +566,7 @@ class GameController extends Controller{
             'weapon' => $weapon['name'],
             'dice' => $weapon['dice'],
             'damage' => $weapon['damage'],
-            'deg' => $attackPlayer,
+            'vie' => $attackPlayer,
             'ennemiHealth' => $attackPlayer,
           );
 

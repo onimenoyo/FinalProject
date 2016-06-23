@@ -126,6 +126,8 @@
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Camp Survivants de la fôret" />
   <div class="dialogue2">
     <p>
+      C’est avec une immense surprise que tu tombes sur un groupe de bâtiments hight tech placé harmonieusement à travers les arbres, leurs couleurs, les tissus, tout semble être fait pour les dissimuler de l’extérieur, et si tu n’étais pas venu à pied, nul doute que tu n’aurais jamais découvert cet endroit.
+      Nouvelle surprise ! Un groupe de personne se dirigent vers toi, commandé par une jeune femme elle même portant un équipement que tu n’as jamais vu auparavant.
     </p>
   </div>
   <div class="conteneur">
@@ -137,8 +139,8 @@
   <div class="dialogue2">
     <p>
       Tu arrives à quelque chose d’étrange, un bosquet dans une forêt. L'environnement semble délimité par un petit ruisseau. Le lieu est vraiment calme et magnifique.
-Tu te sent reposé et apaisé par l’environnement.
-Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes blessures et de ta fatigue.
+      Tu te sent reposé et apaisé par l’environnement.
+      Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes blessures et de ta fatigue.
     </p>
   </div>
   <div class="conteneur">
@@ -149,6 +151,9 @@ Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Lac" />
   <div class="dialogue2">
     <p>
+      Alors que tu quittes enfin la forêt, tu arrives au niveau d’un grand lac. Au loin tu peux apercevoir les montagnes tandis que des oiseaux planent dans le ciel.
+      L’eau est clair et donnerai presque envie de s’y baigner.
+      Malgré tout, tu es obligé de faire attention, car tu es dans une zone dégagé et facilement repérable.
     </p>
   </div>
   <div class="conteneur">
@@ -162,6 +167,8 @@ Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Camp" />
   <div class="dialogue2">
     <p>
+      Après un certain temps, tu découvres au loin une forme inhabituelle. Plus tu t’approches, plus tu te rends compte qu’il s’agit d’un château gigantesque, semblant être à l’abandon.
+      Quel aventure extraordinaire cela serait de l’explorer…. mais tu n’as pas le temps, une prochaine fois peut-être !
     </p>
   </div>
   <div class="conteneur">
@@ -172,6 +179,8 @@ Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Portail du lac" />
   <div class="dialogue2">
     <p>
+      Finissant de longer le lac, tu arrives à quelque chose d’étrange : une barrière naturelle ressemblant à une immense falaise, dans laquelle des sculptures ont été taillées.
+      Au milieu de ce gigantesque mur se trouve un passage traversé par une rivière, celle qui alimente le lac.
     </p>
   </div>
   <div class="conteneur">
@@ -182,6 +191,8 @@ Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords_Pont" />
   <div class="dialogue2">
     <p>
+      Tu entames ton ascension des montagnes. Avec plaisir, tu te rends comptes que l’air est pur, pas de pollution dans l’air.
+      L’endroit est tout de même sacrément escarpé et tu as par moment du mal à progresser.
     </p>
   </div>
   <div class="conteneur">
@@ -195,6 +206,9 @@ Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Temple" />
   <div class="dialogue2">
     <p>
+      Alors que tu cherchais un endroit où te reposer, tu tombes sur un bâtiment taillé à même la roche. Avec curiosité, tu te approches et découvre une sorte d’autel. A l’intérieur se trouve des bougies éteinte, des pots d’encens et pas mal de vieilles offrandes placées devant la statue d’une femme, sûrement une héroïne ou sainte locale.
+
+      Tu décides d’éviter de toucher à quoi que ce soit et profite de l'abri que te procures cet endroit pour te reposer un peu.
     </p>
   </div>
   <div class="conteneur">
@@ -205,6 +219,8 @@ Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Grotte" />
   <div class="dialogue2">
     <p>
+      Une caverne naturelle se trouve devant toi.
+      Par les traces laissées au sol, tu penses que des créatures ont du faire leur tanière de cet endroit. Avec prudence, tu décides de rebrousser chemin.
     </p>
   </div>
   <div class="conteneur">
@@ -215,6 +231,8 @@ Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Base alien" />
   <div class="dialogue2">
     <p>
+      Après un long périple, tu arrives enfin en vue de la base alien. Celle-ci est encore à une certaine distance, mais tu peux déjà apercevoir les formidables défenses dont elle est composée. Outre les patrouilles, des tourelles gigantesques la protèges des attaques autant terrestre qu'aérienne.
+      Étant donnée la position stratégique, tu te rends bien compte qu’un assaut frontal serait suicidaire.
     </p>
   </div>
   <div class="conteneur">
@@ -228,6 +246,8 @@ Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Entrée secrète" />
   <div class="dialogue2">
     <p>
+      Avec l’aide de survivants, tu finis par découvrir un passage cachée dans les montagnes, te permettant d’accéder directement au générateur ennemi par un conduit de ventilation naturel.
+      Heureusement que les envahisseurs ignoraient tout de se passage !
     </p>
   </div>
   <div class="conteneur">
@@ -240,6 +260,8 @@ Quand tu décides de repartir, tu as l’impression d’avoir récupéré de tes
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Générateur" />
   <div class="dialogue2">
     <p>
+      Enfin, tu touches au but, le générateur est devant tout, plus qu’à placer les explosifs et tout faire sauter !
+      Tandis que tu commences à placer les charges, tu entends un bruit étrange, une sorte de raclement sur le sol… tu as juste le temps de te retourner pour apercevoir une immense créature se diriger vers toi et t’attaquer!
     </p>
   </div>
   <div class="conteneur">

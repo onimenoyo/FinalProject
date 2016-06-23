@@ -250,7 +250,7 @@ $url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible]);
           msgHtml += '<br>';
           msgHtml += data.damage;
           msgHtml += '<br>';
-          msgHtml += data.deg;
+          msgHtml += data.vie;
           msgHtml += '<br>';
           msgHtml += data.dice;
           msgHtml += '<br>';
