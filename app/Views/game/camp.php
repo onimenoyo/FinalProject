@@ -12,7 +12,7 @@
         <div class="contenu options">
           <a href="#" id="Command" class='button' name="button">Centre de commandement</a>
           <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Infirmerie'])?>" id="infirmary" class='button' name="button">Infirmerie</a>
-          <a href="#" id="armory" class='button' name="button">Armurerie</a>
+          <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Armurerie'])?>" id="armory" class='button' name="button">Armurerie</a>
           <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Ruines'])?>" id="ruins" class='button' name="button">Explorer les ruines </a>
         </div>
       </div>

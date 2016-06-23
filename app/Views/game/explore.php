@@ -16,6 +16,7 @@
         <button type="submit" id="explore" class="button option" style="color:white" name="button">Exploration</button>
       </form>
 
+
 <?php }elseif($lieu == 'Centre_Commercial'){ ?>
   <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Centre Commercial" />
   <div class="dialogue2">
@@ -268,6 +269,22 @@
     <div class="contenu options">
       <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => 'Entree_Secrete'])?>"><button class="button option" style="color:white" type="button" id="return" name="button">Retour</button></a>
 
+<?php } elseif($lieu == 'Armurerie'){ ?>
+  <img src=" <?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Armurerie" />
+    <div class="dialogue2">
+      <p>
+        L’armurerie se trouve dans les sous sol d’un immeuble en ruine.
+        Quand tu t’en approches, tu peu observer que les lieux ont été fortement améliorés et protégés.
+        A l’intérieur, plusieurs personnes sont en train de réparer des armures ou nettoyer des armes.<br>
+        Un homme se dirige vers toi et te lances :<br>
+        "Bienvenue à vous, je suis l’armurier de cet avant-poste. Si vous avez besoin d’améliorer votre armure,
+        d’acheter des armes ou de vendre des objets, c’est ici qu’il faut venir !"
+      </p>
+    </div>
+    <div class="conteneur">
+      <div class="contenu options">
+
+
 
 <?php } if($lieu != 'Infirmerie') {?>
   <button type="button" id="heal" class="button option" style="color:white" name="button">Soin</button>
@@ -282,7 +299,7 @@
       Placé dans un ancien centre commercial, les lieux ont été vidés et transformé en hôpital de
       fortune. Les lieux sont propres, plusieurs lits ont été placés, séparé par des rideaux, tandis
       qu’au font de la pièce se trouve des cuves contenant des soldats flottant dans un liquide
-      bleu. Plusieurs personnes ont l’air occupées quand tu entends
+      bleu. Plusieurs personnes ont l’air occupées quand tu entends :
       "Un instant, j’arrive ! Je suis le docteur chargé de
       m’assurer de la bonne santé des troupes et de vous retaper si besoin. Nous avons
       découvert des moyens de soigner rapidement avec une technologie de reconstruction alien,
@@ -292,5 +309,8 @@
     <div class="contenu options">
       <a href="<?= $this->url('camp', ['id' => $id]) ?>"><button type="button" id="backtocamp" style="color:white" class="button option" name="button">Retour au camp après s'être fais soigner</button></a>
     </div>
+  </div>
 
-<?php } $this->stop('main_content'); ?>
+    <?php } ?>
+
+  <?php  $this->stop('main_content'); ?>
