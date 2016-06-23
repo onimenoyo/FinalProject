@@ -11,6 +11,40 @@ use \Model\StringUtils;
 
 class UserController extends Controller
 {
+
+  public function contact()
+  {
+    // affiche contact.php
+    $this->show('user/contact');
+  }
+  public function contact_post()
+  {
+    $valid = new Validation();
+    $error = array();
+    // Vérification Pseudo
+    $result = $valid->validateText($_POST['nom'], 3, 50);
+    if (!empty($result)) {$error['nom'] = $result;}
+    // Vérification firstname
+    $result = $valid->validateText($_POST['email'], 3, 50);
+    if (!empty($result)) {$error['email'] = $result;}
+    // Vérification lastname
+    $result = $valid->validateText($_POST['sujet'], 3, 50);
+    if (!empty($result)) {$error['sujet'] = $result;}
+    // Vérification mail
+    $result = $valid->validateText($_POST['message'], 3, 1000);
+    if (!empty($result)) {$error['message'] = $result;}
+    // Si il n'y a pas d'erreur
+    if (count($error) == 0) {
+        // envoi mail
+        $testModel2 = new MailController();
+        $testModel2->email_contact($_POST['sujet'], $_POST['message'], $_POST['email'],$_POST['nom']);
+        $this->show('user/sent_mail', ['mail' => $_POST['email']]);
+    } else {
+      // récupère les erreurs et permet de les réutiliser dans register.php
+      $this->show('user/contact', ['error' => $error]);
+    }
+  }
+  
   public function login()
   {
     // affiche login.php
