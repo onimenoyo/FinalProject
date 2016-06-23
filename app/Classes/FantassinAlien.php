@@ -1,5 +1,5 @@
 <?php
-namespace classes;
+namespace Classes;
 
 class FantassinAlien extends Characters{
   protected $CA = 17;
@@ -30,7 +30,7 @@ class FantassinAlien extends Characters{
   //Dés : 1D8 + 2
   function attaque($cible, $deg){
     $cible->life = $cible->life - $this->diceRoll(1,$deg,2);
-    $pvRestant = 'Il reste ' . $cible->life . 'PV à ' . $cible->get_name();
+    $pvRestant = $cible->life;
     return $pvRestant;
   }
 }

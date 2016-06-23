@@ -1,5 +1,5 @@
 <?php
-namespace classes;
+namespace Classes;
 
 class Characters{
 
@@ -101,7 +101,7 @@ public function touch_cac($cible, $dice, $deg){
     if($touch > $cible->get_CA()){
       return $this->attaque($cible, $dice, $deg);
     }else{
-      return $this->get_name() . ' rate son attaque.';
+      return $cible->get_life();
     }
   }
 }
@@ -199,6 +199,8 @@ public function regenerateSpirit($spirit, $spiritMax){
 public function get_CA(){
   return $this->CA;
 }
+
+
 
 // Retourne les bonus de 'strength', 'dexterity' et 'spirit'
 public function get_bonus($stat){

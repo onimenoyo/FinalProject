@@ -30,7 +30,7 @@ class Ravageur extends Characters{
   //Dés : 2D8 + 15
   function attaque($cible, $deg){
     $cible->life = $cible->life - $this->diceRoll(2,$deg,15);
-    $pvRestant = 'Il reste ' . $cible->life . 'PV à ' . $cible->get_name();
+    $pvRestant = $cible->life;
     return $pvRestant;
   }
 }

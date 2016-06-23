@@ -7,14 +7,14 @@ use \Model\CharactersModel;
 use \Model\InventoryModel;
 use \Model\ObjectsModel;
 use \Services\Validation;
-use \classes\Characters;
-use \classes\Drone;
-use \classes\FantassinAlien;
-use \classes\Player;
-use \classes\Renegat;
-use \classes\Ravageur;
-use \classes\Robot;
-use \classes\Traqueur;
+use \Classes\Characters;
+use \Classes\Drone;
+use \Classes\FantassinAlien;
+use \Classes\Player;
+use \Classes\Renegat;
+use \Classes\Ravageur;
+use \Classes\Robot;
+use \Classes\Traqueur;
 
 
 
@@ -290,7 +290,6 @@ class GameController extends Controller{
 
       $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
       $inventory = $inventories-> findAllWithId($id);
-      $character = $characters-> find($id);
       foreach ($inventory as $object) {
         $item[] = $objects->find($object['object_id']);
       }
@@ -499,27 +498,42 @@ class GameController extends Controller{
       elseif ($cible == 'Renegat'){ $target = new Renegat('Renegat'); }
       elseif ($cible == 'Robot'){ $target = new Robot('Robot'); }
       elseif ($cible == 'Traqueur'){ $target = new Traqueur('Traqueur'); }
-
+      $pvcible = $target->get_life();
+      $char = new CharactersModel();
+      $character = $char->find($id);
+      $player = new Player($character['name']);
+      $player->set_life($character['health']);
+      $pvjoueur = $player->get_life();
 
       $ennemi = array('name' => $target->get_name(),
                       'current_health' => $target->get_life(),
                       'health' => $target->get_lifeMax(),
                       'armor' => $target->get_CA(),
                       );
-
+      $joueur = array('name' => $target->get_name(),
+                      'current_health' => $character['health'],
+                      'health' => $character['health'],
+                      'lvl' => $character['lvl'],
+                      'strength' => $character['strength'],
+                      'armor' => $character['armor'],
+                      'dexterity' => $character['dexterity'],
+                    );
       $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
       $character = $characters-> find($id);
       $inventory = $inventories-> findAllWithId($id);
       foreach ($inventory as $object) {
         $item[] = $objects->find($object['object_id']);
       }
-      $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'ennemi' => $ennemi, 'inventory' => $inventory]);
+      $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'joueur'=> $joueur, 'ennemi' => $ennemi, 'inventory' => $inventory, 'pvcible' => $pvcible, 'pvjoueur' => $pvjoueur]);
 
     }
 
 
-    public function attack($id, $lieu, $cible){
-
+    public function attack($id, $lieu, $cible, $pvcible, $pvjoueur){
+      $characters = new CharactersModel();
+      $inventories = new InventoryModel();
+      $objects = new ObjectsModel();
+      $char = new CharactersModel();
         // appel de la classe du monstre en fonction de la cible
         if ($cible == 'Drone'){ $target = new Drone('Drone'); }
         elseif ($cible == 'FantassinAlien'){ $target = new FantassinAlien('FantassinAlien'); }
@@ -531,14 +545,13 @@ class GameController extends Controller{
         $targetName = $target->get_name();
 
         // appel des informations du personnage
-        $char = new CharactersModel();
         $character = $char->find($id);
         $player = new Player($character['name']);
-        $target->set_newLife($target->get_lifeMax());
+        $target->set_newLife($pvcible);
         $player->set_strength($character['strength']);
         $player->set_dexterity($character['dexterity']);
         $player->set_spirit($character['spirit']);
-        $player->set_life($character['health']);
+        $player->set_life($pvjoueur);
         $player->set_CA($character['armor']);
 
 
@@ -546,39 +559,63 @@ class GameController extends Controller{
         $arme = new ObjectsModel();
         $weapon = $arme->find($character['weapon_id']);
 
-        while (!$player->is_dead() && !$target->is_dead()){
-          // si l'arme est de type corps à corps :
-          if($weapon['type'] == 'cac'){
-            $attackPlayer = $player->touch_cac($target, $weapon['dice'], $weapon['damage']);
-            $ennemi['current_health'] = $attackPlayer;
-          // si l'arme est de type tir
-          }elseif($weapon['type'] == 'tir'){
-            $attackPlayer = $player->touch_distance($target, $weapon['dice'], $weapon['damage']);
-            $ennemi['current_health'] = $attackPlayer;
+        // while(!$target->is_dead() && !$player->is_dead()){
+          $pvcible = $player->touch_cac($target, $weapon['dice'], $weapon['damage']);
+          if($target->is_dead()){
+            echo $target->get_name() . ' est mort !<br>';
+            die();
           }
-        }
+          $pvjoueur = $target->touch_cac($player,1, $target->get_deg());
+          if($player->is_dead()){
+            echo $player->get_name() . ' est mort ! <br> Vous Avez Perdu ! <br>';
+            die();
+          }
+          $ennemi = array('name' => $target->get_name(),
+          'current_health' => $pvcible,
+          'health' => $target->get_lifeMax(),
+          'armor' => $target->get_CA(),
+        );
 
-      $valid = new Validation();
-      // verification ajax :
-       if ($valid->isAjax()){
+        $joueur = array('name' => $target->get_name(),
+        'current_health' => $pvjoueur,
+        'health' => $character['health'],
+        'lvl' => $character['lvl'],
+        'strength' => $character['strength'],
+        'armor' => $character['armor'],
+        'dexterity' => $character['dexterity'],
+      );
+          $loggedUser = $this->getUser();
+          $avatars = new AvatarModel();
+          $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
+          $character = $characters-> find($id);
+          $inventory = $inventories-> findAllWithId($id);
+          foreach ($inventory as $object) {
+            $item[] = $objects->find($object['object_id']);
+          }
+        // }
+        $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'ennemi' => $ennemi, 'joueur' => $joueur, 'inventory' => $inventory, 'pvcible' => $pvcible, 'pvjoueur' => $pvjoueur]);
 
-          $data = array(
-            'cible' => $targetName,
-            'weapon' => $weapon['name'],
-            'dice' => $weapon['dice'],
-            'damage' => $weapon['damage'],
-            'vie' => $attackPlayer,
-            'ennemiHealth' => $attackPlayer,
-          );
-
-        //  debug($data);
-
-          $this->showJson($data);
-          //si ce n'est pas de l'ajax :
-        } else{
-          $this->showNotFound();
-
-        }
+      // $valid = new Validation();
+      // // verification ajax :
+      //  if ($valid->isAjax()){
+      //
+      //     $data = array(
+      //       'cible' => $targetName,
+      //       'weapon' => $weapon['name'],
+      //       'dice' => $weapon['dice'],
+      //       'damage' => $weapon['damage'],
+      //       'vie' => $attackPlayer,
+      //       'ennemiHealth' => $attackPlayer,
+      //     );
+      //
+      //   //  debug($data);
+      //
+      //     $this->showJson($data);
+      //     //si ce n'est pas de l'ajax :
+      //   } else{
+      //     $this->showNotFound();
+      //
+      //   }
 
       }
 

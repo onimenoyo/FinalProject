@@ -1,5 +1,5 @@
 <?php
-namespace classes;
+namespace Classes;
 
 class Traqueur extends Characters{
   protected $CA = 13;
@@ -22,10 +22,14 @@ class Traqueur extends Characters{
     $this->life = $this->life * $this->lvl;
   }
 
+  // Retourne les dégats du mob
+  public function get_deg(){
+    return $this->deg;
+  }
   //Dés : 1D6 + 1
   function attaque($cible, $deg){
     $cible->life = $cible->life - $this->diceRoll(1,$deg,1);
-    $pvRestant = 'Il reste ' . $cible->life . 'PV à ' . $cible->get_name();
+    $pvRestant = $cible->life;
     return $pvRestant;
   }
 }

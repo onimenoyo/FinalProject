@@ -50,8 +50,8 @@ class Player extends Characters{
   public function attaque($cible, $dice, $degArmes){
     $degats = $this->diceRoll($dice, $degArmes,0);
     $newLife = $cible->get_life() - $degats;
-    $cible->set_newLife($newLife);  
-    $ennemi['current_health'] = $cible->get_life();
+    $cible->set_newLife($newLife);
+    // $ennemi['current_health'] = $cible->get_life();
     return  $cible->get_life();
   }
 

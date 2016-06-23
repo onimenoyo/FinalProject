@@ -30,7 +30,7 @@ class Renegat extends Characters{
   //Dés : 2D6 + 9
   function attaque($cible, $deg){
     $cible->life = $cible->life - $this->diceRoll(2,$deg,9);
-    $pvRestant = 'Il reste ' . $cible->life . 'PV à ' . $cible->get_name();
+    $pvRestant = $cible->life;
     return $pvRestant;
   }
 }

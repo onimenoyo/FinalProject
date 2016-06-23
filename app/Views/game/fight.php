@@ -3,7 +3,7 @@
 <?php $this->start('main_content') ?>
       <img src="<?= $this->assetUrl($avatar['img_path'])?>" alt="avatar" id="avatar"/>
       <div id="Mob">
-        <img src="<?= $this->assetUrl('img/bestiaire/'.$cible.'.jpg')?>" alt="pnj" id="pnj"/>
+        <img src="<?= $this->assetUrl('img/Bestiaire/'.$cible.'.jpg')?>" alt="pnj" id="pnj"/>
         <div class="mobInfo">
           <div class="info"><strong>Nom : </strong> <?= $ennemi['name']?></div>
           <div class="info"><strong>Vie : </strong> <div id="ennemiHealth"><?= $ennemi['current_health'] ?></div> /  <?= $ennemi['health']?></div>
@@ -27,7 +27,7 @@
         <div class="contenu options">
 
           <div class="menuAttack">
-            <a href="#"><button class="button option" id="attack">Attaquer</button></a>
+            <a href="<?= $this->url('attack', ['id' => $id, 'cible' => $cible, 'lieu' => $lieu,'avatar' => $avatar, 'objects' => $objects, 'character' => $character, "pvcible" => $pvcible, "pvjoueur" => $pvjoueur ])?>"><button class="button option" id="attack">Attaquer</button></a>
             <a href="#"><div class="button option" id="heal">Se Soigner</div></a>
             <a href="<?= $this->url('explore', ['id' => $id, 'lieu' => $lieu ])?>"><div class="button option" id="run">Fuir !</div></a>
           </div>
@@ -203,7 +203,7 @@
           <div class="hide" id="playerResponsive" >
             <div class="info"><strong>Nom : </strong><?= $character['name']; ?></div><br>
             <div class="info"><strong>Lvl : </strong><?= $character['lvl']; ?></div><br>
-            <div class="info"><strong>Vie : </strong><?= $character['current_health']; ?> / <?= $character['health']; ?></div><br>
+            <div class="info"><strong>Vie : </strong><?= $pvjoueur; ?> / <?= $character['health']; ?></div><br>
             <div class="info"><strong>Energie : </strong><?= $character['energy']; ?></div><br>
             <div class="info"><strong>Armure : </strong><?= $character['armor']; ?></div>
           </div>
@@ -212,7 +212,7 @@
         <div class="contenuinfo infos " id="player">
           <div class="info"><strong>Nom : </strong><?= $character['name']; ?></div><br>
           <div class="info"><strong>Lvl : </strong><?= $character['lvl']; ?></div><br>
-          <div class="info"><strong>Vie : </strong><?= $character['current_health']; ?> / <?= $character['health']; ?></div><br>
+          <div class="info"><strong>Vie : </strong><?= $joueur['current_health']; ?> / <?= $character['health']; ?></div><br>
           <div class="info"><strong>Energie : </strong><?= $character['energy']; ?></div><br>
           <div class="info"><strong>Armure : </strong><?= $character['armor']; ?></div>
         </div>
@@ -229,7 +229,7 @@
 $url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible]);
  ?>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
   $(document).ready(function(){
 
@@ -268,6 +268,6 @@ $url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible]);
       });
     });
   });
-</script>
+</script> -->
 
 <?php $this->stop('ajax') ?>
