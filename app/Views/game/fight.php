@@ -11,9 +11,13 @@
         </div>
       </div>
       <img src="<?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords_Pont" />
+
+      <!-- information dans la bulle de dialogue  -->
       <div class="dialogue">
-<div id="info">
-</div>
+
+        <?php if(!empty($joueur['touch'])){ echo $joueur['touch'];} ?>
+        <br>
+        <?php if(!empty($ennemi['touch'])){ echo $ennemi['touch'];} ?>
 
       </div>
       <div class="conteneur">
@@ -220,54 +224,3 @@
       </div>
 
 <?php $this->stop('main_content') ?>
-
-<?php $this->start('ajax'); ?>
-
-<?php
-
-
-$url = $this->url('attack', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible]);
- ?>
-
-<!-- <script type="text/javascript">
-
-  $(document).ready(function(){
-
-    $('#attack').click(function(e){
-      e.preventDefault();
-
-      $.ajax({
-        type: 'get',
-        url: '<?php echo $url; ?>',
-
-        // en cas de succés :
-        success: function(data){
-            console.log(data.cible);
-          //renvoit l'information de la cible
-          msgHtml = data.cible;
-          msgHtml += '<br>';
-          msgHtml += data.weapon;
-          msgHtml += '<br>';
-          msgHtml += data.damage;
-          msgHtml += '<br>';
-          msgHtml += data.vie;
-          msgHtml += '<br>';
-          msgHtml += data.dice;
-          msgHtml += '<br>';
-
-           $('#info').html(msgHtml);
-
-           ennemiHtml = data.ennemiHealth;
-           $('#ennemiHealth').html(ennemiHtml);
-
-        },
-        // si erreur :
-        error : function(err){
-          console.log (err);
-        }
-      });
-    });
-  });
-</script> -->
-
-<?php $this->stop('ajax') ?>

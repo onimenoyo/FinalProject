@@ -558,14 +558,29 @@ class GameController extends Controller{
         // on récupère les infos de l'arme du personnage
         $arme = new ObjectsModel();
         $weapon = $arme->find($character['weapon_id']);
+        $ancienpvcible = $pvcible;
+        $ancienpvjoueur = $pvjoueur;
 
-        // while(!$target->is_dead() && !$player->is_dead()){
+        //  attaque du joueur  :
           $pvcible = $player->touch_cac($target, $weapon['dice'], $weapon['damage']);
+          if (!$pvcible){
+            $playerTouch = $player->get_name(). ' rate son attaque.';
+            $pvcible = $ancienpvcible;
+          }else {
+            $playerTouch = $player->get_name(). ' touche ' .$target->get_name();
+          }
           if($target->is_dead()){
             echo $target->get_name() . ' est mort !<br>';
             die();
           }
+          // attaque de l'ennemi
           $pvjoueur = $target->touch_cac($player,1, $target->get_deg());
+          if (!$pvjoueur){
+            $targetTouch = $target->get_name(). ' rate son attaque.';
+            $pvjoueur = $ancienpvjoueur;
+          }else {
+            $targetTouch = $target->get_name(). ' touche ' .$target->get_name();
+          }
           if($player->is_dead()){
             echo $player->get_name() . ' est mort ! <br> Vous Avez Perdu ! <br>';
             die();
@@ -574,6 +589,7 @@ class GameController extends Controller{
           'current_health' => $pvcible,
           'health' => $target->get_lifeMax(),
           'armor' => $target->get_CA(),
+          'touch' => $targetTouch,
         );
 
         $joueur = array('name' => $target->get_name(),
@@ -583,6 +599,8 @@ class GameController extends Controller{
         'strength' => $character['strength'],
         'armor' => $character['armor'],
         'dexterity' => $character['dexterity'],
+        'touch' => $playerTouch,
+
       );
           $loggedUser = $this->getUser();
           $avatars = new AvatarModel();
@@ -592,35 +610,9 @@ class GameController extends Controller{
           foreach ($inventory as $object) {
             $item[] = $objects->find($object['object_id']);
           }
-        // }
+
         $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'ennemi' => $ennemi, 'joueur' => $joueur, 'inventory' => $inventory, 'pvcible' => $pvcible, 'pvjoueur' => $pvjoueur]);
-
-      // $valid = new Validation();
-      // // verification ajax :
-      //  if ($valid->isAjax()){
-      //
-      //     $data = array(
-      //       'cible' => $targetName,
-      //       'weapon' => $weapon['name'],
-      //       'dice' => $weapon['dice'],
-      //       'damage' => $weapon['damage'],
-      //       'vie' => $attackPlayer,
-      //       'ennemiHealth' => $attackPlayer,
-      //     );
-      //
-      //   //  debug($data);
-      //
-      //     $this->showJson($data);
-      //     //si ce n'est pas de l'ajax :
-      //   } else{
-      //     $this->showNotFound();
-      //
-      //   }
-
       }
-
-
-
 
 
 }
