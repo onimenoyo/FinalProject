@@ -101,7 +101,7 @@ public function touch_cac($cible, $dice, $deg){
     if($touch > $cible->get_CA()){
       return $this->attaque($cible, $dice, $deg);
     }else{
-      return $cible->get_life();
+      return false;
     }
   }
 }
@@ -116,7 +116,7 @@ public function touch_distance($cible, $dice, $deg){
     if($touch > $cible->get_CA()){
       $this->attaque($cible, $dice, $deg);
     }else{
-      return $this->get_name() . ' rate son attaque.';
+      return false;
     }
   }
 }

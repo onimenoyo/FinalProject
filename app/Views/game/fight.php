@@ -1,7 +1,11 @@
 <?php $this->layout('interfaceLayout', ['title' => 'Combat']) ?>
 
 <?php $this->start('main_content') ?>
+
+      <!-- Image du joueur -->
       <img src="<?= $this->assetUrl($avatar['img_path'])?>" alt="avatar" id="avatar"/>
+
+      <!-- Affichage du monstre -->
       <div id="Mob">
         <img src="<?= $this->assetUrl('img/Bestiaire/'.$cible.'.jpg')?>" alt="pnj" id="pnj"/>
         <div class="mobInfo">
@@ -10,6 +14,7 @@
           <div class="info"><strong>Armure : </strong> <?= $ennemi['armor']?></div>
         </div>
       </div>
+      <!-- Image de background -->
       <img src="<?= $this->assetUrl('img/background/'.$lieu.'.jpg')?>" alt="Abords_Pont" />
 
       <!-- information dans la bulle de dialogue  -->
@@ -20,16 +25,21 @@
         <?php if(!empty($ennemi['touch'])){ echo $ennemi['touch'];} ?>
 
       </div>
+
       <div class="conteneur">
 
+        <!-- Menu gauche affichant les bouttons -->
         <div class="contenu menu">
           <a href="#" id="menu"><div class="button bmenu"><img src="<?= $this->assetUrl('img/icon/menublanc.png')?>" alt="Menu" />Menu</div></a>
           <a href="#" id="Character"><div class="button bmenu"><img src=<?= $this->assetUrl('img/icon/characterblanc.png')?> alt="Character" />Personnage</div></a>
           <a href="#" id='inventaire'><div class="button bmenu"><img src="<?= $this->assetUrl('img/icon/sacblanc.png')?>" alt="Sac" />Inventaire</div></a>
 
         </div>
+
+        <!-- Menu centrale -->
         <div class="contenu options">
 
+          <!-- Menu centrale principal d'attaque -->
           <div class="menuAttack">
             <?php if($ennemi['current_health'] >= 0){ ?>
               <a href="<?= $this->url('attack', ['id' => $id, 'cible' => $cible, 'lieu' => $lieu,'avatar' => $avatar, 'objects' => $objects, 'character' => $character, "pvcible" => $pvcible, "pvjoueur" => $pvjoueur ])?>"><div class="button option" id="run">Attaquer</div></a>
@@ -40,60 +50,72 @@
             <?php }  ?>
           </div>
 
+          <!-- Menu centrale inventaire -->
           <div class="menuInventory conteneur2 hide">
             <div class="flexinventory">
+
+              <!-- Affichage des 2 premiers items -->
               <div class="inventoryflex">
                 <?php $i=0;
                 if (count($objects) >0){
-                for ($i=0; $i < 2 ; $i++) {
-                  ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
-                                                                      'id' => $id,
-                                                                      'lieu' => $lieu,
-                                                                      'cible' => $cible,
-                                                                      'pvcible' => $pvcible,
-                                                                      'pvjoueur' => $pvjoueur,
-                                                                      'avatar' => $avatar,
-                                                                      'objects' => $objects ,
-                                                                      'character' => $character,
-                                                                      'ennemi' => $ennemi ])
-                    ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
-                      <span class="valueObject"><?= $objects[$i]['value'] ?> $</span><span class="amount"><?= $inventory[$i]['amount']?></span>
+                  for ($i=0; $i < 2 ; $i++) {
+                    ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
+                                                                      'id'                => $id,
+                                                                      'lieu'              => $lieu,
+                                                                      'cible'             => $cible,
+                                                                      'pvcible'           => $pvcible,
+                                                                      'pvjoueur'          => $pvjoueur,
+                                                                      'avatar'            => $avatar,
+                                                                      'objects'           => $objects ,
+                                                                      'character'         => $character,
+                                                                      'ennemi'            => $ennemi ])?> ">
 
-                  <?php if ($character['weapon_id'] == $objects[$i]['id']) {
-                    ?> <span class="equip"> Eq </span></a></div> <?php
-                  } else {
-                    ?> </a></div> <?php
-                  } ?>
-                  <?php
-                }
-                if (count($objects) == 1) {
-                  ?><div class="contenu slot"><img src="" /></div> <?php
-                }
-              } else {
-                ?><div class="contenu slot"><img src="" /></div>
-                <div class="contenu slot"><img src="" /></div> <?php
-              } ?>
+                      <img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
+                      <!-- span affichant la valeur de l'objet -->
+                      <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span>
+                      <!-- span affichant le nombre de fois qu'on a cet objet -->
+                      <span class="amount"><?= $inventory[$i]['amount']?></span>
+                      <?php if ($character['weapon_id'] == $objects[$i]['id']) {
+                      // span montrant que l'objet est équipé
+                      ?> <span  class="equip"> Eq </span></a></div>
+                      <?php  } else { ?>
+                      </a></div>
+                      <?php   } ?>
+                      <?php }
+                      if (count($objects) == 1) {
+                        // affiche un emplacement d'inventaire noir vide
+                        ?> <div class="contenu slot"><img src="" /></div> <?php
+                        }
+                      } else {
+                        // affiche 2 emplacements d'inventaire noir vide
+                        ?> <div class="contenu slot"><img src="" /></div>
+                        <div class="contenu slot"><img src="" /></div>
+                    <?php } ?>
               </div>
 
+              <!-- Affichage des items 3 et 4. -->
               <div class="inventoryflex">
                 <?php
                 if (count($objects) >2){
                  for ($i=2; $i < 4 ; $i++) {
                 ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
-                                                                    'id' => $id,
-                                                                    'lieu' => $lieu,
-                                                                    'cible' => $cible,
-                                                                    'pvcible' => $pvcible,
-                                                                    'pvjoueur' => $pvjoueur,
-                                                                    'avatar' => $avatar,
-                                                                    'objects' => $objects ,
-                                                                    'character' => $character,
-                                                                    'ennemi' => $ennemi ])
+                                                                    'id'              => $id,
+                                                                    'lieu'            => $lieu,
+                                                                    'cible'           => $cible,
+                                                                    'pvcible'         => $pvcible,
+                                                                    'pvjoueur'        => $pvjoueur,
+                                                                    'avatar'          => $avatar,
+                                                                    'objects'         => $objects ,
+                                                                    'character'       => $character,
+                                                                    'ennemi'          => $ennemi ])
                   ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
-                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $ </span><span class="amount"><?= $inventory[$i]['amount']?></span>
-
+                  <!-- span affichant la valeur de l'objet -->
+                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span>
+                  <!-- span affichant le nombre de fois qu'on a cet objet -->
+                  <span class="amount"><?= $inventory[$i]['amount']?></span>
                   <?php if ($character['weapon_id'] == $objects[$i]['id']) {
-                    ?> <span  class="equip"> Eq </span><a/></div> <?php
+                  // span montrant que l'objet est équipé
+                  ?> <span  class="equip"> Eq </span></a></div> <?php
                   } else {
                     ?> </a></div> <?php
                   } ?>
@@ -102,31 +124,38 @@
                   } ?>
                 <?php
               } if (count($objects) == 3) {
+                // affiche un emplacement d'inventaire noir vide
                 ?><div class="contenu slot"><img src="" /></div> <?php
               }
             } else {
+              // affiche 2 emplacements d'inventaire noir vide
               ?><div class="contenu slot"><img src="" /></div>
               <div class="contenu slot"><img src="" /></div> <?php
             } ?>
               </div>
 
+              <!-- Affichage des items 5 et 6. -->
               <div class="inventoryflex">
                 <?php
                  if (count($objects) >4){
                  for ($i=4; $i < 6 ; $i++) {
                 ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
-                                                                    'id' => $id,
-                                                                    'lieu' => $lieu,
-                                                                    'cible' => $cible,
-                                                                    'pvcible' => $pvcible,
-                                                                    'pvjoueur' => $pvjoueur,
-                                                                    'avatar' => $avatar,
-                                                                    'objects' => $objects ,
-                                                                    'character' => $character,
-                                                                    'ennemi' => $ennemi ])
+                                                                    'id'              => $id,
+                                                                    'lieu'            => $lieu,
+                                                                    'cible'           => $cible,
+                                                                    'pvcible'         => $pvcible,
+                                                                    'pvjoueur'        => $pvjoueur,
+                                                                    'avatar'          => $avatar,
+                                                                    'objects'         => $objects ,
+                                                                    'character'       => $character,
+                                                                    'ennemi'          => $ennemi ])
                   ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
-                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span><span class="amount"><?= $inventory[$i]['amount']?></span>
+                  <!-- span affichant la valeur de l'objet -->
+                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span>
+                  <!-- span affichant le nombre de fois qu'on a cet objet -->
+                  <span class="amount"><?= $inventory[$i]['amount']?></span>
                 <?php if ($character['weapon_id'] == $objects[$i]['id']) {
+                  // span montrant que l'objet est équipé
                   ?> <span  class="equip"> Eq </span></a></div> <?php
                 }else {
                   ?> </a></div> <?php
@@ -135,12 +164,15 @@
                   break;
                 }
               } if (count($objects) == 5) {
+                // affiche un emplacement d'inventaire noir vide
                 ?><div class="contenu slot"><img src="" /></div> <?php
               }
             } else {
+              // affiche 2 emplacements d'inventaire noir vide
               ?><div class="contenu slot"><img src="" /></div>
               <div class="contenu slot"><img src="" /></div> <?php
             } ?>
+                <!-- affiche l'argent du personnage -->
                 <div class="contenu">Credit : <?= $character['gold'] ?> $</div>
               </div>
 
@@ -149,18 +181,22 @@
                  if (count($objects) >6){
                  for ($i=6; $i < 8 ; $i++) {
                 ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
-                                                                    'id' => $id,
-                                                                    'lieu' => $lieu,
-                                                                    'cible' => $cible,
-                                                                    'pvcible' => $pvcible,
-                                                                    'pvjoueur' => $pvjoueur,
-                                                                    'avatar' => $avatar,
-                                                                    'objects' => $objects ,
-                                                                    'character' => $character,
-                                                                    'ennemi' => $ennemi ])
+                                                                    'id'              => $id,
+                                                                    'lieu'            => $lieu,
+                                                                    'cible'           => $cible,
+                                                                    'pvcible'         => $pvcible,
+                                                                    'pvjoueur'        => $pvjoueur,
+                                                                    'avatar'          => $avatar,
+                                                                    'objects'         => $objects ,
+                                                                    'character'       => $character,
+                                                                    'ennemi'          => $ennemi ])
                   ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
-                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span><span class="amount"><?= $inventory[$i]['amount']?></span>
+                  <!-- span affichant la valeur de l'objet -->
+                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span>
+                  <!-- span affichant le nombre de fois qu'on a cet objet -->
+                  <span class="amount"><?= $inventory[$i]['amount']?></span>
                 <?php if ($character['weapon_id'] == $objects[$i]['id']) {
+                  // span montrant que l'objet est équipé
                   ?> <span  class="equip"> Eq </span></a></div> <?php
                 }else {
                   ?> </a></div> <?php
@@ -169,42 +205,50 @@
                   break;
                 }
               } if (count($objects) == 7) {
+                // affiche un emplacement d'inventaire noir vide
                 ?><div class="contenu slot"><img src="" /></div> <?php
               }
             } else {
+              // affiche 2 emplacements d'inventaire noir vide
               ?><div class="contenu slot"><img src="" /></div>
               <div class="contenu slot"><img src="" /></div> <?php
             } ?>
               </div>
 
+              <!-- Affichage des items 8 et 9. -->
               <div class="inventoryflex">
                 <?php if (count($objects) >8){
                  for ($i=2; $i < count($objects) ; $i++) {
                 ?><div class="contenu slot"><a href="<?= $this->url("equip", ['equip' => $objects[$i]['id'],
-                                                                    'id' => $id,
-                                                                    'lieu' => $lieu,
-                                                                    'cible' => $cible,
-                                                                    'pvcible' => $pvcible,
-                                                                    'pvjoueur' => $pvjoueur,
-                                                                    'avatar' => $avatar,
-                                                                    'objects' => $objects ,
-                                                                    'character' => $character,
-                                                                    'ennemi' => $ennemi ])
+                                                                    'id'              => $id,
+                                                                    'lieu'            => $lieu,
+                                                                    'cible'           => $cible,
+                                                                    'pvcible'         => $pvcible,
+                                                                    'pvjoueur'        => $pvjoueur,
+                                                                    'avatar'          => $avatar,
+                                                                    'objects'         => $objects ,
+                                                                    'character'       => $character,
+                                                                    'ennemi'          => $ennemi ])
                   ?> "><img src="<?= $this->assetUrl('img/armes/'.$objects[$i]['name'].'.png')?>" alt="<?= $objects[$i]['name']; ?>" />
-                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span><span class="amount"><?= $inventory[$i]['amount']?></span>
-                <?php
-                 if ($character['weapon_id'] == $objects[$i]['id']) {
+                  <!-- span affichant la valeur de l'objet -->
+                  <span  class="valueObject"><?= $objects[$i]['value']; ?> $</span>
+                  <!-- span affichant le nombre de fois qu'on a cet objet -->
+                  <span class="amount"><?= $inventory[$i]['amount']?></span>
+                <?php if ($character['weapon_id'] == $objects[$i]['id']) {
+                  // span montrant que l'objet est équipé
                   ?> <span  class="equip"> Eq </span></a></div> <?php
                 }else {
                   ?> </a></div> <?php
                 }
-                if (count($objects) <= 5) {
+                if (count($objects) <= 9) {
                  break;
                }
-              } if (count($objects) == 9) {
+             } if (count($objects) == 9) {
+               // affiche un emplacement d'inventaire noir vide
                 ?><div class="contenu slot"><img src="" /></div> <?php
               }
             } else {
+              // affiche 2 emplacements d'inventaire noir vide
               ?><div class="contenu slot"><img src="" /></div>
               <div class="contenu slot"><img src="" /></div> <?php
             } ?>

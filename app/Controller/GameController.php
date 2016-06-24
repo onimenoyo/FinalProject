@@ -225,10 +225,15 @@ class GameController extends Controller{
     public function equip($equip, $id, $lieu, $cible, $pvcible, $pvjoueur) {
           //récupération des infos de l'utilisateur connecté
           $loggedUser = $this->getUser();
+          //récupération de la tabl avatar
           $avatars = new AvatarModel();
+          //récupération de la tabl characters
           $characters = new CharactersModel();
+          //récupération de la tabl inventory
           $inventories = new InventoryModel();
+          //récupération de la tabl objets
           $objects = new ObjectsModel();
+          //récupération des infos des ennemies
           $drone = new Drone('Drone');
           $fantassinAlien = new FantassinAlien('FantassinAlien');
           $ravageur = new Ravageur('Ravageur');
@@ -236,8 +241,11 @@ class GameController extends Controller{
           $robot = new Robot('Robot');
           $traqueur = new Traqueur('Traqueur');
 
+          //on retrouve le personnage gràce à l'id injecté dans l'url
           $character = $characters->find($id);
+          //on retrouve l'pbjet gràce à l''equip' injecté dans l'url
           $object = $objects->find($equip);
+          // si l'objet est equipable on l'active dans la tabl characters
           if ($object['wearable'] == 1 ) {
             $characters->update(array(
                         'weapon_id' => $equip,
@@ -272,8 +280,8 @@ class GameController extends Controller{
         foreach ($inventory as $object) {
           $item[] = $objects->find($object['object_id']);
         }
-        $this->show('game/fight', ["pvcible" => $pvcible,
-                                   "pvjoueur" => $pvjoueur,
+        $this->show('game/fight', ['pvcible' => $pvcible,
+                                   'pvjoueur' => $pvjoueur,
                                    'id' => $id,
                                    'lieu' => $lieu,
                                    'cible' => $cible,

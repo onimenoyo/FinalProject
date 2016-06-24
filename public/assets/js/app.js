@@ -1,10 +1,12 @@
 $(document).ready(function() {
     $("#menu").click(function() {
+      // lorsqu'on appui sur le boutton menu cache l'inventaire et affiche le menu attack
       if ($(".menuConnexion").hasClass('hide') && $(".menuAttack").hasClass('hide')) {
-        $(".menuConnexion").removeClass('hide');
+        $(".menuAttack").removeClass('hide');
         $(".menuInventory").addClass('hide');
       }
       if ($(".menuConnexion").hasClass('hide') || $(".menuAttack").hasClass('hide')) {
+        // lorsqu'on appui sur le boutton attack cache l'inventaire et affiche le menu connexion
         if ($(".menuConnexion").hasClass('hide')) {
           $(".menuConnexion").removeClass('hide');
           $(".menuAttack").addClass('hide');
@@ -22,6 +24,7 @@ $(document).ready(function() {
 
 
     $("#inventaire").click(function() {
+      // affiche l'inventaire et cache le menu qui est actuellement en affichage
         if ($(".menuInventory").hasClass('hide')) {
             $(".menuInventory").removeClass('hide');
             if ($(".menuAttack").hasClass('hide')) {}
@@ -31,6 +34,7 @@ $(document).ready(function() {
             if ($("#playerResponsive").hasClass('hide')) {}
             else {$("#playerResponsive").addClass('hide');}
         } else {
+          // si le menu inventaire est deja afficher on le cache
           $(".menuAttack").removeClass('hide');
           $(".menuInventory").addClass('hide');
         }
