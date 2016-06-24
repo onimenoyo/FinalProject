@@ -19,7 +19,6 @@ use \Classes\Traqueur;
 
 
 
-
 class GameController extends Controller{
 
   public function intro() {
@@ -223,79 +222,68 @@ class GameController extends Controller{
       }
     }
 
-    public function equip($equip, $id, $lieu, $cible) {
-      //récupération des infos de l'utilisateur connecté
-      $loggedUser = $this->getUser();
-      $avatars = new AvatarModel();
-      $characters = new CharactersModel();
-      $inventories = new InventoryModel();
-      $objects = new ObjectsModel();
-      $drone = new Drone('Drone');
-      $fantassinAlien = new FantassinAlien('FantassinAlien');
-      $ravageur = new Ravageur('Ravageur');
-      $renegat = new Renegat('Renegat');
-      $robot = new Robot('Robot');
-      $traqueur = new Traqueur('Traqueur');
+    public function equip($equip, $id, $lieu, $cible, $pvcible, $pvjoueur) {
+          //récupération des infos de l'utilisateur connecté
+          $loggedUser = $this->getUser();
+          $avatars = new AvatarModel();
+          $characters = new CharactersModel();
+          $inventories = new InventoryModel();
+          $objects = new ObjectsModel();
+          $drone = new Drone('Drone');
+          $fantassinAlien = new FantassinAlien('FantassinAlien');
+          $ravageur = new Ravageur('Ravageur');
+          $renegat = new Renegat('Renegat');
+          $robot = new Robot('Robot');
+          $traqueur = new Traqueur('Traqueur');
 
-      $character = $characters->find($id);
-      $object = $objects->find($equip);
-      if ($object['wearable'] == 1 ) {
-        $characters->update(array(
-                    'weapon_id' => $equip,
-          ), $character['id']
-        );
-      }
+          $character = $characters->find($id);
+          $object = $objects->find($equip);
+          if ($object['wearable'] == 1 ) {
+            $characters->update(array(
+                        'weapon_id' => $equip,
+              ), $character['id']
+            );
+          }
 
-      if ($cible == 'Drone') {
-        $ennemi = array('name' => $drone->get_name(),
-                        'current_health' => $drone->get_life(),
-                        'health' => $drone->get_lifeMax(),
-                        'armor' => $drone->get_CA(),
-                        );
-      }
-      if ($cible == 'FantassinAlien') {
-        $ennemi = array('name' => $fantassinAlien->get_name(),
-                        'current_health' => $fantassinAlien->get_life(),
-                        'health' => $fantassinAlien->get_lifeMax(),
-                        'armor' => $fantassinAlien->get_CA(),
-                        );
-      }
-      if ($cible == 'Ravageur') {
-        $ennemi = array('name' => $ravageur->get_name(),
-                        'current_health' => $ravageur->get_life(),
-                        'health' => $ravageur->get_lifeMax(),
-                        'armor' => $ravageur->get_CA(),
-                        );
-      }
-      if ($cible == 'Renegat') {
-        $ennemi = array('name' => $renegat->get_name(),
-                        'current_health' => $renegat->get_life(),
-                        'health' => $renegat->get_lifeMax(),
-                        'armor' => $renegat->get_CA(),
-                        );
-      }
-      if ($cible == 'Robot') {
-        $ennemi = array('name' => $robot->get_name(),
-                        'current_health' => $robot->get_life(),
-                        'health' => $robot->get_lifeMax(),
-                        'armor' => $robot->get_CA(),
-                        );
-      }
-      if ($cible == 'Traqueur') {
-        $ennemi = array('name' => $traqueur->get_name(),
-                        'current_health' => $traqueur->get_life(),
-                        'health' => $traqueur->get_lifeMax(),
-                        'armor' => $traqueur->get_CA(),
-                        );
-      }
-
-      $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
-      $inventory = $inventories-> findAllWithId($id);
-      foreach ($inventory as $object) {
-        $item[] = $objects->find($object['object_id']);
-      }
-      $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'ennemi' => $ennemi,  'inventory' => $inventory]);
-    }
+          if ($cible == 'Drone'){$target = new Drone('Drone');  }
+          elseif ($cible == 'FantassinAlien'){ $target = new FantassinAlien('FantassinAlien'); }
+          elseif ($cible == 'Ravageur'){ $target = new Ravageur('Ravageur'); }
+          elseif ($cible == 'Renegat'){ $target = new Renegat('Renegat'); }
+          elseif ($cible == 'Robot'){ $target = new Robot('Robot'); }
+          elseif ($cible == 'Traqueur'){ $target = new Traqueur('Traqueur'); }
+          // on place dans un array les informations de l'ennemi
+          $ennemi = array('name' => $target->get_name(),
+                          'current_health' => $target->get_life(),
+                          'health' => $target->get_lifeMax(),
+                          'armor' => $target->get_CA(),
+                          );
+        // on place dans un array les informations du joueur
+        $joueur = array('name' => $target->get_name(),
+                          'current_health' => $character['health'],
+                          'health' => $character['health'],
+                          'lvl' => $character['lvl'],
+                          'strength' => $character['strength'],
+                          'armor' => $character['armor'],
+                          'dexterity' => $character['dexterity'],
+                          );
+        $avatar = $avatars-> getUserWithAvatar($loggedUser['avatar_id']);
+        $character = $characters-> find($id);
+        $inventory = $inventories-> findAllWithId($id);
+        foreach ($inventory as $object) {
+          $item[] = $objects->find($object['object_id']);
+        }
+        $this->show('game/fight', ["pvcible" => $pvcible,
+                                   "pvjoueur" => $pvjoueur,
+                                   'id' => $id,
+                                   'lieu' => $lieu,
+                                   'cible' => $cible,
+                                   'avatar' => $avatar,
+                                   'objects' => $item ,
+                                   'character' => $character,
+                                   'ennemi' => $ennemi,
+                                   'joueur' => $joueur,
+                                   'inventory' => $inventory]);
+  }
 
 
     // afficher la page explore en fonction du lieu :
@@ -530,6 +518,7 @@ class GameController extends Controller{
       }
       $this->show('game/fight', ['id' => $id, 'lieu' => $lieu, 'cible' => $cible, 'avatar' => $avatar, 'objects' => $item , 'character' => $character, 'joueur'=> $joueur, 'ennemi' => $ennemi, 'inventory' => $inventory, 'pvcible' => $pvcible, 'pvjoueur' => $pvjoueur]);
     }
+
 
 
     public function attack($id, $lieu, $cible, $pvcible, $pvjoueur){

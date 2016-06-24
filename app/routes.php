@@ -62,11 +62,8 @@
 		['GET', '/game/explore/[:id]/[:lieu]', 'Game#explore', 'explore'],
 		['POST', '/game/explore/[:id]/[:lieu]', 'Game#exploration', 'exploration'],
 		['GET', '/game/fight/[:id]/[:lieu]/[:cible]', "Game#fight", 'fight'],
-		['GET', '/game/fight/[:equip]/[:id]/[:lieu]/[:cible]', "Game#equip", 'equip'],
+		['GET', '/game/fight/[:equip]/[:id]/[:lieu]/[:cible]/[:pvcible]/[:pvjoueur]', "Game#equip", 'equip'],
 		['GET', '/game/fight/[:id]/[:lieu]/[:cible]/[:pvcible]/[:pvjoueur]', "Game#attack", 'attack'],
-
-		// AJAX
-		//['GET', '/game/attack/[:id]/[:lieu]/[:cible]', "Game#attack", 'attack'],
 
 		// CONTACT
 		['GET', '/contact', 'User#contact', 'contact'],

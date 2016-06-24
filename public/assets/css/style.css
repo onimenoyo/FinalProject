@@ -306,12 +306,16 @@ Couleur générale First Side:
 }
 .align_center{
     text-align: center;
+    color: rgb(70, 218, 227);
+    text-shadow: 2px 2px black;
 }
+
+
 
 #contact a{
     position: absolute;
-    bottom: -8em;
-    left: 32vw;
+    bottom: 0em;
+    left: 19vw;
 }
 .align_center img{
     width: 100px;
@@ -319,9 +323,44 @@ Couleur générale First Side:
 }
 #contact form {
     margin: 1% auto;
-    padding-left: 25%;
+    padding-left: 10%;
 }
 
 #contact input{
     width: 645px;
+}
+
+.logoSiteHome{
+  margin-top: 5em;
+  margin-left: 40%;
+  width: 25%;
+  height: 5%;
+}
+
+.home{
+  margin: 0 10em;
+}
+.home h1{
+  padding-top: 2em;
+  margin: 2em auto;
+  text-align: center;
+  text-shadow: 2px 2px black;
+}
+.home p{
+  font-size: 1.3em;
+  padding: 0 1em;
+  text-align : justify;
+}
+.home h4{
+  padding-left: 1em;
+  margin: 2em auto;
+  text-align: left;
+  padding-bottom: 2em;
+}
+.cadre{
+  /*rgb(134, 125, 0);*/
+  box-shadow: 0 0 3px 3px rgb(63, 30, 117);
+  border-radius: 15px;
+  background-color: rgba(55, 56, 56, 0.73);
+  color: rgb(143, 235, 255);
 }

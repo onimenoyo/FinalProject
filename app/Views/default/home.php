@@ -8,9 +8,17 @@
 <h1>Bonjour <?= $w_user['firstname'].' '.$w_user['lastname']?></h1>
 <?php } ?>
 <?php foreach ($news as $new) {
-  ?> <h1><?= $new['title'] ?></h1> <br>
-    <p><?= $new['content'] ?></p>
-    <h4><?= $new['created_at'] ?> par <?= $new['created_by'] ?></h4>
+
+  ?>
+  <div class="home">
+    <img src="<?= $this->assetUrl('img/Logo Final Project.png')?>" alt="Logo" class="logoSiteHome"/>
+    <div class="cadre">
+      <h1><?= $new['title'] ?></h1> <br>
+      <p><?= $new['content'] ?></p>
+      <h4><?= $new['created_at'] ?> par <?= $new['created_by'] ?></h4>
+    </div>
+
+  </div>
       <?php
 } ?>
 <?php if (!empty($w_user)) { ?>
