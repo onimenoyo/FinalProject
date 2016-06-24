@@ -586,8 +586,8 @@ class GameController extends Controller{
           }
           // si le joueur est mort :
           if($player->is_dead()){
-            echo $player->get_name() . ' est mort ! <br> Vous Avez Perdu ! <br>';
-            die();
+            $this->show('game/explore', ['id' => $id, 'lieu' => 'Infirmerie']);
+
           }
 
           $ennemi = array('name' => $target->get_name(),

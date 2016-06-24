@@ -307,7 +307,7 @@
   </div>
   <div class="conteneur">
     <div class="contenu options">
-      <a href="<?= $this->url('camp', ['id' => $id]) ?>"><button type="button" id="backtocamp" style="color:white" class="button option" name="button">Retour au camp après s'être fais soigner</button></a>
+      <a href="<?= $this->url('camp', ['id' => $id]) ?>"><button type="button" id="backtocamp" style="color:white" class="button option" name="button">Retour au camp après s'être fait soigner</button></a>
     </div>
   </div>
 
