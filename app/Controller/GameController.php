@@ -579,7 +579,7 @@ class GameController extends Controller{
               $targetTouch = $target->get_name(). ' rate son attaque.';
               $pvjoueur = $ancienpvjoueur;
             }else {
-              $targetTouch = $target->get_name(). ' touche ' .$target->get_name();
+              $targetTouch = $target->get_name(). ' touche ' .$player->get_name();
             }
           }else{
             $targetTouch = '';
